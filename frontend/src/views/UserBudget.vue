@@ -96,7 +96,7 @@ export default {
 
 .budget-category-container {
 	display: grid;
-	grid-template-columns: repeat(4, 1fr);
+	grid-template-columns: repeat(2, 1fr);
 	margin-bottom: 1rem;
 }
 
@@ -105,25 +105,45 @@ export default {
 }
 
 .category-title {
-	grid-column: 1 / 5;
+	grid-column: 1 / 3;
 	padding-bottom: 1rem;
 }
 
 .budget-category-container .card {
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 2fr;
-	grid-template-areas: "target current average most-expensive";
+	grid-template-areas: 
+	'target target'
+	'current current'
+	'average average'
+	'most-expensive most-expensive'
+	;
 	padding: 1rem;
-	grid-column: 1 / 5;
+	grid-column: 1 / 3;
+}
+
+@media screen and (min-width: 60rem) {
+	.budget-category-container .card {
+		max-width: 33rem;
+		grid-template-areas: 
+		'target target target'
+		'current current current'
+		'average average average'
+		'most-expensive most-expensive most-expensive'
+		;
+	}
+}
+
+@media screen and (min-width: 80rem) {
+	.budget-category-container .card {
+		max-width: fit-content;
+		grid-template-areas: 'target current average most-expensive';
+	}
 }
 
 .budget-card-item {
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
 	padding: 1rem;
 	margin: 1rem;
-	/* display: flex;
-    flex-wrap: wrap;
-    justify-content: center; */
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 }

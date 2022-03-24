@@ -5,7 +5,7 @@ import store from "./store";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faSquareCheck } from "@fortawesome/free-solid-svg-icons";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -22,7 +22,7 @@ app.use(router);
 library.add(
 	faSquareCheck,
 	faPen,
-	faTrashCan,
+	faTrash,
 	faMagnifyingGlass,
 	faHeart,
 	faPlus

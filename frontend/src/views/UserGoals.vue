@@ -14,22 +14,10 @@
 				<h2 class="goal-title">Lose 10 pounds</h2>
 				<div class="icons">
 					<a href="">
-						<i class="fa-solid fa-pen"></i>
+						<font-awesome-icon :icon="['fas', 'pen']" />
 					</a>
 					<a href="">
-						<i class="fa-solid fa-trash"></i>
-					</a>
-				</div>
-				<h4 class="goal-started-date">Started 10 months ago</h4>
-			</base-card>
-			<base-card>
-				<h2 class="goal-title">Lose 10 pounds</h2>
-				<div class="icons">
-					<a href="">
-						<i class="fa-solid fa-pen"></i>
-					</a>
-					<a href="">
-						<i class="fa-solid fa-trash"></i>
+						<font-awesome-icon :icon="['fas', 'trash']" />
 					</a>
 				</div>
 				<h4 class="goal-started-date">Started 10 months ago</h4>
@@ -38,10 +26,22 @@
 				<h2 class="goal-title">Lose 10 pounds</h2>
 				<div class="icons">
 					<a href="">
-						<i class="fa-solid fa-pen"></i>
+						<font-awesome-icon :icon="['fas', 'pen']" />
 					</a>
 					<a href="">
-						<i class="fa-solid fa-trash"></i>
+						<font-awesome-icon :icon="['fas', 'trash']" />
+					</a>
+				</div>
+				<h4 class="goal-started-date">Started 10 months ago</h4>
+			</base-card>
+			<base-card>
+				<h2 class="goal-title">Lose 10 pounds</h2>
+				<div class="icons">
+					<a href="">
+						<font-awesome-icon :icon="['fas', 'pen']" />
+					</a>
+					<a href="">
+						<font-awesome-icon :icon="['fas', 'trash']" />
 					</a>
 				</div>
 				<h4 class="goal-started-date">Started 10 months ago</h4>
@@ -95,8 +95,22 @@ export default {
 	grid-template-columns: repeat(4, 1fr);
 }
 
+@media screen and (min-width: 70rem) {
+	.main-container .card {
+		max-width: 50rem;
+		width: 30rem;
+	}
+}
+
+@media screen and (min-width: 80rem) {
+	.main-container .card {
+		max-width: 50rem;
+		width: 50rem;
+	}
+}
+
 .goal-title {
-	grid-column: 1 / 3;
+	grid-column: 1 / 4;
 }
 
 .icons {
@@ -111,7 +125,7 @@ export default {
 }
 
 .goal-started-date {
-	grid-column: 1 / 3;
+	grid-column: 1 / 5;
 	grid-row: 2 / 3;
 	text-indent: 1rem;
 	font-size: 0.8rem;

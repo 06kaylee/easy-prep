@@ -97,7 +97,13 @@ export default {
 	max-width: none;
 }
 
+.content-container .card h2 {
+	display: flex;
+	justify-content: center;
+}
+
 .content-container {
+	padding: 2rem;
 	display: grid;
 	grid-template-areas:
 		"welcome"
@@ -107,7 +113,7 @@ export default {
 		"upcoming-meals"
 		"budget";
 	gap: 1.5rem;
-	width: min(95%, 70rem);
+	/* width: min(95%, 70rem); */
 }
 
 #welcome-msg {
@@ -135,7 +141,7 @@ export default {
 	grid-area: budget;
 }
 
-@media screen and (min-width: 30em) {
+@media screen and (min-width: 40em) {
 	.content-container {
 		grid-template-areas:
 			"welcome welcome"
