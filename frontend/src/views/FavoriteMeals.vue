@@ -3,13 +3,10 @@
 		<div class="main-container">
 			<header>
 				<h2>Your Favorite Meals</h2>
-				<a href="">
-					<font-awesome-icon :icon="['fas', 'pen']" />
-				</a>
 			</header>
 
-			<favorite-meal-item 
-				v-for="favoriteMeal in favoriteMeals" 
+			<favorite-meal-item
+				v-for="favoriteMeal in favoriteMeals"
 				:key="favoriteMeal.id"
 				:id="favoriteMeal.id"
 				:title="favoriteMeal.title"
@@ -26,13 +23,13 @@ import FavoriteMealItem from "../components/favorite-meals/FavoriteMealItem.vue"
 export default {
 	components: {
 		DashboardLayout,
-		FavoriteMealItem
+		FavoriteMealItem,
 	},
 	computed: {
 		favoriteMeals() {
-			return this.$store.getters['favoriteMeals/favoriteMeals'];
+			return this.$store.getters["favoriteMeals/favoriteMeals"];
 		},
-	}
+	},
 };
 </script>
 
@@ -47,13 +44,5 @@ export default {
 	grid-column: 1 / 4;
 	display: flex;
 	justify-content: space-between;
-}
-
-.fa-pen {
-	color: black;
-}
-
-.fa-pen:hover {
-	color: grey;
 }
 </style>

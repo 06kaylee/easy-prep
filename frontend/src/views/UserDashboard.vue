@@ -32,9 +32,14 @@
 			<base-card>
 				<div class="upcoming-meals-container">
 					<ul>
-						<li v-for="upcomingMeal in upcomingMeals" :key="upcomingMeal.dayOfWeek">
+						<li
+							v-for="upcomingMeal in upcomingMeals"
+							:key="upcomingMeal.dayOfWeek"
+						>
 							<h3 class="day-of-week">{{ upcomingMeal.dayOfWeek }}</h3>
-							<p class="sublist">{{ upcomingMeal.numOfMealsPlanned }} meals planned</p>
+							<p class="sublist">
+								{{ upcomingMeal.numOfMealsPlanned }} meals planned
+							</p>
 						</li>
 					</ul>
 				</div>
@@ -60,24 +65,24 @@ export default {
 	},
 	computed: {
 		numFavoriteMeals() {
-			return this.$store.getters['dashboardPage/numFavoriteMeals'];
+			return this.$store.getters["dashboardPage/numFavoriteMeals"];
 		},
 		numGoals() {
-			return this.$store.getters['dashboardPage/numGoals'];
+			return this.$store.getters["dashboardPage/numGoals"];
 		},
 		numDietaryRestrictions() {
-			return this.$store.getters['dashboardPage/numDietaryRestrictions'];
+			return this.$store.getters["dashboardPage/numDietaryRestrictions"];
 		},
 		currentMonthMoneySpent() {
-			return this.$store.getters['dashboardPage/currentMonthMoneySpent'];
+			return this.$store.getters["dashboardPage/currentMonthMoneySpent"];
 		},
 		lastMonthMoneySpent() {
-			return this.$store.getters['dashboardPage/lastMonthMoneySpent'];
+			return this.$store.getters["dashboardPage/lastMonthMoneySpent"];
 		},
 		upcomingMeals() {
-			return this.$store.getters['dashboardPage/upcomingMeals'];
-		}
-	}
+			return this.$store.getters["dashboardPage/upcomingMeals"];
+		},
+	},
 };
 </script>
 
@@ -159,7 +164,7 @@ export default {
 	}
 }
 
-@media screen and (min-width: 80em) {
+@media screen and (min-width: 90em) {
 	.content-container {
 		grid-template-areas:
 			"welcome welcome welcome welcome"

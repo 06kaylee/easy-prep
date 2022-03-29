@@ -1,5 +1,5 @@
 <template>
-    <base-card>
+	<base-card>
 		<router-link :to="favoriteMealDetailLink">
 			<h3 class="recipe-name">{{ title }}</h3>
 			<div class="img-container">
@@ -11,26 +11,26 @@
 
 <script>
 export default {
-    props: {
-        id: {
-            type: String,
-            required: true
-        },
-        title: {
-            type: String,
-            required: true
-        },
-        imgLink: {
-            type: String,
-            required: true
-        }
-    },
-    computed: {
-        favoriteMealDetailLink() {
-			return this.$route.path + '/' + this.id;
-		}
-    }
-}
+	props: {
+		id: {
+			type: String,
+			required: true,
+		},
+		title: {
+			type: String,
+			required: true,
+		},
+		imgLink: {
+			type: String,
+			required: true,
+		},
+	},
+	computed: {
+		favoriteMealDetailLink() {
+			return this.$route.path + "/" + this.id;
+		},
+	},
+};
 </script>
 
 <style scoped>
@@ -46,7 +46,7 @@ div .card a {
 }
 
 div .card:hover {
-    opacity: 0.8; 
+	opacity: 0.8;
 }
 
 .recipe-name {

@@ -8,6 +8,7 @@ import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import BaseButton from "./components/ui/BaseButton.vue";
@@ -25,6 +26,7 @@ library.add(
 	faTrash,
 	faMagnifyingGlass,
 	faHeart,
+	faHeartRegular,
 	faPlus
 );
 

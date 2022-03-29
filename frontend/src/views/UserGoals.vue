@@ -17,7 +17,10 @@
 						<font-awesome-icon :icon="['fas', 'pen']" />
 					</a>
 					<a href="">
-						<font-awesome-icon :icon="['fas', 'trash']" />
+						<font-awesome-icon
+							@click="removeGoal($event, goal.id)"
+							:icon="['fas', 'trash']"
+						/>
 					</a>
 				</div>
 				<h4 class="goal-started-date">{{ goal.startDate }}</h4>
@@ -35,9 +38,15 @@ export default {
 	},
 	computed: {
 		goals() {
-			return this.$store.getters['goals/goals'];
-		}
-	}
+			return this.$store.getters["goals/goals"];
+		},
+	},
+	methods: {
+		removeGoal(event, id) {
+			event.preventDefault();
+			this.$store.dispatch("goals/removeGoal", id);
+		},
+	},
 };
 </script>
 

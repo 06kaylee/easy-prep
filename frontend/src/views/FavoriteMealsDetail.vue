@@ -2,8 +2,9 @@
 	<div class="container">
 		<h2 class="grid-col-span-3 medium-padding-bottom">
 			{{ mealTitle }}
-			<button class="like-btn">
-				<font-awesome-icon :icon="['fas', 'heart']" />
+			<button class="like-btn" @click="toggleLikeBtn">
+				<font-awesome-icon v-if="isLiked" :icon="['fas', 'heart']" />
+				<font-awesome-icon v-else :icon="['far', 'heart']" />
 			</button>
 		</h2>
 		<div class="img-container grid-col-span-3 medium-padding-bottom">
@@ -21,11 +22,12 @@
 
 <script>
 export default {
-	props: ['id'],
+	props: ["id"],
 	data() {
 		return {
-			selectedFavoriteMeal: null
-		}
+			selectedFavoriteMeal: null,
+			isLiked: true,
+		};
 	},
 	computed: {
 		mealTitle() {
@@ -33,14 +35,33 @@ export default {
 		},
 		mealImgLink() {
 			return this.selectedFavoriteMeal.imgLink;
-		}
+		},
+	},
+	methods: {
+		toggleLikeBtn() {
+			this.isLiked = !this.isLiked;
+			if (!this.isLiked) {
+				// remove the meal from the favorite meals list
+			} else if (this.isLiked && !this.containsFavMeal()) {
+				// add meal to the favorite meals list
+			}
+		},
+		containsFavMeal() {
+			const favoriteMeals = this.$store.getters["favoriteMeals/favoriteMeals"];
+			for (const favoriteMeal of favoriteMeals) {
+				if (favoriteMeal.id === this.id) {
+					return true;
+				}
+			}
+			return false;
+		},
 	},
 	created() {
-		this.selectedFavoriteMeal = this.$store.getters['favoriteMeals/favoriteMeals'].find((favoriteMeal) => 
-			favoriteMeal.id === this.id
-		);
-	}
-}
+		this.selectedFavoriteMeal = this.$store.getters[
+			"favoriteMeals/favoriteMeals"
+		].find((favoriteMeal) => favoriteMeal.id === this.id);
+	},
+};
 </script>
 
 <style scoped>
@@ -86,5 +107,6 @@ export default {
 	background: none;
 	font-size: 1.4rem;
 	padding-left: 0.5rem;
+	cursor: pointer;
 }
 </style>
