@@ -3,31 +3,22 @@
 		<div class="main-container">
 			<header>
 				<h2>Your Personal Information</h2>
+				<a href="">
+					<font-awesome-icon :icon="['fas', 'pen']" />
+				</a>
 			</header>
 			<div class="card-container">
-				<base-card>
+				<base-card v-for="restriction in restrictions" :key="restriction.category">
 					<header>
-						<h3>Dietary Restrictions</h3>
+						<h3>{{ restriction.category }}</h3>
 						<a href="">
 							<i class="fa-solid fa-pen"></i>
 						</a>
 					</header>
 					<ul>
-						<li>Gluten Free</li>
-						<li>Vegan</li>
-					</ul>
-				</base-card>
-
-				<base-card>
-					<header>
-						<h3>Dietary Restrictions</h3>
-						<a href="">
-							<i class="fa-solid fa-pen"></i>
-						</a>
-					</header>
-					<ul>
-						<li>Gluten Free</li>
-						<li>Vegan</li>
+						<li v-for="restrictionItem in restriction.restrictionItems" :key="restrictionItem">
+							{{ restrictionItem }}
+						</li>
 					</ul>
 				</base-card>
 			</div>
@@ -42,6 +33,11 @@ export default {
 	components: {
 		DashboardLayout,
 	},
+	computed: {
+		restrictions() {
+			return this.$store.getters['personalInfo/restrictions'];
+		}
+	}
 };
 </script>
 
@@ -50,13 +46,35 @@ export default {
 	padding: 0.5rem 2rem 0 2rem;
 }
 
+.main-container header {
+	display: flex;
+	justify-content: space-between;
+}
+
+.fa-pen {
+	color: black;
+}
+
 .card-container {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	gap: 1rem;
 }
 
+@media screen and (max-width: 65rem) {
+	.card-container {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media screen and (max-width: 45rem) {
+	.card-container {
+		grid-template-columns: 1fr;
+	}
+}
+
 .card-container .card {
+	max-width: 15rem;
 	margin: 2rem 0;
 }
 

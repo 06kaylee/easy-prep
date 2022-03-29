@@ -8,51 +8,11 @@
 				</a>
 			</header>
 			<div class="meal-schedule">
-				<base-card>
-					<h2>Mon</h2>
-					<div class="breakfast-container">
-						<p>Eggs and Bacon</p>
-						<p>700 calories</p>
-					</div>
-					<div class="lunch-container">
-						<p>Sandwich</p>
-						<p>600 calories</p>
-					</div>
-					<div class="dinner-container">
-						<p>Steak and potatoes</p>
-						<p>1000 calories</p>
-					</div>
-				</base-card>
-
-				<base-card>
-					<h2>Tues</h2>
-					<div class="breakfast-container">
-						<p>Eggs and Bacon</p>
-						<p>700 calories</p>
-					</div>
-					<div class="lunch-container">
-						<p>Sandwich</p>
-						<p>600 calories</p>
-					</div>
-					<div class="dinner-container">
-						<p>Steak and potatoes</p>
-						<p>1000 calories</p>
-					</div>
-				</base-card>
-
-				<base-card>
-					<h2>Wed</h2>
-					<div class="breakfast-container">
-						<p>Eggs and Bacon</p>
-						<p>700 calories</p>
-					</div>
-					<div class="lunch-container">
-						<p>Sandwich</p>
-						<p>600 calories</p>
-					</div>
-					<div class="dinner-container">
-						<p>Steak and potatoes</p>
-						<p>1000 calories</p>
+				<base-card v-for="upcomingMeal in upcomingMeals" :key="upcomingMeal.dayOfWeek">
+					<h2>{{ upcomingMeal.dayOfWeek }}</h2>
+					<div class="meal-container" v-for="meal in upcomingMeal.meals" :key="meal">
+						<p>{{ meal.item }}</p>
+						<p>{{ meal.calorieCount }}</p>
 					</div>
 				</base-card>
 			</div>
@@ -67,6 +27,11 @@ export default {
 	components: {
 		DashboardLayout,
 	},
+	computed: {
+		upcomingMeals() {
+			return this.$store.getters['upcomingMeals/upcomingMeals'];
+		}
+	}
 };
 </script>
 
@@ -115,24 +80,15 @@ export default {
 	padding: 1rem;
 }
 
-.breakfast-container {
-	grid-column: 2 / 3;
+.meal-container {
 	text-align: center;
 	padding: 1rem;
 	border-right: 2px solid black;
 }
 
-.lunch-container {
-	grid-column: 3 / 4;
-	text-align: center;
-	border-right: 2px solid black;
-	padding: 1rem;
-}
-
-.dinner-container {
-	grid-column: 4 / 5;
-	text-align: center;
-	padding: 1rem;
+.meal-container:last-child {
+	border-right: none;
+	scroll-snap-stop: always;
 }
 
 a:hover {

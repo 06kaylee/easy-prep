@@ -7,53 +7,27 @@
 					<font-awesome-icon :icon="['fas', 'pen']" />
 				</a>
 			</header>
-			<div class="budget-category-container">
-				<h3 class="category-title">Groceries</h3>
+			<div class="budget-category-container" v-for="budget in budgets" :key="budget.category">
+				<h3 class="category-title">{{ budget.category }}</h3>
 				<base-card>
 					<div class="budget-card-item">
 						<p>Target Amount</p>
-						<p>$80/week</p>
+						<p>${{ budget.stats.targetAmount }}/week</p>
 					</div>
 					<div class="budget-card-item">
 						<p>Current Total</p>
-						<p>$40</p>
+						<p>${{ budget.stats.currentTotal }}</p>
 					</div>
 					<div class="budget-card-item">
 						<p>Average Spent</p>
-						<p>$77/week</p>
+						<p>${{ budget.stats.avgSpent }}/week</p>
 					</div>
 					<div class="budget-card-item">
 						<p>Most Expensive Ingredients</p>
 						<ol>
-							<li>Almonds</li>
-							<li>Olive Oil</li>
-							<li>Eggs</li>
-						</ol>
-					</div>
-				</base-card>
-			</div>
-
-			<div class="budget-category-container">
-				<h3 class="category-title">Dining Out</h3>
-				<base-card>
-					<div class="budget-card-item">
-						<p>Target Amount</p>
-						<p>$80/week</p>
-					</div>
-					<div class="budget-card-item">
-						<p>Current Total</p>
-						<p>$40</p>
-					</div>
-					<div class="budget-card-item">
-						<p>Average Spent</p>
-						<p>$77/week</p>
-					</div>
-					<div class="budget-card-item">
-						<p>Most Expensive Ingredients</p>
-						<ol>
-							<li>Almonds</li>
-							<li>Olive Oil</li>
-							<li>Eggs</li>
+							<li v-for="expensiveItem in budget.stats.mostExpensive" :key="expensiveItem">
+								{{expensiveItem}}
+							</li>
 						</ol>
 					</div>
 				</base-card>
@@ -69,6 +43,11 @@ export default {
 	components: {
 		DashboardLayout,
 	},
+	computed: {
+		budgets() {
+			return this.$store.getters['budget/budgets'];
+		}
+	}
 };
 </script>
 

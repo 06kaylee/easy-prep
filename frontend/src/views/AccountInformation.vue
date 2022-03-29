@@ -4,7 +4,7 @@
 			<header>
 				<h2>Your Account Information</h2>
 				<a href="">
-					<i class="fa-solid fa-pen"></i>
+					<font-awesome-icon :icon="['fas', 'pen']" />
 				</a>
 			</header>
 			<div class="info-container">
@@ -15,16 +15,16 @@
 						<input
 							type="text"
 							id="email"
-							value="06.kaylee@gmail.com"
+							:value="email"
 							readonly
 						/>
 					</li>
 					<li>
 						<label for="password">Password</label>
 						<br />
-						<input type="text" id="password" value="abc123" readonly />
+						<input type="text" id="password" :value="password" readonly />
 					</li>
-					<li>This account has been active for 2 years.</li>
+					<li>This account has been active for {{ timeSinceAccountCreation }} years.</li>
 				</ul>
 			</div>
 		</div>
@@ -38,6 +38,17 @@ export default {
 	components: {
 		DashboardLayout,
 	},
+	computed: {
+		email() {
+			return this.$store.getters['accountInfo/email'];
+		},
+		password() {
+			return this.$store.getters['accountInfo/password'];
+		},
+		timeSinceAccountCreation() {
+			return this.$store.getters['accountInfo/timeSinceAccountCreation'];
+		}
+	}
 };
 </script>
 

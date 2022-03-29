@@ -1,13 +1,13 @@
 <template>
 	<div class="container">
 		<h2 class="grid-col-span-3 medium-padding-bottom">
-			Pasta With Garlic, Scallions, and Breadcrumbs
+			{{ mealTitle }}
 			<button class="like-btn">
 				<font-awesome-icon :icon="['fas', 'heart']" />
 			</button>
 		</h2>
 		<div class="img-container grid-col-span-3 medium-padding-bottom">
-			<img src="../assets/sample-logo.jpg" alt="" />
+			<img :src="require('../assets/' + mealImgLink)" alt="" />
 		</div>
 		<ul class="grid-col-span-3">
 			<li class="light-padding-bottom">Servings</li>
@@ -18,6 +18,30 @@
 		</ul>
 	</div>
 </template>
+
+<script>
+export default {
+	props: ['id'],
+	data() {
+		return {
+			selectedFavoriteMeal: null
+		}
+	},
+	computed: {
+		mealTitle() {
+			return this.selectedFavoriteMeal.title;
+		},
+		mealImgLink() {
+			return this.selectedFavoriteMeal.imgLink;
+		}
+	},
+	created() {
+		this.selectedFavoriteMeal = this.$store.getters['favoriteMeals/favoriteMeals'].find((favoriteMeal) => 
+			favoriteMeal.id === this.id
+		);
+	}
+}
+</script>
 
 <style scoped>
 .grid-col-span-3 {

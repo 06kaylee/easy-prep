@@ -24,7 +24,7 @@ const router = createRouter({
 		{ path: "/account-info", component: AccountInformation },
 		{ path: "/personal-info", component: PersonalInformation },
 		{ path: "/favorite-meals", component: FavoriteMeals },
-		{ path: "/favorite-meals/:id", component: FavoriteMealsDetail },
+		{ path: "/favorite-meals/:id", component: FavoriteMealsDetail, props: true },
 		{ path: "/upcoming-meals", component: UpcomingMeals },
 		{ path: "/budget", component: UserBudget },
 		{ path: "/goals", component: UserGoals },

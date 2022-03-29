@@ -10,8 +10,8 @@
 					</a>
 				</h4>
 			</header>
-			<base-card>
-				<h2 class="goal-title">Lose 10 pounds</h2>
+			<base-card v-for="goal in goals" :key="goal.id">
+				<h2 class="goal-title">{{ goal.title }}</h2>
 				<div class="icons">
 					<a href="">
 						<font-awesome-icon :icon="['fas', 'pen']" />
@@ -20,31 +20,7 @@
 						<font-awesome-icon :icon="['fas', 'trash']" />
 					</a>
 				</div>
-				<h4 class="goal-started-date">Started 10 months ago</h4>
-			</base-card>
-			<base-card>
-				<h2 class="goal-title">Lose 10 pounds</h2>
-				<div class="icons">
-					<a href="">
-						<font-awesome-icon :icon="['fas', 'pen']" />
-					</a>
-					<a href="">
-						<font-awesome-icon :icon="['fas', 'trash']" />
-					</a>
-				</div>
-				<h4 class="goal-started-date">Started 10 months ago</h4>
-			</base-card>
-			<base-card>
-				<h2 class="goal-title">Lose 10 pounds</h2>
-				<div class="icons">
-					<a href="">
-						<font-awesome-icon :icon="['fas', 'pen']" />
-					</a>
-					<a href="">
-						<font-awesome-icon :icon="['fas', 'trash']" />
-					</a>
-				</div>
-				<h4 class="goal-started-date">Started 10 months ago</h4>
+				<h4 class="goal-started-date">{{ goal.startDate }}</h4>
 			</base-card>
 		</div>
 	</dashboard-layout>
@@ -57,6 +33,11 @@ export default {
 	components: {
 		DashboardLayout,
 	},
+	computed: {
+		goals() {
+			return this.$store.getters['goals/goals'];
+		}
+	}
 };
 </script>
 
