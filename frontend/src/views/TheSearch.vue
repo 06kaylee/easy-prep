@@ -15,33 +15,17 @@
 			</div>
 		</div>
 
-		<div class="content-container">
-			<div class="recipes-card">
-				<a href="">
-					<h3 class="title">Quick Recipes</h3>
-					<div class="img-container">
-						<img src="../assets/sample-logo.jpg" alt="" />
-					</div>
-				</a>
-			</div>
-
-			<div class="recipes-card">
-				<a href="">
-					<h3 class="title">March Madness Appetizers</h3>
-					<div class="img-container">
-						<img src="../assets/sample-logo.jpg" alt="" />
-					</div>
-				</a>
-			</div>
-
-			<div class="recipes-card">
-				<a href="">
-					<h3 class="title">Breakfast of Champions</h3>
-					<div class="img-container">
-						<img src="../assets/sample-logo.jpg" alt="" />
-					</div>
-				</a>
-			</div>
+		<div class="sample-recipes-container">
+			<base-card>
+				<base-card class="recipe-card">
+					<p>Target Amount</p>
+					<p>blah</p>
+				</base-card>
+				<base-card class="recipe-card">
+					<p>Target Amount</p>
+					<p>blah</p>
+				</base-card>
+			</base-card>
 		</div>
 	</div>
 </template>
@@ -88,27 +72,17 @@
 	color: blue;
 }
 
-.content-container {
+.sample-recipes-container {
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	padding: 3rem;
-	width: fit-content;
-	column-gap: 14rem;
-	row-gap: 2rem;
-	margin: 8.5rem auto 0 auto;
+	grid-template-columns: repeat(4, 1fr);
 }
 
-.recipes-card {
-	border-radius: 12px;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-	padding: 1rem;
-	margin: 1rem 0.5rem 1rem 0.5rem;
-	max-width: 12rem;
+.sample-recipes-container .card {
+	grid-column: 1 / 5;
 }
 
-.recipes-card a {
-	text-decoration: none;
-	color: black;
+.recipe-card:nth-of-type(1) {
+	grid-column: 1 / 3;
 }
 
 .title {

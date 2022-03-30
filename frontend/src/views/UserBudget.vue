@@ -7,7 +7,11 @@
 					<font-awesome-icon :icon="['fas', 'pen']" />
 				</a>
 			</header>
-			<div class="budget-category-container" v-for="budget in budgets" :key="budget.category">
+			<div
+				class="budget-category-container"
+				v-for="budget in budgets"
+				:key="budget.category"
+			>
 				<h3 class="category-title">{{ budget.category }}</h3>
 				<base-card>
 					<div class="budget-card-item">
@@ -25,8 +29,11 @@
 					<div class="budget-card-item">
 						<p>Most Expensive Ingredients</p>
 						<ol>
-							<li v-for="expensiveItem in budget.stats.mostExpensive" :key="expensiveItem">
-								{{expensiveItem}}
+							<li
+								v-for="expensiveItem in budget.stats.mostExpensive"
+								:key="expensiveItem"
+							>
+								{{ expensiveItem }}
 							</li>
 						</ol>
 					</div>
@@ -45,9 +52,9 @@ export default {
 	},
 	computed: {
 		budgets() {
-			return this.$store.getters['budget/budgets'];
-		}
-	}
+			return this.$store.getters["budget/budgets"];
+		},
+	},
 };
 </script>
 
@@ -90,32 +97,31 @@ export default {
 
 .budget-category-container .card {
 	display: grid;
-	grid-template-areas: 
-	'target target'
-	'current current'
-	'average average'
-	'most-expensive most-expensive'
-	;
+	grid-template-areas:
+		"target target"
+		"current current"
+		"average average"
+		"most-expensive most-expensive";
 	padding: 1rem;
 	grid-column: 1 / 3;
+	border-color: #ccc8c6;
 }
 
 @media screen and (min-width: 60rem) {
 	.budget-category-container .card {
 		max-width: 33rem;
-		grid-template-areas: 
-		'target target target'
-		'current current current'
-		'average average average'
-		'most-expensive most-expensive most-expensive'
-		;
+		grid-template-areas:
+			"target target target"
+			"current current current"
+			"average average average"
+			"most-expensive most-expensive most-expensive";
 	}
 }
 
 @media screen and (min-width: 80rem) {
 	.budget-category-container .card {
 		max-width: fit-content;
-		grid-template-areas: 'target current average most-expensive';
+		grid-template-areas: "target current average most-expensive";
 	}
 }
 
@@ -134,6 +140,14 @@ export default {
 .budget-card-item p:nth-of-type(2) {
 	grid-column: 1 / 3;
 	grid-row: 2 / 3;
+}
+
+.budget-category-container:nth-child(even) .budget-card-item {
+	background-color: #efd9c1;
+}
+
+.budget-category-container:nth-child(odd) .budget-card-item {
+	background-color: #c7d8c6;
 }
 
 .budget-card-item:nth-of-type(1) {
