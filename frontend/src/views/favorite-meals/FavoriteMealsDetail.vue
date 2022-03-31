@@ -8,7 +8,7 @@
 			</button>
 		</h2>
 		<div class="img-container grid-col-span-3 medium-padding-bottom">
-			<img :src="require('../assets/' + mealImgLink)" alt="" />
+			<img :src="require('../../assets/' + mealImgLink)" alt="" />
 		</div>
 		<ul class="grid-col-span-3">
 			<li class="light-padding-bottom">Servings</li>

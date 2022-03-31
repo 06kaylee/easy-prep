@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import DashboardLayout from "../components/layout/DashboardLayout.vue";
-import FavoriteMealItem from "../components/favorite-meals/FavoriteMealItem.vue";
+import DashboardLayout from "../../components/layout/DashboardLayout.vue";
+import FavoriteMealItem from "../../components/favorite-meals/FavoriteMealItem.vue";
 
 export default {
 	components: {

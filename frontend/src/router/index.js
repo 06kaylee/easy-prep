@@ -4,13 +4,15 @@ import LoginModal from "../components/auth/LoginModal";
 import SignUpModal from "../components/auth/SignUpModal";
 import TheSearch from "../views/TheSearch.vue";
 import UserDashboard from "../views/UserDashboard.vue";
-import AccountInformation from "../views/AccountInformation.vue";
-import PersonalInformation from "../views/PersonalInformation.vue";
-import FavoriteMeals from "../views/FavoriteMeals.vue";
-import FavoriteMealsDetail from "../views/FavoriteMealsDetail.vue";
-import UpcomingMeals from "../views/UpcomingMeals.vue";
-import UserBudget from "../views/UserBudget.vue";
-import UserGoals from "../views/UserGoals.vue";
+import AccountInformation from "../views/settings/AccountInformation.vue";
+import PersonalInformation from "../views/settings/PersonalInformation.vue";
+import FavoriteMeals from "../views/favorite-meals/FavoriteMeals.vue";
+import FavoriteMealsDetail from "../views/favorite-meals/FavoriteMealsDetail.vue";
+import UpcomingMeals from "../views/upcoming-meals/UpcomingMeals.vue";
+import UserBudget from "../views/budget/UserBudget.vue";
+import UserGoals from "../views/goals/UserGoals.vue";
+import EditGoalsPage from "../views/goals/EditGoalsPage.vue";
+import AddGoalPage from "../views/goals/AddGoalPage.vue";
 import NotFound from "../views/NotFound.vue";
 
 const router = createRouter({
@@ -28,6 +30,8 @@ const router = createRouter({
 		{ path: "/upcoming-meals", component: UpcomingMeals },
 		{ path: "/budget", component: UserBudget },
 		{ path: "/goals", component: UserGoals },
+		{ path: "/edit-goals/:id", component: EditGoalsPage, props: true },
+		{ path: "/add-goal", component: AddGoalPage },
 		{ path: "/:notFound(.*)", component: NotFound },
 	],
 });

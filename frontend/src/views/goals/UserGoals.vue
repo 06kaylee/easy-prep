@@ -4,18 +4,18 @@
 			<header>
 				<h2>Your Goals</h2>
 				<h4>
-					<a href="" class="new-goal">
+					<router-link to="/add-goal" class="new-goal">
 						Add a new goal
 						<font-awesome-icon :icon="['fas', 'plus']" />
-					</a>
+					</router-link>
 				</h4>
 			</header>
 			<base-card v-for="goal in goals" :key="goal.id">
 				<h2 class="goal-title">{{ goal.title }}</h2>
 				<div class="icons">
-					<a href="">
+					<router-link :to="'/edit-goals/' + goal.id" >
 						<font-awesome-icon :icon="['fas', 'pen']" />
-					</a>
+					</router-link>
 					<a href="">
 						<font-awesome-icon
 							@click="removeGoal($event, goal.id)"
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import DashboardLayout from "../components/layout/DashboardLayout.vue";
+import DashboardLayout from "../../components/layout/DashboardLayout.vue";
 
 export default {
 	components: {

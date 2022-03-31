@@ -18,12 +18,22 @@
 		<div class="sample-recipes-container">
 			<base-card>
 				<base-card class="recipe-card">
-					<p>Target Amount</p>
-					<p>blah</p>
+					<h2 class="title">Quick Meals</h2>
+					<div class="img-container">
+						<img :src="require('../assets/sample-logo.jpg')" alt="">
+					</div>
 				</base-card>
 				<base-card class="recipe-card">
-					<p>Target Amount</p>
-					<p>blah</p>
+					<h2 class="title">Breakfast Classics</h2>
+					<div class="img-container">
+						<img :src="require('../assets/sample-logo.jpg')" alt="">
+					</div>
+				</base-card>
+				<base-card class="recipe-card">
+					<h2 class="title">Easy Dinners</h2>
+					<div class="img-container">
+						<img :src="require('../assets/sample-logo.jpg')" alt="">
+					</div>
 				</base-card>
 			</base-card>
 		</div>
@@ -77,12 +87,13 @@
 	grid-template-columns: repeat(4, 1fr);
 }
 
-.sample-recipes-container .card {
+.sample-recipes-container > .card {
 	grid-column: 1 / 5;
-}
-
-.recipe-card:nth-of-type(1) {
-	grid-column: 1 / 3;
+	max-width: 80rem;
+	width: 80rem;
+	display: flex;
+	justify-content: space-evenly;
+	margin: 10rem auto;
 }
 
 .title {
@@ -95,6 +106,7 @@
 	display: flex;
 	justify-content: center;
 	align-content: center;
+	margin: 0 auto;
 }
 
 .img-container img {
