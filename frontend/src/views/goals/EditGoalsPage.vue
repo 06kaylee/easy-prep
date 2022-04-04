@@ -1,17 +1,17 @@
 <template>
-    <base-card>
-        <goals-form isEditing></goals-form>
-        {{ id }}
-    </base-card>
+	<base-card>
+		<h2>Edit a Goal</h2>
+		<edit-goals-form isEditing :id="id"></edit-goals-form>
+	</base-card>
 </template>
 
 <script>
-import GoalsForm from '../../components/goals/GoalsForm.vue';
+import EditGoalsForm from "../../components/goals/EditGoalsForm.vue";
 
 export default {
-    components: {
-        GoalsForm
-    },
-    props: ['id']
-}
+	components: {
+		EditGoalsForm,
+	},
+	props: ["id"],
+};
 </script>

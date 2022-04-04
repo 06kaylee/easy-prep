@@ -4,19 +4,25 @@ export default {
 		return {
 			goals: [
 				{
-					id: 1,
+					id: "1",
 					title: "Lose 10 pounds",
-					startDate: "Started 10 months ago",
+					category: "fitness",
+					startDate: "2022-04-01",
+					endDate: "2022-04-30",
 				},
 				{
-					id: 2,
+					id: "2",
 					title: "No sugar for a month",
-					startDate: "19 days to go",
+					category: "nutrition",
+					startDate: "2022-03-04",
+					endDate: "2022-07-31",
 				},
 				{
-					id: 3,
+					id: "3",
 					title: "Build muscle",
-					startDate: "Started 5 months ago",
+					category: "fitness",
+					startDate: "2022-01-01",
+					endDate: "2022-12-31",
 				},
 			],
 		};
@@ -25,11 +31,17 @@ export default {
 		removeGoal(state, id) {
 			state.goals = state.goals.filter((goal) => goal.id !== id);
 		},
+		addGoal(state, payload) {
+			state.goals.push(payload);
+		},
 	},
 	actions: {
 		removeGoal(context, id) {
 			console.log(id);
 			context.commit("removeGoal", id);
+		},
+		addGoal(context, payload) {
+			context.commit("addGoal", payload);
 		},
 	},
 	getters: {

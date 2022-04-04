@@ -8,9 +8,16 @@
 				</a>
 			</header>
 			<div class="meal-schedule">
-				<base-card v-for="upcomingMeal in upcomingMeals" :key="upcomingMeal.dayOfWeek">
+				<base-card
+					v-for="upcomingMeal in upcomingMeals"
+					:key="upcomingMeal.dayOfWeek"
+				>
 					<h2>{{ upcomingMeal.dayOfWeek }}</h2>
-					<div class="meal-container" v-for="meal in upcomingMeal.meals" :key="meal">
+					<div
+						class="meal-container"
+						v-for="meal in upcomingMeal.meals"
+						:key="meal"
+					>
 						<p>{{ meal.item }}</p>
 						<p>{{ meal.calorieCount }}</p>
 					</div>
@@ -29,9 +36,9 @@ export default {
 	},
 	computed: {
 		upcomingMeals() {
-			return this.$store.getters['upcomingMeals/upcomingMeals'];
-		}
-	}
+			return this.$store.getters["upcomingMeals/upcomingMeals"];
+		},
+	},
 };
 </script>
 
@@ -71,7 +78,9 @@ export default {
 
 .meal-schedule .card {
 	display: grid;
-	grid-template-columns: repeat(4, 1fr);
+	grid-template-columns: repeat(4, 10rem);
+	grid-auto-flow: column;
+	overflow-x: auto;
 }
 
 .meal-schedule .card h2 {

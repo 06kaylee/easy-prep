@@ -1,16 +1,16 @@
 <template>
-    <base-card>
-        <h2>Add a Goal</h2>
-        <goals-form :isEditing="false"></goals-form>
-    </base-card>
+	<base-card>
+		<h2>Add a Goal</h2>
+		<add-goal-form :isEditing="false"></add-goal-form>
+	</base-card>
 </template>
 
 <script>
-import GoalsForm from '../../components/goals/GoalsForm.vue';
+import AddGoalForm from "../../components/goals/AddGoalForm.vue";
 
 export default {
-    components: {
-        GoalsForm
-    }
-}
+	components: {
+		AddGoalForm,
+	},
+};
 </script>
