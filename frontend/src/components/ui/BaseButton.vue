@@ -1,5 +1,5 @@
 <template>
-	<button v-if="!link" :class="mode">
+	<button v-if="!link" class="css-button-3d" :class="mode">
 		<slot></slot>
 	</button>
 	<router-link v-else :to="to" :class="mode">
@@ -40,7 +40,6 @@ a {
 	color: black;
 	cursor: pointer;
 	border-radius: 14px;
-	/* width: 55%; */
 	width: fit-content;
 	transition: 0.4s;
 }

@@ -3,20 +3,22 @@
 		<div class="main-container">
 			<header>
 				<h2>Your Budget</h2>
-				<a href="">
-					<font-awesome-icon :icon="['fas', 'pen']" />
-				</a>
 			</header>
 			<div
 				class="budget-category-container"
 				v-for="budget in budgets"
-				:key="budget.category"
+				:key="budget.id"
 			>
-				<h3 class="category-title">{{ budget.category }}</h3>
+				<h3 class="category-title">
+					{{ budget.category }}
+					<router-link :to="'/edit-budget/' + budget.id">
+						<font-awesome-icon :icon="['fas', 'pen']" />
+					</router-link>
+				</h3>
 				<base-card>
 					<div class="budget-card-item">
 						<p>Target Amount</p>
-						<p>${{ budget.stats.targetAmount }}/week</p>
+						<p>${{ budget.stats.targetAmount }}/{{ budget.stats.timeline }}</p>
 					</div>
 					<div class="budget-card-item">
 						<p>Current Total</p>
