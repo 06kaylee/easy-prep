@@ -3,21 +3,21 @@
 		<div class="main-container">
 			<header>
 				<h2>Your Personal Information</h2>
-				<a href="">
-					<font-awesome-icon :icon="['fas', 'pen']" />
-				</a>
 			</header>
 			<div class="card-container">
-				<base-card v-for="restriction in restrictions" :key="restriction.category">
+				<base-card v-for="restriction in restrictions" :key="restriction.id">
 					<header>
 						<h3>{{ restriction.category }}</h3>
-						<a href="">
-							<i class="fa-solid fa-pen"></i>
-						</a>
+						<router-link :to="'/add-personal-info/' + restriction.id">
+							<font-awesome-icon :icon="['fas', 'plus']" />
+						</router-link>
 					</header>
 					<ul>
 						<li v-for="restrictionItem in restriction.restrictionItems" :key="restrictionItem">
 							{{ restrictionItem }}
+							<a href="" @click="removeItem($event, restriction.id, restrictionItem)">
+								<font-awesome-icon :icon="['fas', 'x']" />
+							</a>
 						</li>
 					</ul>
 				</base-card>
@@ -36,6 +36,15 @@ export default {
 	computed: {
 		restrictions() {
 			return this.$store.getters['personalInfo/restrictions'];
+		}
+	},
+	methods: {
+		removeItem(event, id, restrictionItem) {
+			event.preventDefault();
+			this.$store.dispatch('personalInfo/removeItem', {
+				id,
+				item: restrictionItem
+			});
 		}
 	}
 };
@@ -93,6 +102,21 @@ export default {
 }
 
 .fa-pen {
+	color: black;
+}
+
+.fa-x {
+	color: red;
+	opacity: 0.5;
+	padding-left: 0.5rem;
+}
+
+.fa-x:hover {
+	opacity: 1;
+	transition: 0.4s;
+}
+
+.fa-plus {
 	color: black;
 }
 

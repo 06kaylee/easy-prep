@@ -45,7 +45,7 @@ export default {
 			return rootGetters["goals/goals"].length;
 		},
 		numDietaryRestrictions(_, _2, _3, rootGetters) {
-			return rootGetters["personalInfo/restrictions"].dietary.restrictionItems
+			return rootGetters["personalInfo/restrictions"][0].restrictionItems
 				.length;
 		},
 		currentMonthMoneySpent(_1, _2, _3, rootGetters) {

@@ -75,7 +75,7 @@ export default {
 
 .fa-pen {
 	color: black;
-	font-size: 1.1rem;
+	font-size: 1rem;
 }
 
 .fa-pen:hover {
@@ -95,6 +95,10 @@ export default {
 .category-title {
 	grid-column: 1 / 3;
 	padding-bottom: 1rem;
+}
+
+.category-title a {
+	padding-left: 0.5rem;
 }
 
 .budget-category-container .card {

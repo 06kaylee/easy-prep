@@ -6,6 +6,7 @@ import TheSearch from "../views/TheSearch.vue";
 import UserDashboard from "../views/UserDashboard.vue";
 import AccountInformation from "../views/settings/AccountInformation.vue";
 import PersonalInformation from "../views/settings/PersonalInformation.vue";
+import AddPersonalInformationPage from "../views/settings/AddPersonalInformationPage.vue";
 import FavoriteMeals from "../views/favorite-meals/FavoriteMeals.vue";
 import FavoriteMealsDetail from "../views/favorite-meals/FavoriteMealsDetail.vue";
 import UpcomingMeals from "../views/upcoming-meals/UpcomingMeals.vue";
@@ -26,6 +27,7 @@ const router = createRouter({
 		{ path: "/dashboard", component: UserDashboard },
 		{ path: "/account-info", component: AccountInformation },
 		{ path: "/personal-info", component: PersonalInformation },
+		{ path: "/add-personal-info/:id", component: AddPersonalInformationPage, props: true },
 		{ path: "/favorite-meals", component: FavoriteMeals },
 		{
 			path: "/favorite-meals/:id",
