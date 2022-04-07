@@ -1,63 +1,56 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const Product = require("./models/product");
+const Campground = require("./models/campground");
 
-mongoose
-	.connect("mongodb://localhost:27017/farmStand", {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-	})
-	.then(() => {
-		console.log("mongo connection open");
-	})
-	.catch((err) => {
-		console.log(err);
-	});
+mongoose.connect("mongodb://localhost:27017/CampgroundApp")
+    .then(() => {
+        console.log("database is connected");
+    })
+    .catch(err => {
+        console.log(err);
+    })
 
 const app = express();
 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
-
-// products index -> GET /products
-app.get('/products', async (req, res) => {
-	const products = await Product.find({});
-	console.log(products);
-	res.send("all products will be here");
+app.get("/", (req, res) => {
+    res.send("home page");
 })
 
-// product details -> GET /products/:id
-app.get('/products/:id', async (req, res) => {
-	const product = await Product.findById(req.params.id);
-	console.log(product);
-	res.send(`product for id ${req.params.id}`);
+// index
+app.get("/campgrounds", async (req, res) => {
+    const campgrounds = await Campground.find({});
+    res.send(campgrounds);
 })
 
-// creating products 
-
-// serve the form with this route
-app.get('/products/new', (req, res) => {
-	// render the form
+//show
+app.get("/campgrounds/:id", async (req, res) => {
+    const campground = await Campground.findById(req.params.id);
+    console.log(campground);
+    res.send(campground);
 })
 
-// route the form posts to
-app.post('/products', async (req, res) => {
-	const newProduct = new Product(req.body);
-	await newProduct.save();
-	res.redirect('/products');
+// create
+app.post("/campgrounds", async (req, res) => {
+    const campground = new Campground(req.body);
+    await campground.save();
+    res.send(campground);
 })
 
-app.put("/products/:id", async (req, res) => {
-	Product.findByIdAndUpdate(id, req.body, { runValidators: true });
+//update
+app.patch("/campgrounds/:id", async (req, res) => {
+    const campground = await Campground.findByIdAndUpdate(req.params.id, {...req.body}, {new : true})
+    res.send(campground);
 })
 
-app.delete("/products/:id", async (req, res) => {
-	const product = await Product.findByIdAndDelete(id);
-	console.log(product);
+//delete
+app.delete("/campgrounds/:id", async (req, res) => {
+    const campground = await Campground.findByIdAndDelete(req.params.id);
+    res.send(`${campground.title} was deleted!`);
 })
-
 
 app.listen(3000, () => {
-	console.log("Listening on port 3000");
-});
+    console.log("Listening on port 3000");
+})

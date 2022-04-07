@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-const Product = require("./models/product");
+const Campground = require("./models/campground");
 
 mongoose
-	.connect("mongodb://localhost:27017/farmStand", {
+	.connect("mongodb://localhost:27017/CampgroundApp", {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 	})
@@ -13,25 +13,28 @@ mongoose
 		console.log(err);
 	});
 
-const seedProducts = [
+const seedCampgrounds = [
     {
-        name: "Tomato",
-        price: 1.99,
-        category: "fruit"
+        title: "Sweetwater",
+        price: "$9/night",
+        description: "cool campground", 
+        location: "california"
     },
     {
-        name: "Banana",
-        price: 3.99,
-        category: "fruit"
+        title: "Some lake",
+        price: "$10/night",
+        description: "cool campground", 
+        location: "california"
     },
     {
-        name: "Celery",
-        price: 0.99,
-        category: "vegetable"
+        title: "Alpine pond",
+        price: "$11/night",
+        description: "cool campground", 
+        location: "california"
     },
 ];
 
-Product.insertMany(seedProducts)
+Campground.insertMany(seedCampgrounds)
 .then(res => {
     console.log(res);
 })
