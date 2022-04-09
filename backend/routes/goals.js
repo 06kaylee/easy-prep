@@ -1,24 +1,18 @@
 const express = require("express");
 const router = express.Router();
+const goalController = require("../controllers/goal-controller");
 
 // GET all goals
-router.get("/", (req, res) => {
-	res.send("All goals here");
-});
-
-// PATCH a goal by id
-router.patch("/:id", (req, res) => {
-	res.send(`Patching a goal with the id of ${req.params.id}`);
-});
-
-// DELETE a goal by id
-router.delete("/:id", (req, res) => {
-	res.send(`Deleting a goal with the id of ${req.params.id}`);
-});
+router.get("/", goalController.allGoals);
 
 // POST a new goal
-router.post("/", (req, res) => {
-	res.send("Creating a new goal");
-});
+router.post("/", goalController.createGoal);
+
+// PATCH a goal by id
+router.patch("/:id", goalController.updateGoal);
+
+// DELETE a goal by id
+router.delete("/:id", goalController.deleteGoal);
+
 
 module.exports = router;
