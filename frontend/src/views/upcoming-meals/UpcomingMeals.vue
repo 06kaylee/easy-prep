@@ -3,25 +3,13 @@
 		<div class="main-container">
 			<header>
 				<h2>Your Upcoming Meals</h2>
-				<a href="">
-					<font-awesome-icon :icon="['fas', 'pen']" />
-				</a>
 			</header>
 			<div class="meal-schedule">
-				<base-card
+				<upcoming-meal-item
 					v-for="upcomingMeal in upcomingMeals"
 					:key="upcomingMeal.dayOfWeek"
-				>
-					<h2>{{ upcomingMeal.dayOfWeek }}</h2>
-					<div
-						class="meal-container"
-						v-for="meal in upcomingMeal.meals"
-						:key="meal"
-					>
-						<p>{{ meal.item }}</p>
-						<p>{{ meal.calorieCount }}</p>
-					</div>
-				</base-card>
+					:dayOfWeek="upcomingMeal.dayOfWeek"
+				></upcoming-meal-item>
 			</div>
 		</div>
 	</dashboard-layout>
@@ -29,10 +17,12 @@
 
 <script>
 import DashboardLayout from "../../components/layout/DashboardLayout.vue";
+import UpcomingMealItem from "../../components/upcoming-meals/UpcomingMealItem.vue";
 
 export default {
 	components: {
 		DashboardLayout,
+		UpcomingMealItem
 	},
 	computed: {
 		upcomingMeals() {
@@ -56,37 +46,12 @@ export default {
 	justify-content: space-between;
 }
 
-.main-container .card {
-	margin: 0;
-}
-
-.fa-pen {
-	margin-right: 1.5rem;
-	color: black;
-}
-
-.fa-pen:hover {
-	color: grey;
-}
-
 .meal-schedule {
 	grid-column: 1 / 5;
 	margin-top: 2rem;
 	display: grid;
-	grid-gap: 2rem;
-}
-
-.meal-schedule .card {
-	display: grid;
-	grid-template-columns: repeat(4, 10rem);
-	grid-auto-flow: column;
-	overflow-x: auto;
-}
-
-.meal-schedule .card h2 {
-	text-align: center;
-	border-right: 2px solid black;
-	padding: 1rem;
+	grid-template-columns: repeat(3, 1fr);
+	row-gap: 3rem;
 }
 
 .meal-container {

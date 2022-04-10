@@ -10,6 +10,7 @@ import AddPersonalInformationPage from "../views/settings/AddPersonalInformation
 import FavoriteMeals from "../views/favorite-meals/FavoriteMeals.vue";
 import FavoriteMealsDetail from "../views/favorite-meals/FavoriteMealsDetail.vue";
 import UpcomingMeals from "../views/upcoming-meals/UpcomingMeals.vue";
+import UpcomingMealsDetail from "../views/upcoming-meals/UpcomingMealsDetail.vue";
 import UserBudget from "../views/budget/UserBudget.vue";
 import EditBudgetPage from "../views/budget/EditBudgetPage.vue";
 import UserGoals from "../views/goals/UserGoals.vue";
@@ -35,6 +36,7 @@ const router = createRouter({
 			props: true,
 		},
 		{ path: "/upcoming-meals", component: UpcomingMeals },
+		{ path: '/upcoming-meals/:dayOfWeek', component: UpcomingMealsDetail, props: true },
 		{ path: "/budget", component: UserBudget },
 		{ path: "/edit-budget/:id", component: EditBudgetPage, props: true },
 		{ path: "/goals", component: UserGoals },
