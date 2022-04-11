@@ -11,6 +11,8 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faX } from "@fortawesome/free-solid-svg-icons";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import { faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import BaseButton from "./components/ui/BaseButton.vue";
 import BaseCard from "./components/ui/BaseCard.vue";
@@ -29,7 +31,9 @@ library.add(
 	faHeart,
 	faHeartRegular,
 	faPlus,
-	faX
+	faX,
+	faAngleDown,
+	faAngleUp
 );
 
 app.component("font-awesome-icon", FontAwesomeIcon);

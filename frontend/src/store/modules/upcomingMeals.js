@@ -7,73 +7,64 @@ export default {
 					dayOfWeek: "Mon",
 					meals: [
 						{
+							id: "1",
 							item: "Eggs and Bacon",
 							calorieCount: 600,
-							img: 'sample-logo.jpg',
+							img: "sample-logo.jpg",
 							nutritionFacts: {
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
 								totalCarbs: 37,
-								protein: 3
+								protein: 3,
 							},
-							ingredients: [
-								'4 eggs',
-								'3 strips of bacon',
-								'1 pound of cheese'
-							],
+							ingredients: ["4 eggs", "3 strips of bacon", "1 pound of cheese"],
 							steps: [
-								'Crack the eggs',
-								'Cook the bacon at medium temperature',
-								'Once eggs are done, sprinkle cheese on top'
+								"Crack the eggs",
+								"Cook the bacon at medium temperature",
+								"Once eggs are done, sprinkle cheese on top",
 							],
-							recipeUrl: 'https://www.google.com'
+							recipeUrl: "https://www.google.com",
 						},
 						{
+							id: "2",
 							item: "Sandwich",
 							calorieCount: 500,
-							img: 'sample-logo.jpg',
+							img: "sample-logo.jpg",
 							nutritionFacts: {
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
 								totalCarbs: 37,
-								protein: 3
+								protein: 3,
 							},
-							ingredients: [
-								'4 eggs',
-								'3 strips of bacon',
-								'1 pound of cheese'
-							],
+							ingredients: ["4 eggs", "3 strips of bacon", "1 pound of cheese"],
 							steps: [
-								'Crack the eggs',
-								'Cook the bacon at medium temperature',
-								'Once eggs are done, sprinkle cheese on top'
+								"Crack the eggs",
+								"Cook the bacon at medium temperature",
+								"Once eggs are done, sprinkle cheese on top",
 							],
-							recipeUrl: 'https://www.google.com'
+							recipeUrl: "https://www.google.com",
 						},
 						{
+							id: "3",
 							item: "Steak and Potatoes",
 							calorieCount: 1000,
-							img: 'sample-logo.jpg',
+							img: "sample-logo.jpg",
 							nutritionFacts: {
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
 								totalCarbs: 37,
-								protein: 3
+								protein: 3,
 							},
-							ingredients: [
-								'4 eggs',
-								'3 strips of bacon',
-								'1 pound of cheese'
-							],
+							ingredients: ["4 eggs", "3 strips of bacon", "1 pound of cheese"],
 							steps: [
-								'Crack the eggs',
-								'Cook the bacon at medium temperature',
-								'Once eggs are done, sprinkle cheese on top'
+								"Crack the eggs",
+								"Cook the bacon at medium temperature",
+								"Once eggs are done, sprinkle cheese on top",
 							],
-							userInput: true
+							userInput: true,
 						},
 					],
 				},
@@ -81,73 +72,64 @@ export default {
 					dayOfWeek: "Tues",
 					meals: [
 						{
+							id: "4",
 							item: "Eggs and Bacon",
 							calorieCount: 600,
-							img: 'sample-logo.jpg',
+							img: "sample-logo.jpg",
 							nutritionFacts: {
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
 								totalCarbs: 37,
-								protein: 3
+								protein: 3,
 							},
-							ingredients: [
-								'4 eggs',
-								'3 strips of bacon',
-								'1 pound of cheese'
-							],
+							ingredients: ["4 eggs", "3 strips of bacon", "1 pound of cheese"],
 							steps: [
-								'Crack the eggs',
-								'Cook the bacon at medium temperature',
-								'Once eggs are done, sprinkle cheese on top'
+								"Crack the eggs",
+								"Cook the bacon at medium temperature",
+								"Once eggs are done, sprinkle cheese on top",
 							],
-							userInput: true
+							userInput: true,
 						},
 						{
+							id: "5",
 							item: "Sandwich",
 							calorieCount: 500,
-							img: 'sample-logo.jpg',
+							img: "sample-logo.jpg",
 							nutritionFacts: {
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
 								totalCarbs: 37,
-								protein: 3
+								protein: 3,
 							},
-							ingredients: [
-								'4 eggs',
-								'3 strips of bacon',
-								'1 pound of cheese'
-							],
+							ingredients: ["4 eggs", "3 strips of bacon", "1 pound of cheese"],
 							steps: [
-								'Crack the eggs',
-								'Cook the bacon at medium temperature',
-								'Once eggs are done, sprinkle cheese on top'
+								"Crack the eggs",
+								"Cook the bacon at medium temperature",
+								"Once eggs are done, sprinkle cheese on top",
 							],
-							recipeUrl: 'https://www.google.com'
+							recipeUrl: "https://www.google.com",
 						},
 						{
+							id: "6",
 							item: "Steak and Potatoes",
 							calorieCount: 1000,
-							img: 'sample-logo.jpg',
+							img: "sample-logo.jpg",
 							nutritionFacts: {
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
 								totalCarbs: 37,
-								protein: 3
+								protein: 3,
 							},
-							ingredients: [
-								'4 eggs',
-								'3 strips of bacon',
-								'1 pound of cheese'
-							],
+							ingredients: ["4 eggs", "3 strips of bacon", "1 pound of cheese"],
 							steps: [
-								'Crack the eggs',
-								'Cook the bacon at medium temperature',
-								'Once eggs are done, sprinkle cheese on top'
+								"Crack the eggs",
+								"Cook the bacon at medium temperature",
+								"Once eggs are done, sprinkle cheese on top",
 							],
-							recipeUrl: 'https://www.google.com'
+							recipeUrl: "https://www.google.com",
 						},
 					],
 				},
@@ -155,50 +137,44 @@ export default {
 					dayOfWeek: "Wed",
 					meals: [
 						{
+							id: "7",
 							item: "Eggs and Bacon",
 							calorieCount: 600,
-							img: 'sample-logo.jpg',
+							img: "sample-logo.jpg",
 							nutritionFacts: {
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
 								totalCarbs: 37,
-								protein: 3
+								protein: 3,
 							},
-							ingredients: [
-								'4 eggs',
-								'3 strips of bacon',
-								'1 pound of cheese'
-							],
+							ingredients: ["4 eggs", "3 strips of bacon", "1 pound of cheese"],
 							steps: [
-								'Crack the eggs',
-								'Cook the bacon at medium temperature',
-								'Once eggs are done, sprinkle cheese on top'
+								"Crack the eggs",
+								"Cook the bacon at medium temperature",
+								"Once eggs are done, sprinkle cheese on top",
 							],
-							userInput: true
+							userInput: true,
 						},
 						{
+							id: "8",
 							item: "Sandwich",
 							calorieCount: 500,
-							img: 'sample-logo.jpg',
+							img: "sample-logo.jpg",
 							nutritionFacts: {
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
 								totalCarbs: 37,
-								protein: 3
+								protein: 3,
 							},
-							ingredients: [
-								'4 eggs',
-								'3 strips of bacon',
-								'1 pound of cheese'
-							],
+							ingredients: ["4 eggs", "3 strips of bacon", "1 pound of cheese"],
 							steps: [
-								'Crack the eggs',
-								'Cook the bacon at medium temperature',
-								'Once eggs are done, sprinkle cheese on top'
+								"Crack the eggs",
+								"Cook the bacon at medium temperature",
+								"Once eggs are done, sprinkle cheese on top",
 							],
-							recipeUrl: 'https://www.google.com'
+							recipeUrl: "https://www.google.com",
 						},
 					],
 				},
@@ -206,50 +182,44 @@ export default {
 					dayOfWeek: "Thurs",
 					meals: [
 						{
+							id: "9",
 							item: "Eggs and Bacon",
 							calorieCount: 600,
-							img: 'sample-logo.jpg',
+							img: "sample-logo.jpg",
 							nutritionFacts: {
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
 								totalCarbs: 37,
-								protein: 3
+								protein: 3,
 							},
-							ingredients: [
-								'4 eggs',
-								'3 strips of bacon',
-								'1 pound of cheese'
-							],
+							ingredients: ["4 eggs", "3 strips of bacon", "1 pound of cheese"],
 							steps: [
-								'Crack the eggs',
-								'Cook the bacon at medium temperature',
-								'Once eggs are done, sprinkle cheese on top'
+								"Crack the eggs",
+								"Cook the bacon at medium temperature",
+								"Once eggs are done, sprinkle cheese on top",
 							],
-							userInput: true
+							userInput: true,
 						},
 						{
+							id: "10",
 							item: "Sandwich",
 							calorieCount: 500,
-							img: 'sample-logo.jpg',
+							img: "sample-logo.jpg",
 							nutritionFacts: {
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
 								totalCarbs: 37,
-								protein: 3
+								protein: 3,
 							},
-							ingredients: [
-								'4 eggs',
-								'3 strips of bacon',
-								'1 pound of cheese'
-							],
+							ingredients: ["4 eggs", "3 strips of bacon", "1 pound of cheese"],
 							steps: [
-								'Crack the eggs',
-								'Cook the bacon at medium temperature',
-								'Once eggs are done, sprinkle cheese on top'
+								"Crack the eggs",
+								"Cook the bacon at medium temperature",
+								"Once eggs are done, sprinkle cheese on top",
 							],
-							recipeUrl: 'https://www.google.com'
+							recipeUrl: "https://www.google.com",
 						},
 					],
 				},
@@ -257,50 +227,44 @@ export default {
 					dayOfWeek: "Fri",
 					meals: [
 						{
+							id: "11",
 							item: "Eggs and Bacon",
 							calorieCount: 600,
-							img: 'sample-logo.jpg',
+							img: "sample-logo.jpg",
 							nutritionFacts: {
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
 								totalCarbs: 37,
-								protein: 3
+								protein: 3,
 							},
-							ingredients: [
-								'4 eggs',
-								'3 strips of bacon',
-								'1 pound of cheese'
-							],
+							ingredients: ["4 eggs", "3 strips of bacon", "1 pound of cheese"],
 							steps: [
-								'Crack the eggs',
-								'Cook the bacon at medium temperature',
-								'Once eggs are done, sprinkle cheese on top'
+								"Crack the eggs",
+								"Cook the bacon at medium temperature",
+								"Once eggs are done, sprinkle cheese on top",
 							],
-							recipeUrl: 'https://www.google.com'
+							recipeUrl: "https://www.google.com",
 						},
 						{
+							id: "12",
 							item: "Sandwich",
 							calorieCount: 500,
-							img: 'sample-logo.jpg',
+							img: "sample-logo.jpg",
 							nutritionFacts: {
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
 								totalCarbs: 37,
-								protein: 3
+								protein: 3,
 							},
-							ingredients: [
-								'4 eggs',
-								'3 strips of bacon',
-								'1 pound of cheese'
-							],
+							ingredients: ["4 eggs", "3 strips of bacon", "1 pound of cheese"],
 							steps: [
-								'Crack the eggs',
-								'Cook the bacon at medium temperature',
-								'Once eggs are done, sprinkle cheese on top'
+								"Crack the eggs",
+								"Cook the bacon at medium temperature",
+								"Once eggs are done, sprinkle cheese on top",
 							],
-							recipeUrl: 'https://www.google.com'
+							recipeUrl: "https://www.google.com",
 						},
 					],
 				},
@@ -308,73 +272,64 @@ export default {
 					dayOfWeek: "Sat",
 					meals: [
 						{
+							id: "13",
 							item: "Eggs and Bacon",
 							calorieCount: 600,
-							img: 'sample-logo.jpg',
+							img: "sample-logo.jpg",
 							nutritionFacts: {
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
 								totalCarbs: 37,
-								protein: 3
+								protein: 3,
 							},
-							ingredients: [
-								'4 eggs',
-								'3 strips of bacon',
-								'1 pound of cheese'
-							],
+							ingredients: ["4 eggs", "3 strips of bacon", "1 pound of cheese"],
 							steps: [
-								'Crack the eggs',
-								'Cook the bacon at medium temperature',
-								'Once eggs are done, sprinkle cheese on top'
+								"Crack the eggs",
+								"Cook the bacon at medium temperature",
+								"Once eggs are done, sprinkle cheese on top",
 							],
-							recipeUrl: 'https://www.google.com'
+							recipeUrl: "https://www.google.com",
 						},
 						{
+							id: "14",
 							item: "Sandwich",
 							calorieCount: 500,
-							img: 'sample-logo.jpg',
+							img: "sample-logo.jpg",
 							nutritionFacts: {
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
 								totalCarbs: 37,
-								protein: 3
+								protein: 3,
 							},
-							ingredients: [
-								'4 eggs',
-								'3 strips of bacon',
-								'1 pound of cheese'
-							],
+							ingredients: ["4 eggs", "3 strips of bacon", "1 pound of cheese"],
 							steps: [
-								'Crack the eggs',
-								'Cook the bacon at medium temperature',
-								'Once eggs are done, sprinkle cheese on top'
+								"Crack the eggs",
+								"Cook the bacon at medium temperature",
+								"Once eggs are done, sprinkle cheese on top",
 							],
-							recipeUrl: 'https://www.google.com'
+							recipeUrl: "https://www.google.com",
 						},
 						{
+							id: "15",
 							item: "Eggs and Bacon",
 							calorieCount: 600,
-							img: 'sample-logo.jpg',
+							img: "sample-logo.jpg",
 							nutritionFacts: {
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
 								totalCarbs: 37,
-								protein: 3
+								protein: 3,
 							},
-							ingredients: [
-								'4 eggs',
-								'3 strips of bacon',
-								'1 pound of cheese'
-							],
+							ingredients: ["4 eggs", "3 strips of bacon", "1 pound of cheese"],
 							steps: [
-								'Crack the eggs',
-								'Cook the bacon at medium temperature',
-								'Once eggs are done, sprinkle cheese on top'
+								"Crack the eggs",
+								"Cook the bacon at medium temperature",
+								"Once eggs are done, sprinkle cheese on top",
 							],
-							userInput: true
+							userInput: true,
 						},
 					],
 				},
@@ -382,73 +337,64 @@ export default {
 					dayOfWeek: "Sun",
 					meals: [
 						{
+							id: "16",
 							item: "Eggs and Bacon",
 							calorieCount: 600,
-							img: 'sample-logo.jpg',
+							img: "sample-logo.jpg",
 							nutritionFacts: {
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
 								totalCarbs: 37,
-								protein: 3
+								protein: 3,
 							},
-							ingredients: [
-								'4 eggs',
-								'3 strips of bacon',
-								'1 pound of cheese'
-							],
+							ingredients: ["4 eggs", "3 strips of bacon", "1 pound of cheese"],
 							steps: [
-								'Crack the eggs',
-								'Cook the bacon at medium temperature',
-								'Once eggs are done, sprinkle cheese on top'
+								"Crack the eggs",
+								"Cook the bacon at medium temperature",
+								"Once eggs are done, sprinkle cheese on top",
 							],
-							recipeUrl: 'https://www.google.com'
+							recipeUrl: "https://www.google.com",
 						},
 						{
+							id: "17",
 							item: "Sandwich",
 							calorieCount: 500,
-							img: 'sample-logo.jpg',
+							img: "sample-logo.jpg",
 							nutritionFacts: {
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
 								totalCarbs: 37,
-								protein: 3
+								protein: 3,
 							},
-							ingredients: [
-								'4 eggs',
-								'3 strips of bacon',
-								'1 pound of cheese'
-							],
+							ingredients: ["4 eggs", "3 strips of bacon", "1 pound of cheese"],
 							steps: [
-								'Crack the eggs',
-								'Cook the bacon at medium temperature',
-								'Once eggs are done, sprinkle cheese on top'
+								"Crack the eggs",
+								"Cook the bacon at medium temperature",
+								"Once eggs are done, sprinkle cheese on top",
 							],
-							recipeUrl: 'https://www.google.com'
+							recipeUrl: "https://www.google.com",
 						},
 						{
+							id: "18",
 							item: "Sandwich",
 							calorieCount: 500,
-							img: 'sample-logo.jpg',
+							img: "sample-logo.jpg",
 							nutritionFacts: {
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
 								totalCarbs: 37,
-								protein: 3
+								protein: 3,
 							},
-							ingredients: [
-								'4 eggs',
-								'3 strips of bacon',
-								'1 pound of cheese'
-							],
+							ingredients: ["4 eggs", "3 strips of bacon", "1 pound of cheese"],
 							steps: [
-								'Crack the eggs',
-								'Cook the bacon at medium temperature',
-								'Once eggs are done, sprinkle cheese on top'
+								"Crack the eggs",
+								"Cook the bacon at medium temperature",
+								"Once eggs are done, sprinkle cheese on top",
 							],
-							recipeUrl: 'https://www.google.com'
+							recipeUrl: "https://www.google.com",
 						},
 					],
 				},
