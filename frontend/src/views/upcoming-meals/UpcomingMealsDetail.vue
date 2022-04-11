@@ -18,22 +18,22 @@
 
                 <p>{{ upcomingMeal.calorieCount }}</p>
 
-                <h4>Nutrition Facts</h4>
-                <ul>
+                <button @click="setCollapsible('nutrition facts')">Nutrition Facts</button>
+                <ul v-if="!isNutritionFactsCollapsed">
                     <li v-for="nutritionFact in currentMeal.nutritionFacts" :key="nutritionFact">
                         {{ nutritionFact }}
                     </li>
                 </ul>
 
-                <h4>Ingredient list</h4>
-                <ul>
+                <button @click="setCollapsible('ingredient list')">Ingredient List</button>
+                <ul v-if="!isIngredientListCollapsed">
                     <li v-for="ingredient in currentMeal.ingredients" :key="ingredient">
                         {{ ingredient }}
                     </li>
                 </ul>
 
-                <h4>Steps</h4>
-                <ol>
+                <button @click="setCollapsible('steps')">Steps</button>
+                <ol v-if="!isStepsCollapsed">
                     <li v-for="step in currentMeal.steps" :key="step">
                         {{ step }}
                     </li>
@@ -54,10 +54,17 @@ export default {
             meals: null,
             currentMeal: null,
             currentIndex: 0,
+            isNutritionFactsCollapsed: true,
+            isIngredientListCollapsed: true,
+            isStepsCollapsed: true
         }
     },
     methods: {
         nextMeal() {
+            this.isNutritionFactsCollapsed = true;
+            this.isIngredientListCollapsed = true;
+            this.isStepsCollapsed = true;
+            
             if(this.currentIndex + 1 === this.meals.length) {
                 this.currentIndex = 0;
             }
@@ -65,6 +72,21 @@ export default {
                 this.currentIndex += 1;
             }
             this.currentMeal = this.meals[this.currentIndex];
+        },
+        setCollapsible(sectionName) {
+            switch(sectionName) {
+                case 'nutrition facts':
+                    this.isNutritionFactsCollapsed = !this.isNutritionFactsCollapsed;
+                    break;
+                case 'ingredient list':
+                    this.isIngredientListCollapsed = !this.isIngredientListCollapsed;
+                    break;
+                case 'steps':
+                    this.isStepsCollapsed = !this.isStepsCollapsed;
+                    break;
+                default: 
+                    console.log("Error, there is no section to collapse");
+            }
         }
     },
     computed: {
@@ -84,6 +106,17 @@ export default {
 </script>
 
 <style scoped>
+.collapsible {
+    background-color: lightslategray;
+    color: white;
+    cursor: pointer;
+}
+
+.content {
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
 #app .main-container {
     border-radius: 12px;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
