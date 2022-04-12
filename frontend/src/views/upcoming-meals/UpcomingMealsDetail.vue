@@ -1,7 +1,9 @@
 <template>
 	<base-card class="main-container">
 		<h2>{{ upcomingMeal.dayOfWeek }}</h2>
-		<base-button link to="/upcoming-meals" class="all-meals-btn">Back</base-button>
+		<base-button link to="/upcoming-meals" class="all-meals-btn"
+			>Back</base-button
+		>
 		<div class="meal-container" v-if="currentMeal">
 			<base-card>
 				<div class="icons">
@@ -12,6 +14,7 @@
 				</div>
 
 				<h3>{{ currentMeal.item }}</h3>
+				<h4 class="calorie-count">{{ currentMeal.calorieCount }} calories</h4>
 
 				<div class="img-container">
 					<img :src="require('../../assets/' + mealImgLink)" alt="" />
@@ -84,7 +87,9 @@
 							{{ note }}
 						</li>
 					</ul>
-					<p v-else-if="!isNotesCollapsed && !currentMeal.notes">No notes yet!</p>
+					<p v-else-if="!isNotesCollapsed && !currentMeal.notes">
+						No notes yet!
+					</p>
 				</div>
 
 				<div class="created-by-container">
@@ -113,7 +118,7 @@ export default {
 			isNutritionFactsCollapsed: true,
 			isIngredientListCollapsed: true,
 			isStepsCollapsed: true,
-			isNotesCollapsed: true
+			isNotesCollapsed: true,
 		};
 	},
 	methods: {
@@ -121,7 +126,7 @@ export default {
 			this.isNutritionFactsCollapsed = true;
 			this.isIngredientListCollapsed = true;
 			this.isStepsCollapsed = true;
-			this.isNotesCollapsed = true
+			this.isNotesCollapsed = true;
 
 			if (this.currentIndex + 1 === this.meals.length) {
 				this.currentIndex = 0;
@@ -210,6 +215,12 @@ export default {
 .meal-container > button {
 	justify-self: center;
 	align-self: center;
+}
+
+.calorie-count {
+	text-align: center;
+	font-weight: 400;
+	font-size: 0.85rem;
 }
 
 .icons {

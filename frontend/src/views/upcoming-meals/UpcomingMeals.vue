@@ -5,11 +5,11 @@
 				<h2>Your Upcoming Meals</h2>
 			</header>
 			<div class="meal-schedule">
-				<upcoming-meal-item
+				<upcoming-meal-day
 					v-for="upcomingMeal in upcomingMeals"
 					:key="upcomingMeal.dayOfWeek"
 					:dayOfWeek="upcomingMeal.dayOfWeek"
-				></upcoming-meal-item>
+				></upcoming-meal-day>
 			</div>
 		</div>
 	</dashboard-layout>
@@ -17,12 +17,12 @@
 
 <script>
 import DashboardLayout from "../../components/layout/DashboardLayout.vue";
-import UpcomingMealItem from "../../components/upcoming-meals/UpcomingMealItem.vue";
+import UpcomingMealDay from "../../components/upcoming-meals/UpcomingMealDay.vue";
 
 export default {
 	components: {
 		DashboardLayout,
-		UpcomingMealItem
+		UpcomingMealDay,
 	},
 	computed: {
 		upcomingMeals() {
