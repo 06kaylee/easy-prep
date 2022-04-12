@@ -2,61 +2,50 @@
 	<form @submit.prevent="submitForm">
 		<div class="form-control">
 			<label for="item" id="item-label">Item</label>
-			<input type="text" id="item" v-model="selectedMeal.item" />
+			<input type="text" id="item" v-model="selectedMeal.item" :readonly="selectedMeal.recipeUrl" />
 		</div>
 
 		<!--
 			if user created recipe: name, image, nutrition facts, ingredient list, steps, notes
 			if user got recipe from someone else: notes
 		-->
-
-		<!-- <div class="form-control">
-			<h3>Category</h3>
-			<input
-				type="radio"
-				id="fitness"
-				name="category"
-				value="fitness"
-				v-model="selectedGoal.category"
-			/>
-			<label for="fitness">Fitness</label>
-
-			<input
-				type="radio"
-				id="nutrition"
-				name="category"
-				value="nutrition"
-				v-model="selectedGoal.category"
-			/>
-			<label for="nutrition">Nutrition</label>
-
-			<input
-				type="radio"
-				id="other"
-				name="category"
-				value="other"
-				v-model="selectedGoal.category"
-			/>
-			<label for="other">Other</label>
+		<h3>Image</h3>
+		<div class="form-control">
+			<input type="file" id="item-image" name="item-image" accept="image/png, image/jpeg, image/jpg" :readonly="selectedMeal.recipeUrl">
 		</div>
 
+		<h3>Nutrition Facts</h3>
 		<div class="form-control">
-			<label for="start-date" id="start-date-label">Start Date</label>
-			<input
-				type="date"
-				id="start-date"
-				name="start-date"
-				v-model="selectedGoal.startDate"
-			/>
+			<label for="total-fat">Total Fat</label>
+			<input type="text" id="total-fat" name="total-fat" v-model="selectedMeal.nutritionFacts.totalFat" :readonly="selectedMeal.recipeUrl">
 
-			<label for="end-date" id="end-date-label">End Date</label>
-			<input
-				type="date"
-				id="end-date"
-				name="end-date"
-				v-model="selectedGoal.endDate"
-			/>
-		</div> -->
+			<label for="cholesterol">Cholesterol</label>
+			<input type="text" id="cholesterol" name="cholesterol" v-model="selectedMeal.nutritionFacts.cholesterol" :readonly="selectedMeal.recipeUrl">
+
+			<label for="sodium">Sodium</label>
+			<input type="text" id="sodium" name="sodium" v-model="selectedMeal.nutritionFacts.sodium" :readonly="selectedMeal.recipeUrl">
+
+			<label for="total-carbs">Total Carbohydrates</label>
+			<input type="text" id="total-carbs" name="total-carbs" v-model="selectedMeal.nutritionFacts.totalCarbs" :readonly="selectedMeal.recipeUrl">
+
+			<label for="protein">Protein</label>
+			<input type="text" id="protein" name="protein" v-model="selectedMeal.nutritionFacts.protein" :readonly="selectedMeal.recipeUrl">
+		</div>
+
+		<h3>Ingredients</h3>
+		<div class="form-control">
+			<input type="text" v-for="ingredient in selectedMeal.ingredients" :key="ingredient" :value="ingredient" :readonly="selectedMeal.recipeUrl">
+		</div>
+
+		<h3>Steps</h3>
+		<div class="form-control">
+			<textarea v-for="step in selectedMeal.steps" :key="step" :value="step" :readonly="selectedMeal.recipeUrl"></textarea>
+		</div>
+
+		<h3 v-if="selectedMeal.notes">Notes</h3>
+		<div class="form-control" v-if="selectedMeal.notes">
+			<textarea v-for="note in selectedMeal.notes" :key="note" :value="note"></textarea>
+		</div>
 
 		<input type="submit" />
 	</form>

@@ -1,7 +1,7 @@
 <template>
 	<base-card class="main-container">
 		<h2>{{ upcomingMeal.dayOfWeek }}</h2>
-		<router-link to="/upcoming-meals"> Back to all upcoming meals </router-link>
+		<base-button link to="/upcoming-meals" class="all-meals-btn">Back</base-button>
 		<div class="meal-container" v-if="currentMeal">
 			<base-card>
 				<div class="icons">
@@ -70,6 +70,23 @@
 					</ol>
 				</div>
 
+				<div class="collapsible-container">
+					<button @click="setCollapsible('notes')">
+						Notes
+						<font-awesome-icon
+							v-if="isNotesCollapsed"
+							:icon="['fas', 'angle-down']"
+						/>
+						<font-awesome-icon v-else :icon="['fas', 'angle-up']" />
+					</button>
+					<ul v-if="!isNotesCollapsed && currentMeal.notes">
+						<li v-for="note in currentMeal.notes" :key="note">
+							{{ note }}
+						</li>
+					</ul>
+					<p v-else-if="!isNotesCollapsed && !currentMeal.notes">No notes yet!</p>
+				</div>
+
 				<div class="created-by-container">
 					<p v-if="currentMeal.recipeUrl">
 						Recipe from:
@@ -96,6 +113,7 @@ export default {
 			isNutritionFactsCollapsed: true,
 			isIngredientListCollapsed: true,
 			isStepsCollapsed: true,
+			isNotesCollapsed: true
 		};
 	},
 	methods: {
@@ -103,6 +121,7 @@ export default {
 			this.isNutritionFactsCollapsed = true;
 			this.isIngredientListCollapsed = true;
 			this.isStepsCollapsed = true;
+			this.isNotesCollapsed = true
 
 			if (this.currentIndex + 1 === this.meals.length) {
 				this.currentIndex = 0;
@@ -121,6 +140,9 @@ export default {
 					break;
 				case "steps":
 					this.isStepsCollapsed = !this.isStepsCollapsed;
+					break;
+				case "notes":
+					this.isNotesCollapsed = !this.isNotesCollapsed;
 					break;
 				default:
 					console.log("Error, there is no section to collapse");
@@ -161,6 +183,11 @@ export default {
 	grid-gap: 1rem;
 }
 
+.all-meals-btn {
+	width: fit-content;
+	height: fit-content;
+}
+
 .main-container h2 {
 	grid-column: 1 / 4;
 	text-align: center;
@@ -199,6 +226,10 @@ export default {
 .fa-x:hover {
 	opacity: 1;
 	transition: 0.4s;
+}
+
+.fa-pen {
+	color: black;
 }
 
 .main-container .card h3 {
@@ -244,5 +275,12 @@ ul styles for nutrition facts and ingredient list
 */
 .collapsible-container ul {
 	margin-left: 2rem;
+}
+
+/*
+p styles for notes 
+*/
+.collapsible-container p {
+	margin-left: 1rem;
 }
 </style>
