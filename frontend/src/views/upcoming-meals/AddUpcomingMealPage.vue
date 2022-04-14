@@ -1,5 +1,5 @@
 <template>
-	<div class="edit-container">
+	<div class>
 		<div class="back-btn-container">
 			<base-button class="back-btn" link :to="allMealsLink"
 				>Back to all meals</base-button

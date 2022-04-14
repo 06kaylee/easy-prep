@@ -9,9 +9,9 @@ export default {
 						{
 							id: "1",
 							item: "Eggs and Bacon",
-							calorieCount: 600,
 							img: "sample-logo.jpg",
 							nutritionFacts: {
+								calories: 600,
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
@@ -30,9 +30,9 @@ export default {
 						{
 							id: "2",
 							item: "Sandwich",
-							calorieCount: 500,
 							img: "sample-logo.jpg",
 							nutritionFacts: {
+								calories: 500,
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
@@ -50,9 +50,9 @@ export default {
 						{
 							id: "3",
 							item: "Steak and Potatoes",
-							calorieCount: 1000,
 							img: "sample-logo.jpg",
 							nutritionFacts: {
+								calories: 1000,
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
@@ -76,9 +76,9 @@ export default {
 						{
 							id: "4",
 							item: "Eggs and Bacon",
-							calorieCount: 600,
 							img: "sample-logo.jpg",
 							nutritionFacts: {
+								calories: 600,
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
@@ -97,9 +97,9 @@ export default {
 						{
 							id: "5",
 							item: "Sandwich",
-							calorieCount: 500,
 							img: "sample-logo.jpg",
 							nutritionFacts: {
+								calories: 500,
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
@@ -117,9 +117,9 @@ export default {
 						{
 							id: "6",
 							item: "Steak and Potatoes",
-							calorieCount: 1000,
 							img: "sample-logo.jpg",
 							nutritionFacts: {
+								calories: 1000,
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
@@ -143,9 +143,9 @@ export default {
 						{
 							id: "7",
 							item: "Eggs and Bacon",
-							calorieCount: 600,
 							img: "sample-logo.jpg",
 							nutritionFacts: {
+								calories: 600,
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
@@ -163,9 +163,9 @@ export default {
 						{
 							id: "8",
 							item: "Sandwich",
-							calorieCount: 500,
 							img: "sample-logo.jpg",
 							nutritionFacts: {
+								calories: 500,
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
@@ -189,9 +189,9 @@ export default {
 						{
 							id: "9",
 							item: "Eggs and Bacon",
-							calorieCount: 600,
 							img: "sample-logo.jpg",
 							nutritionFacts: {
+								calories: 600,
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
@@ -209,9 +209,9 @@ export default {
 						{
 							id: "10",
 							item: "Sandwich",
-							calorieCount: 500,
 							img: "sample-logo.jpg",
 							nutritionFacts: {
+								calories: 500,
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
@@ -235,9 +235,9 @@ export default {
 						{
 							id: "11",
 							item: "Eggs and Bacon",
-							calorieCount: 600,
 							img: "sample-logo.jpg",
 							nutritionFacts: {
+								calories: 600,
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
@@ -256,9 +256,9 @@ export default {
 						{
 							id: "12",
 							item: "Sandwich",
-							calorieCount: 500,
 							img: "sample-logo.jpg",
 							nutritionFacts: {
+								calories: 500,
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
@@ -281,9 +281,9 @@ export default {
 						{
 							id: "13",
 							item: "Eggs and Bacon",
-							calorieCount: 600,
 							img: "sample-logo.jpg",
 							nutritionFacts: {
+								calories: 600,
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
@@ -302,9 +302,9 @@ export default {
 						{
 							id: "14",
 							item: "Sandwich",
-							calorieCount: 500,
 							img: "sample-logo.jpg",
 							nutritionFacts: {
+								calories: 500,
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
@@ -322,9 +322,9 @@ export default {
 						{
 							id: "15",
 							item: "Eggs and Bacon",
-							calorieCount: 600,
 							img: "sample-logo.jpg",
 							nutritionFacts: {
+								calories: 600,
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
@@ -348,9 +348,9 @@ export default {
 						{
 							id: "16",
 							item: "Eggs and Bacon",
-							calorieCount: 600,
 							img: "sample-logo.jpg",
 							nutritionFacts: {
+								calories: 600,
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
@@ -368,9 +368,9 @@ export default {
 						{
 							id: "17",
 							item: "Sandwich",
-							calorieCount: 500,
 							img: "sample-logo.jpg",
 							nutritionFacts: {
+								calories: 500,
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
@@ -389,9 +389,9 @@ export default {
 						{
 							id: "18",
 							item: "Sandwich",
-							calorieCount: 500,
 							img: "sample-logo.jpg",
 							nutritionFacts: {
+								calories: 500,
 								totalFat: 8,
 								cholesterol: 0,
 								sodium: 160,
@@ -411,8 +411,27 @@ export default {
 			],
 		};
 	},
-	mutations: {},
-	actions: {},
+	mutations: {
+		addMeal(state, payload) {
+			// find correct day
+			const mealsForDay = state.upcomingMeals.find(meals => meals.dayOfWeek === payload.dayOfWeek).meals;
+
+			const mealsForDayIndex = state.upcomingMeals.findIndex(meals => meals.dayOfWeek === payload.dayOfWeek);
+
+			console.log(mealsForDay, mealsForDayIndex);
+
+			// push meal to meals array
+			mealsForDay.push(payload.newMeal);
+
+			// set state to updated meals array
+			state.upcomingMeals[mealsForDayIndex].meals = mealsForDay;
+		}
+	},
+	actions: {
+		addMeal(context, payload) {
+			context.commit('addMeal', payload);
+		}
+	},
 	getters: {
 		upcomingMeals(state) {
 			return state.upcomingMeals;

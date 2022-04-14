@@ -21,6 +21,14 @@
 		<!-- Nutrition Facts -->
 		<h3>Nutrition Facts</h3>
 		<div class="form-control nutrition-facts">
+			<label for="calories">Calories</label>
+			<input
+				type="text"
+				id="calories"
+				name="calories"
+				v-model="nutritionFacts.calories"
+			/>
+
 			<label for="total-fat">Total Fat(g)</label>
 			<input
 				type="text"
@@ -64,33 +72,46 @@
 
 		<!-- Ingredients -->
 		<h3>Ingredients</h3>
-		<div class="form-control ingredients">
-			<input type="text" @change="setIngredient" />
-			<button>Add ingredient</button>
+		<div class="form-control ingredients" v-for="(ingredient, index) in ingredients" :key="index">
+			<input type="text" v-model="ingredients[index]" />
+			<a @click="addField(ingredients)">
+				<font-awesome-icon :icon="['fas', 'plus']" />
+			</a>
+			<a @click="removeField(index, ingredients)">
+				<font-awesome-icon :icon="['fas', 'minus']" />
+			</a>
 		</div>
 
 		<!-- Steps -->
 		<h3>Steps</h3>
-		<div class="form-control steps">
+		<div class="form-control steps" v-for="(step, index) in steps" :key="index">
 			<textarea
-				name="steps"
-				id="steps"
-				@change="setStep"
-				cols="30"
-				rows="10"
+				v-model="steps[index]"
+				cols="10"
+				rows="5"
 			></textarea>
+			<a @click="addField(steps)">
+				<font-awesome-icon :icon="['fas', 'plus']" />
+			</a>
+			<a @click="removeField(index, steps)">
+				<font-awesome-icon :icon="['fas', 'minus']" />
+			</a>
 		</div>
 
 		<!-- Notes -->
 		<h3>Notes</h3>
-		<div class="form-control">
+		<div class="form-control notes" v-for="(note, index) in notes" :key="index">
 			<textarea
-				name="notes"
-				id="notes"
-				@change="setNote"
+				v-model="notes[index]"
 				cols="30"
 				rows="10"
 			></textarea>
+			<a @click="addField(notes)">
+				<font-awesome-icon :icon="['fas', 'plus']" />
+			</a>
+			<a @click="removeField(index, notes)">
+				<font-awesome-icon :icon="['fas', 'minus']" />
+			</a>
 		</div>
 
 		<input type="submit" />
@@ -102,34 +123,46 @@ export default {
 	data() {
 		return {
 			itemName: "",
-			calorieCount: null,
 			img: "",
 			nutritionFacts: {
+				calories: "",
 				totalFat: "",
 				cholesterol: "",
 				sodium: "",
 				totalCarbs: "",
 				protein: "",
 			},
-			ingredients: [],
-			steps: [],
-			notes: [],
+			ingredients: [""],
+			steps: [""],
+			notes: [""],
 			userInput: true,
 		};
 	},
 	methods: {
-		setIngredient(event) {
-			const newIngredient = event.target.value;
-			this.ingredients.push(newIngredient);
+		addField(fieldType) {
+			fieldType.push("");
+			console.log(fieldType);
 		},
-		setStep(event) {
-			const newStep = event.target.value;
-			this.steps.push(newStep);
+		removeField(index, fieldType) {
+			fieldType.splice(index, 1);
+			console.log(fieldType);
 		},
-		setNote(event) {
-			const newNote = event.target.value;
-			this.notes.push(newNote);
-		},
+		submitForm() {
+			const dayOfWeek = this.$route.params.dayOfWeek;
+			const newMeal = {
+				id: '19',
+				item: this.itemName,
+				img: require('../../assets/' + 'sample-logo.jpg'),
+				nutritionFacts: this.nutritionFacts,
+				ingredients: this.ingredients,
+				steps: this.steps,
+				notes: this.notes,
+				userInput: this.userInput
+			}
+
+			this.$store.dispatch('upcomingMeals/addMeal', { dayOfWeek, newMeal });
+			this.$router.replace(`/upcoming-meals/${dayOfWeek}/meals`);
+		}
 	},
 };
 </script>
@@ -169,6 +202,11 @@ h3 {
 .steps,
 .notes {
 	display: grid;
+	grid-template-columns: repeat(3, auto);
+}
+
+.ingredients {
+	grid-template-columns: repeat(3, auto);
 }
 
 .form-control:nth-of-type(2) label {
@@ -183,7 +221,40 @@ input {
 	margin-bottom: 0.5rem;
 }
 
+.ingredients input,
+textarea {
+	width: 11rem;
+}
+
 textarea {
 	margin-bottom: 0.5rem;
+}
+
+a .fa-plus {
+	color: #70a86d;
+}
+
+a .fa-plus:hover {
+	color: #8ed48a;
+	transition: 0.5s;
+}
+
+a .fa-minus {
+	color: #fa0000;
+}
+
+a .fa-minus:hover {
+	color: #fc8181;
+	transition: 0.5s;
+}
+
+a {
+	display: block;
+	width: fit-content;
+	height: fit-content;
+}
+
+a:hover {
+	cursor: pointer;
 }
 </style>

@@ -1,5 +1,4 @@
 <template>
-	<!-- add calorie count to edit form -->
 	<base-card class="main-container">
 		<h2>{{ upcomingMeal.dayOfWeek }}</h2>
 		<base-button link to="/upcoming-meals" class="all-meals-btn"
@@ -19,13 +18,10 @@
 				</div>
 
 				<h3>{{ currentMeal.item }}</h3>
-				<h4 class="calorie-count">{{ currentMeal.calorieCount }} calories</h4>
 
 				<div class="img-container">
 					<img :src="require('../../assets/' + mealImgLink)" alt="" />
 				</div>
-
-				<p>{{ upcomingMeal.calorieCount }}</p>
 
 				<div class="collapsible-container">
 					<button @click="setCollapsible('nutrition facts')">
@@ -232,12 +228,6 @@ export default {
 .meal-container > button {
 	justify-self: center;
 	align-self: center;
-}
-
-.calorie-count {
-	text-align: center;
-	font-weight: 400;
-	font-size: 0.85rem;
 }
 
 .icons {
