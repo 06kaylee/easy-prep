@@ -7,20 +7,19 @@
 		</div>
 
 		<base-card>
-			<h2>Edit an Upcoming Meal</h2>
-			<edit-upcoming-meal-form :id="id"></edit-upcoming-meal-form>
+			<h2>Add an Upcoming Meal</h2>
+			<add-upcoming-meal-form></add-upcoming-meal-form>
 		</base-card>
 	</div>
 </template>
 
 <script>
-import EditUpcomingMealForm from "../../components/upcoming-meals/EditUpcomingMealForm.vue";
+import AddUpcomingMealForm from "../../components/upcoming-meals/AddUpcomingMealForm.vue";
 
 export default {
 	components: {
-		EditUpcomingMealForm,
+		AddUpcomingMealForm,
 	},
-	props: ["id"],
 	data() {
 		return {
 			dayOfWeek: this.$route.params.dayOfWeek,

@@ -1,22 +1,22 @@
 <template>
-    <router-link :to="upcomingMealDetailLink">
-        <base-card>
-            <h2>{{ dayOfWeek }}</h2>
-        </base-card>
-    </router-link>
+	<router-link :to="upcomingMealDetailLink">
+		<base-card>
+			<h2>{{ dayOfWeek }}</h2>
+		</base-card>
+	</router-link>
 </template>
 
 <script>
 export default {
 	props: {
 		dayOfWeek: {
-            type: String,
-            required: true
-        }
+			type: String,
+			required: true,
+		},
 	},
 	computed: {
 		upcomingMealDetailLink() {
-			return this.$route.path + "/" + this.dayOfWeek;
+			return this.$route.path + "/" + this.dayOfWeek + "/meals";
 		},
 	},
 };
@@ -24,7 +24,7 @@ export default {
 
 <style scoped>
 div .card {
-    margin: 0;
+	margin: 0;
 	max-width: 30rem;
 	width: 16rem;
 	height: 13rem;

@@ -1,9 +1,14 @@
 <template>
+	<!-- add calorie count to edit form -->
 	<base-card class="main-container">
 		<h2>{{ upcomingMeal.dayOfWeek }}</h2>
 		<base-button link to="/upcoming-meals" class="all-meals-btn"
 			>Back</base-button
 		>
+		<base-button link :to="addMealLink" class="add-meal-btn"
+			>Add a meal</base-button
+		>
+
 		<div class="meal-container" v-if="currentMeal">
 			<base-card>
 				<div class="icons">
@@ -159,7 +164,10 @@ export default {
 			return this.currentMeal.img;
 		},
 		editMealLink() {
-			return this.$route.path + "/edit-upcoming-meals/" + this.currentMeal.id;
+			return this.$route.path + "/edit/" + this.currentMeal.id;
+		},
+		addMealLink() {
+			return this.$route.path + "/add";
 		},
 	},
 	created() {
@@ -180,22 +188,11 @@ export default {
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
 	padding: 2rem;
 	margin: 2rem auto 1rem auto;
-	max-width: 80rem;
-	width: 80rem;
+	max-width: 70rem;
 	height: fit-content;
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	grid-gap: 1rem;
-}
-
-.all-meals-btn {
-	width: fit-content;
-	height: fit-content;
-}
-
-.main-container h2 {
-	grid-column: 1 / 4;
-	text-align: center;
 }
 
 .meal-container .card {
@@ -203,6 +200,26 @@ export default {
 	width: 100%;
 	height: fit-content;
 	display: grid;
+}
+
+.all-meals-btn {
+	width: fit-content;
+	height: fit-content;
+	grid-column: 1 / 2;
+	grid-row: 1 / 2;
+	justify-self: start;
+}
+
+.add-meal-btn {
+	grid-column: 3 / 4;
+	grid-row: 1 / 2;
+	justify-self: end;
+}
+
+.main-container h2 {
+	grid-column: 2 / 3;
+	grid-row: 1 / 2;
+	text-align: center;
 }
 
 .meal-container {
