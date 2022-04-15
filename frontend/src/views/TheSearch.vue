@@ -3,42 +3,66 @@
 		<div class="search-bar-container">
 			<h2>Find Your Next Favorite Meal</h2>
 			<div class="search-bar">
-				<div class="icon-container">
-					<i class="fa-solid fa-magnifying-glass"></i>
-					<input
-						type="text"
-						id="search-input"
-						placeholder="Search by name, ingredient, genre, chef, etc."
-					/>
-				</div>
-				<a href=""> Advanced Search </a>
+				<input
+					type="text"
+					id="search-input"
+					placeholder="Search by name, ingredient, genre, chef, etc."
+				/>
+				<!-- <font-awesome-icon class="search-btn" :icon="['fas', 'magnifying-glass']" /> -->
+				<a href="">Advanced Search</a>
 			</div>
 		</div>
 
 		<div class="sample-recipes-container">
 			<base-card>
 				<base-card class="recipe-card">
-					<h2 class="title">Quick Meals</h2>
+					<h2 class="title">{{ currentData.title }}</h2>
 					<div class="img-container">
 						<img :src="require('../assets/sample-logo.jpg')" alt="">
 					</div>
 				</base-card>
-				<base-card class="recipe-card">
-					<h2 class="title">Breakfast Classics</h2>
-					<div class="img-container">
-						<img :src="require('../assets/sample-logo.jpg')" alt="">
-					</div>
-				</base-card>
-				<base-card class="recipe-card">
-					<h2 class="title">Easy Dinners</h2>
-					<div class="img-container">
-						<img :src="require('../assets/sample-logo.jpg')" alt="">
-					</div>
-				</base-card>
+				<base-button @click="nextData">Next</base-button>
 			</base-card>
 		</div>
 	</div>
 </template>
+
+<script>
+export default {
+	data() {
+		return {
+			sampleData: [
+				{
+					title: "Easy Dinners",
+				},
+				{
+					title: "Breakfast Classics",
+				},
+				{
+					title: "On the Go Meals",
+				}
+			],
+			currentData: null,
+			currentIndex: 0,
+			sampleCardsCollapsed: false
+		}
+	},
+	methods: {
+		nextData() {
+			if(this.currentIndex + 1 === this.sampleData.length) {
+				this.currentIndex = 0;
+			}
+			else {
+				this.currentIndex += 1;
+			}
+			this.currentData = this.sampleData[this.currentIndex];
+		}
+	},
+	created() {
+		this.currentData = this.sampleData[0];
+	}
+}
+</script>
 
 <style scoped>
 .search-bar-container {
@@ -60,11 +84,6 @@
 	grid-column: 1 / 5;
 	display: grid;
 	justify-content: center;
-}
-
-.icon-container {
-	display: grid;
-	grid-template: 1fr / auto 1fr;
 }
 
 #search-input {
@@ -89,11 +108,17 @@
 
 .sample-recipes-container > .card {
 	grid-column: 1 / 5;
-	max-width: 80rem;
-	width: 80rem;
-	display: flex;
-	justify-content: space-evenly;
+	max-width: 70rem;
+	width: 80%;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
 	margin: 10rem auto;
+}
+
+@media screen and (max-width: 70rem) {
+	.sample-recipes-container > .card {
+		grid-template-columns: repeat(2, 1fr);
+	}
 }
 
 .title {

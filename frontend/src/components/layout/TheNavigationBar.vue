@@ -10,13 +10,15 @@
 		<button
 			class="mobile-nav-toggle"
 			aria-controls="primary-navigation"
-			aria-expanded="false"
+			:aria-expanded="!navCollapsed"
+			@click="toggleNav"
 		>
-			<font-awesome-icon :icon="['fas', 'bars']" />
+			<font-awesome-icon v-if="navCollapsed" :icon="['fas', 'bars']" />
+			<font-awesome-icon v-else :icon="['fas', 'x']" />
 		</button>
 
 		<nav>
-			<ul id="primary-navigation" class="primary-navigation">
+			<ul id="primary-navigation" class="primary-navigation" :class="{ 'show-nav': !navCollapsed }">
 				<li>
 					<router-link to="/login">Login</router-link>
 				</li>
@@ -39,6 +41,22 @@
 	</header>
 </template>
 
+<script>
+export default {
+	data() {
+		return {
+			navCollapsed: true
+		}
+	},
+	methods: {
+		toggleNav() {
+			this.navCollapsed = !this.navCollapsed;
+
+		}
+	}
+}
+</script>
+
 <style scoped>
 body {
 	overflow-x: hidden;
@@ -58,13 +76,12 @@ body {
 	list-style: none;
 	padding: 0;
 	margin: 0;
-	gap: 1rem;
-	background: rgb(104, 160, 107);
+	gap: 4rem;
+	/* background: rgb(104, 160, 107); */
 }
 
 @supports (backdrop-filter: blur(0.5rem)) {
 	.primary-navigation {
-		background: rgba(104, 160, 107, 0.6);
 		backdrop-filter: blur(0.5rem);
 	}
 }
@@ -78,14 +95,26 @@ body {
 	display: none;
 }
 
-@media screen and (max-width: 45em) {
+@media screen and (max-width: 65rem) {
+	.primary-navigation {
+		gap: 2rem;
+	}
+}
+
+@media screen and (max-width: 55em) {
 	.primary-navigation {
 		position: fixed;
-		inset: 0 0 0 40%;
+		inset: 0 0 0 65%;
 		z-index: 1000;
 		flex-direction: column;
 		padding: min(30vh, 8rem) 2rem;
 		transform: translateX(100%); /* move 100% of its width off the page */
+		transition: 0.5s ease;
+		gap: 2rem;
+	}
+
+	.show-nav {
+		transform: translateX(0%);
 	}
 
 	.mobile-nav-toggle {
@@ -101,6 +130,12 @@ body {
 	}
 }
 
+@media screen and (max-width: 40rem) {
+	.primary-header {
+		padding-left: 2rem;
+	}
+}
+
 #logo-container {
 	display: flex;
 	max-width: 10rem;
@@ -109,6 +144,8 @@ body {
 
 #logo-container a {
 	font-size: 1.4em;
+	text-decoration: none;
+	color: black;
 }
 
 #logo-container img {
