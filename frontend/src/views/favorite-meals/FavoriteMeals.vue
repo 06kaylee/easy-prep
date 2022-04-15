@@ -37,12 +37,34 @@ export default {
 .main-container {
 	padding: 0.5rem 0rem 0 1.5rem;
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
+	grid-template-columns: 1fr;
 }
 
 .main-container header {
-	grid-column: 1 / 4;
+	grid-column: 1 / 2;
 	display: flex;
 	justify-content: space-between;
+}
+
+/* if greater than or equal to 60rem */
+@media screen and (min-width: 45rem) {
+	.main-container {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.main-container header {
+		grid-column: 1 / 3;
+	}
+}
+
+/* if greater than or equal to 60rem */
+@media screen and (min-width: 60rem) {
+	.main-container {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.main-container header {
+		grid-column: 1 / 4;
+	}
 }
 </style>

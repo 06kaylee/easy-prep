@@ -72,7 +72,11 @@
 
 		<!-- Ingredients -->
 		<h3>Ingredients</h3>
-		<div class="form-control ingredients" v-for="(ingredient, index) in ingredients" :key="index">
+		<div
+			class="form-control ingredients"
+			v-for="(ingredient, index) in ingredients"
+			:key="index"
+		>
 			<input type="text" v-model="ingredients[index]" />
 			<a @click="addField(ingredients)">
 				<font-awesome-icon :icon="['fas', 'plus']" />
@@ -85,11 +89,7 @@
 		<!-- Steps -->
 		<h3>Steps</h3>
 		<div class="form-control steps" v-for="(step, index) in steps" :key="index">
-			<textarea
-				v-model="steps[index]"
-				cols="10"
-				rows="5"
-			></textarea>
+			<textarea v-model="steps[index]" cols="10" rows="5"></textarea>
 			<a @click="addField(steps)">
 				<font-awesome-icon :icon="['fas', 'plus']" />
 			</a>
@@ -101,11 +101,7 @@
 		<!-- Notes -->
 		<h3>Notes</h3>
 		<div class="form-control notes" v-for="(note, index) in notes" :key="index">
-			<textarea
-				v-model="notes[index]"
-				cols="30"
-				rows="10"
-			></textarea>
+			<textarea v-model="notes[index]" cols="30" rows="10"></textarea>
 			<a @click="addField(notes)">
 				<font-awesome-icon :icon="['fas', 'plus']" />
 			</a>
@@ -147,22 +143,38 @@ export default {
 			fieldType.splice(index, 1);
 			console.log(fieldType);
 		},
+		onFileChange(event) {
+			const files = event.target.files || event.dataTransfer.files;
+			console.log(files);
+			if (!files.length) return;
+			this.createImage(files[0]);
+		},
+		createImage(file) {
+			const reader = new FileReader();
+
+			reader.onload = (event) => {
+				this.img = event.target.result;
+			};
+			reader.readAsDataURL(file);
+		},
 		submitForm() {
 			const dayOfWeek = this.$route.params.dayOfWeek;
+			const newImg = new Image();
+			newImg.src = this.img;
 			const newMeal = {
-				id: '19',
+				id: "19",
 				item: this.itemName,
-				img: require('../../assets/' + 'sample-logo.jpg'),
+				img: newImg,
 				nutritionFacts: this.nutritionFacts,
 				ingredients: this.ingredients,
 				steps: this.steps,
 				notes: this.notes,
-				userInput: this.userInput
-			}
+				userInput: this.userInput,
+			};
 
-			this.$store.dispatch('upcomingMeals/addMeal', { dayOfWeek, newMeal });
+			this.$store.dispatch("upcomingMeals/addMeal", { dayOfWeek, newMeal });
 			this.$router.replace(`/upcoming-meals/${dayOfWeek}/meals`);
-		}
+		},
 	},
 };
 </script>

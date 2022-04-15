@@ -4,13 +4,12 @@
 			<header>
 				<h2>Your Upcoming Meals</h2>
 			</header>
-			<div class="meal-schedule">
-				<upcoming-meal-day
-					v-for="upcomingMeal in upcomingMeals"
-					:key="upcomingMeal.dayOfWeek"
-					:dayOfWeek="upcomingMeal.dayOfWeek"
-				></upcoming-meal-day>
-			</div>
+
+			<upcoming-meal-day
+				v-for="upcomingMeal in upcomingMeals"
+				:key="upcomingMeal.dayOfWeek"
+				:dayOfWeek="upcomingMeal.dayOfWeek"
+			></upcoming-meal-day>
 		</div>
 	</dashboard-layout>
 </template>
@@ -35,34 +34,33 @@ export default {
 <style scoped>
 .main-container {
 	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	grid-auto-rows: min-content;
+	grid-template-columns: 1fr;
 	padding: 1.5rem;
+	gap: 2rem;
 }
 
 .main-container header {
-	grid-column: 1 / 5;
-	display: flex;
-	justify-content: space-between;
+	grid-column: 1 / 2;
 }
 
-.meal-schedule {
-	grid-column: 1 / 5;
-	margin-top: 2rem;
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	row-gap: 3rem;
+@media screen and (min-width: 55rem) {
+	.main-container {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.main-container header {
+		grid-column: 1 / 3;
+	}
 }
 
-.meal-container {
-	text-align: center;
-	padding: 1rem;
-	border-right: 2px solid black;
-}
+@media screen and (min-width: 80rem) {
+	.main-container {
+		grid-template-columns: repeat(3, 1fr);
+	}
 
-.meal-container:last-child {
-	border-right: none;
-	scroll-snap-stop: always;
+	.main-container header {
+		grid-column: 1 / 4;
+	}
 }
 
 a:hover {

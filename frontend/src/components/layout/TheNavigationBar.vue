@@ -1,15 +1,22 @@
 <template>
-	<header class="nav-container">
-		<div id="logo-img-container">
+	<header class="primary-header">
+		<div id="logo-container">
 			<a href="/">
 				<img src="../../assets/sample-logo.jpg" alt="" />
 			</a>
-		</div>
-		<div id="logo-container">
 			<router-link to="/">LogoName</router-link>
 		</div>
+
+		<button
+			class="mobile-nav-toggle"
+			aria-controls="primary-navigation"
+			aria-expanded="false"
+		>
+			<font-awesome-icon :icon="['fas', 'bars']" />
+		</button>
+
 		<nav>
-			<ul>
+			<ul id="primary-navigation" class="primary-navigation">
 				<li>
 					<router-link to="/login">Login</router-link>
 				</li>
@@ -33,41 +40,78 @@
 </template>
 
 <style scoped>
-.nav-container {
+body {
+	overflow-x: hidden;
+}
+
+.primary-header {
 	display: flex;
-	justify-content: flex-end;
+	justify-content: space-between;
 	align-items: center;
 	padding: 1em 5em 1em 5em;
 	box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 	/* offset-x, offset-y, blur-radius, spread-radius, color */
 }
 
-.nav-container li {
+.primary-navigation {
+	display: flex;
 	list-style: none;
-	display: inline-block;
-	padding: 0 2.5em;
+	padding: 0;
+	margin: 0;
+	gap: 1rem;
+	background: rgb(104, 160, 107);
 }
 
-.nav-container a {
+@supports (backdrop-filter: blur(0.5rem)) {
+	.primary-navigation {
+		background: rgba(104, 160, 107, 0.6);
+		backdrop-filter: blur(0.5rem);
+	}
+}
+
+.primary-navigation a {
 	text-decoration: none;
 	color: black;
 }
 
+.mobile-nav-toggle {
+	display: none;
+}
+
+@media screen and (max-width: 45em) {
+	.primary-navigation {
+		position: fixed;
+		inset: 0 0 0 40%;
+		z-index: 1000;
+		flex-direction: column;
+		padding: min(30vh, 8rem) 2rem;
+		transform: translateX(100%); /* move 100% of its width off the page */
+	}
+
+	.mobile-nav-toggle {
+		display: block;
+		position: absolute;
+		background: transparent;
+		border: none;
+		cursor: pointer;
+		font-size: 1.3rem;
+		top: 2rem;
+		right: 2rem;
+		z-index: 9999;
+	}
+}
+
 #logo-container {
-	margin-right: auto;
+	display: flex;
+	max-width: 10rem;
+	align-items: center;
 }
 
 #logo-container a {
 	font-size: 1.4em;
 }
 
-#logo-img-container {
-	max-width: 50px;
-	max-height: 50px;
-	padding-right: 0.5em;
-}
-
-#logo-img-container img {
+#logo-container img {
 	max-width: 100%;
 	max-height: 100%;
 }

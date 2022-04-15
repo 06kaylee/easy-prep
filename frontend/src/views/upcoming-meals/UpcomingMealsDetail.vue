@@ -20,7 +20,9 @@
 				<h3>{{ currentMeal.item }}</h3>
 
 				<div class="img-container">
-					<img :src="require('../../assets/' + mealImgLink)" alt="" />
+					<!-- {{ mealImgLink }}
+					<img :src="require('../../assets/' + mealImgLink)" alt="" /> -->
+					<img :src="mealImgLink" alt="" />
 				</div>
 
 				<div class="collapsible-container">
@@ -157,7 +159,7 @@ export default {
 	},
 	computed: {
 		mealImgLink() {
-			return this.currentMeal.img;
+			return this.currentMeal.img.src;
 		},
 		editMealLink() {
 			return this.$route.path + "/edit/" + this.currentMeal.id;
