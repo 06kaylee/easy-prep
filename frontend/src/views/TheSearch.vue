@@ -14,14 +14,22 @@
 		</div>
 
 		<div class="sample-recipes-container">
-			<base-card>
+			<base-card v-if="sampleCardsCollapsed">
 				<base-card class="recipe-card">
 					<h2 class="title">{{ currentData.title }}</h2>
 					<div class="img-container">
-						<img :src="require('../assets/sample-logo.jpg')" alt="">
+						<img :src="require('../assets/sample-logo.jpg')" alt="" />
 					</div>
 				</base-card>
 				<base-button @click="nextData">Next</base-button>
+			</base-card>
+			<base-card v-else>
+				<base-card v-for="sampleItem in sampleData" :key="sampleItem">
+					<h2 class="title">{{ sampleItem.title }}</h2>
+					<div class="img-container">
+						<img :src="require('../assets/sample-logo.jpg')" alt="" />
+					</div>
+				</base-card>
 			</base-card>
 		</div>
 	</div>
@@ -40,28 +48,38 @@ export default {
 				},
 				{
 					title: "On the Go Meals",
-				}
+				},
 			],
 			currentData: null,
 			currentIndex: 0,
-			sampleCardsCollapsed: false
-		}
+			sampleCardsCollapsed: false,
+		};
 	},
 	methods: {
 		nextData() {
-			if(this.currentIndex + 1 === this.sampleData.length) {
+			if (this.currentIndex + 1 === this.sampleData.length) {
 				this.currentIndex = 0;
-			}
-			else {
+			} else {
 				this.currentIndex += 1;
 			}
 			this.currentData = this.sampleData[this.currentIndex];
-		}
+		},
+		toggleCollapsedCards(event) {
+			if (event.currentTarget.innerWidth <= 1029) {
+				this.sampleCardsCollapsed = true;
+			} else {
+				this.sampleCardsCollapsed = false;
+			}
+		},
 	},
 	created() {
 		this.currentData = this.sampleData[0];
-	}
-}
+		window.addEventListener("resize", this.toggleCollapsedCards);
+	},
+	unmounted() {
+		window.removeEventListener("resize", this.toggleCollapsedCards);
+	},
+};
 </script>
 
 <style scoped>
