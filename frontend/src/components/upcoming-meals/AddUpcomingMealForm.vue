@@ -18,6 +18,18 @@
 			/>
 		</div>
 
+		<!-- servings -->
+		<div class="form-control">
+			<label for="servings" id="servings-label">Servings</label>
+			<input type="number" id="servings" v-model="servings" />
+		</div>
+
+		<!-- ready time -->
+		<div class="form-control">
+			<label for="ready-time" id="ready-time-label">Ready Time(minutes)</label>
+			<input type="number" id="ready-time" v-model="readyTime" />
+		</div>
+
 		<!-- Nutrition Facts -->
 		<h3>Nutrition Facts</h3>
 		<div class="form-control nutrition-facts">
@@ -78,10 +90,10 @@
 			:key="index"
 		>
 			<input type="text" v-model="ingredients[index]" />
-			<a @click="addField(ingredients)">
+			<a @click="addField(ingredients)" @keyup.enter="addField(ingredients)" tabindex="0">
 				<font-awesome-icon :icon="['fas', 'plus']" />
 			</a>
-			<a @click="removeField(index, ingredients)">
+			<a @click="removeField(index, ingredients)" @keyup.enter="removeField(index, ingredients)" tabindex="0">
 				<font-awesome-icon :icon="['fas', 'minus']" />
 			</a>
 		</div>
@@ -90,10 +102,10 @@
 		<h3>Steps</h3>
 		<div class="form-control steps" v-for="(step, index) in steps" :key="index">
 			<textarea v-model="steps[index]" cols="10" rows="5"></textarea>
-			<a @click="addField(steps)">
+			<a @click="addField(steps)" @keyup.enter="addField(steps)" tabindex="0">
 				<font-awesome-icon :icon="['fas', 'plus']" />
 			</a>
-			<a @click="removeField(index, steps)">
+			<a @click="removeField(index, steps)" @keyup.enter="removeField(index, steps)" tabindex="0">
 				<font-awesome-icon :icon="['fas', 'minus']" />
 			</a>
 		</div>
@@ -102,10 +114,10 @@
 		<h3>Notes</h3>
 		<div class="form-control notes" v-for="(note, index) in notes" :key="index">
 			<textarea v-model="notes[index]" cols="30" rows="10"></textarea>
-			<a @click="addField(notes)">
+			<a @click="addField(notes)" @keyup.enter="addField(notes)" tabindex="0">
 				<font-awesome-icon :icon="['fas', 'plus']" />
 			</a>
-			<a @click="removeField(index, notes)">
+			<a @click="removeField(index, notes)" @keyup.enter="removeField(index, notes)" tabindex="0">
 				<font-awesome-icon :icon="['fas', 'minus']" />
 			</a>
 		</div>
@@ -115,11 +127,15 @@
 </template>
 
 <script>
+import UpcomingMealService from "../../services/UpcomingMealService";
+
 export default {
 	data() {
 		return {
 			itemName: "",
 			img: "",
+			servings: null,
+			readyTime: null,
 			nutritionFacts: {
 				calories: "",
 				totalFat: "",
@@ -137,15 +153,12 @@ export default {
 	methods: {
 		addField(fieldType) {
 			fieldType.push("");
-			console.log(fieldType);
 		},
 		removeField(index, fieldType) {
 			fieldType.splice(index, 1);
-			console.log(fieldType);
 		},
 		onFileChange(event) {
 			const files = event.target.files || event.dataTransfer.files;
-			console.log(files);
 			if (!files.length) return;
 			this.createImage(files[0]);
 		},
@@ -157,22 +170,25 @@ export default {
 			};
 			reader.readAsDataURL(file);
 		},
-		submitForm() {
+		async submitForm() {
 			const dayOfWeek = this.$route.params.dayOfWeek;
 			const newImg = new Image();
 			newImg.src = this.img;
 			const newMeal = {
-				id: "19",
-				item: this.itemName,
-				img: newImg,
+				dayOfWeek: dayOfWeek,
+				itemName: this.itemName,
+				img: 'blah',
+				servings: this.servings,
+				readyTime: this.readyTime,
 				nutritionFacts: this.nutritionFacts,
 				ingredients: this.ingredients,
 				steps: this.steps,
 				notes: this.notes,
 				userInput: this.userInput,
 			};
-
-			this.$store.dispatch("upcomingMeals/addMeal", { dayOfWeek, newMeal });
+			const res = await UpcomingMealService.add(newMeal);
+			console.log(res.data);
+			// this.$store.dispatch("upcomingMeals/addMeal", { dayOfWeek, newMeal });
 			this.$router.replace(`/upcoming-meals/${dayOfWeek}/meals`);
 		},
 	},
@@ -185,8 +201,8 @@ form {
 }
 
 #item-label,
-#start-date-label,
-#end-date-label {
+#servings-label,
+#ready-time-label {
 	display: block;
 	font-weight: bold;
 	padding-bottom: 0.3rem;

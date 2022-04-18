@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<base-card>
-			<the-sidebar></the-sidebar>
+			<the-sidebar :isActive="isActive"></the-sidebar>
 		</base-card>
 
 		<base-card :class="{ 'page-width': changeWidth }">
@@ -22,6 +22,9 @@ export default {
 			required: false,
 			default: false,
 		},
+		isActive: {
+			type: String,
+		}
 	},
 };
 </script>
@@ -37,11 +40,14 @@ export default {
 .card:nth-of-type(1) {
 	grid-column: 1 / 3;
 	margin: 2rem 0 1rem 1rem;
+	max-height: 100vh;
+	height: 86vh;
 }
 
 .card:nth-of-type(2) {
 	grid-column: 3 / 13;
 	margin: 2rem 2rem 1rem 1rem;
+	height: fit-content;
 }
 
 .page-width {

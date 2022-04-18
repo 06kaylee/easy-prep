@@ -28,27 +28,29 @@ exports.deleteFavoriteMeal = async (req, res) => {
     try {
         const id = req.params.id;
         const favoriteMealToDelete = await FavoriteMeal.findByIdAndDelete(id);
-        res.redirect('/favorite-meals');
+        res.send(favoriteMealToDelete);
     }
     catch(err) {
         console.log(`Error trying to delete a favorite meal: ${err}`);
     }
 }
 
+// edit a favorite meal by id
+exports.editFavoriteMeal = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const updatedFavoriteMeal = await FavoriteMeal.findByIdAndUpdate(id, req.body, { runValidators: true, new: true });
+        res.send(updatedFavoriteMeal);
+    }
+    catch(err) {
+        console.log(`Error while trying to update favorite meal: ${err}`);
+    }
+}
+
 // add a favorite meal
 exports.addFavoriteMeal = async (req, res) => {
     try {
-        const newFavoriteMeal = new FavoriteMeal({
-            title: 'Burrito',
-            img: 'some link here',
-            recipeInformation: {
-                servings: 2,
-                readyTime: 60,
-                nutritionStats: ['vitamin C', 'iron', 'protein'],
-                ingredientList: ['pasta', 'chicken', 'sauce', 'cheese'],
-                recipeUrl: 'url goes here'
-            }
-        });
+        const newFavoriteMeal = new FavoriteMeal(req.body);
         const newFavoriteMealSaved = await newFavoriteMeal.save();
         res.send(newFavoriteMealSaved);
     }

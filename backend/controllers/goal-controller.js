@@ -2,10 +2,22 @@ const Goal = require("../models/goal");
 
 
 // get all goals
-exports.allGoals = async (req, res) => {
+exports.getAllGoals = async (req, res) => {
     try {
         const goals = await Goal.find({});
         res.send(goals);
+    }
+    catch (err) {
+        console.log(`Error occurred while retrieving all of the goals: ${err}`);
+    }
+}
+
+// get a goals
+exports.getGoal = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const goal = await Goal.findById(id);
+        res.send(goal);
     }
     catch (err) {
         console.log(`Error occurred while retrieving all of the goals: ${err}`);
@@ -16,12 +28,7 @@ exports.allGoals = async (req, res) => {
 // create a new goal
 exports.createGoal = async (req, res) => {
     try {
-        const newGoal = new Goal({
-            title: 'blah3', 
-            category: 'other', 
-            startDate: '04/19/22', 
-            endDate: '05/10/22'
-        });
+        const newGoal = new Goal(req.body);
         console.log(newGoal);
         const savedNewGoal = await newGoal.save();
         res.send(savedNewGoal);
@@ -51,7 +58,7 @@ exports.deleteGoal = async (req, res) => {
     try {
         const id = req.params.id;
         const goalToDelete = await Goal.findByIdAndDelete(id);
-        res.redirect('/goals');
+        res.send(goalToDelete);
     }
     catch(err) {
         console.log(`Error while trying to delete a goal: ${err}`);

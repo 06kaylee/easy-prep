@@ -1,9 +1,9 @@
 <template>
 	<base-card>
 		<router-link :to="favoriteMealDetailLink">
-			<h3 class="recipe-name">{{ title }}</h3>
+			<h3 class="recipe-name">{{ itemName }}</h3>
 			<div class="img-container">
-				<img :src="require('../../assets/' + imgLink)" :alt="title" />
+				<img :src="require('../../assets/' + img)" :alt="itemName" />
 			</div>
 		</router-link>
 	</base-card>
@@ -16,11 +16,11 @@ export default {
 			type: String,
 			required: true,
 		},
-		title: {
+		itemName: {
 			type: String,
 			required: true,
 		},
-		imgLink: {
+		img: {
 			type: String,
 			required: true,
 		},

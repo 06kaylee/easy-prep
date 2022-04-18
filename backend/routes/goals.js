@@ -3,7 +3,10 @@ const router = express.Router();
 const goalController = require("../controllers/goal-controller");
 
 // GET all goals
-router.get("/", goalController.allGoals);
+router.get("/", goalController.getAllGoals);
+
+// GET a goal
+router.get("/:id", goalController.getGoal);
 
 // POST a new goal
 router.post("/", goalController.createGoal);

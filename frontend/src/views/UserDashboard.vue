@@ -1,6 +1,6 @@
 <template>
-	<dashboard-layout changeWidth>
-		<div class="content-container">
+	<dashboard-layout changeWidth isActive="dashboard">
+		<div class="content-container" v-if="upcomingMeals">
 			<header id="welcome-msg">
 				<h2>Welcome, name</h2>
 			</header>
@@ -8,7 +8,8 @@
 			<base-card>
 				<div class="favmeal-container">
 					<a>
-						<h2>{{ numFavoriteMeals }} Favorite Meals</h2>
+						<h2 v-if="numFavoriteMeals > 1">{{ numFavoriteMeals }} Favorite Meals</h2>
+						<h2 v-else>{{ numFavoriteMeals }} Favorite Meal</h2>
 					</a>
 				</div>
 			</base-card>
@@ -16,7 +17,8 @@
 			<base-card>
 				<div class="goal-container">
 					<a>
-						<h2>{{ numGoals }} Goals</h2>
+						<h2 v-if="numGoals > 1">{{ numGoals }} Goals</h2>
+						<h2 v-else>{{ numGoals }} Goal</h2>
 					</a>
 				</div>
 			</base-card>
@@ -24,7 +26,8 @@
 			<base-card>
 				<div class="restriction-container">
 					<a>
-						<h2>{{ numDietaryRestrictions }} Dietary Restrictions</h2>
+						<h2 v-if="numDietaryRestrictions > 1">{{ numDietaryRestrictions }} Dietary Restrictions</h2>
+						<h2 v-else>{{ numDietaryRestrictions }} Dietary Restriction</h2>
 					</a>
 				</div>
 			</base-card>
@@ -33,12 +36,15 @@
 				<div class="upcoming-meals-container">
 					<ul>
 						<li
-							v-for="upcomingMeal in upcomingMeals"
-							:key="upcomingMeal.dayOfWeek"
+							v-for="(summary, dayOfWeek) in upcomingMealsSummary"
+							:key="summary"
 						>
-							<h3 class="day-of-week">{{ upcomingMeal.dayOfWeek }}</h3>
-							<p class="sublist">
-								{{ upcomingMeal.numOfMealsPlanned }} meals planned
+							<h3 class="day-of-week">{{ dayOfWeek }}</h3>
+							<p v-if="summary.numMeals > 1 || summary.numMeals === 0" class="sublist">
+								{{ summary.numMeals}} meals planned
+							</p>
+							<p v-else class="sublist">
+								{{ summary.numMeals}} meal planned
 							</p>
 						</li>
 					</ul>
@@ -58,17 +64,27 @@
 
 <script>
 import DashboardLayout from "../components/layout/DashboardLayout.vue";
+import FavoriteMealService from "../services/FavoriteMealService";
+import GoalService from "../services/GoalService";
+import UpcomingMealService from "../services/UpcomingMealService";
 
 export default {
 	components: {
 		DashboardLayout,
 	},
+	data() {
+		return {
+			favoriteMeals: null,
+			goals: null,
+			upcomingMeals: null
+		}
+	},
 	computed: {
 		numFavoriteMeals() {
-			return this.$store.getters["dashboardPage/numFavoriteMeals"];
+			return this.favoriteMeals.length;
 		},
 		numGoals() {
-			return this.$store.getters["dashboardPage/numGoals"];
+			return this.goals.length;
 		},
 		numDietaryRestrictions() {
 			return this.$store.getters["dashboardPage/numDietaryRestrictions"];
@@ -79,10 +95,30 @@ export default {
 		lastMonthMoneySpent() {
 			return this.$store.getters["dashboardPage/lastMonthMoneySpent"];
 		},
-		upcomingMeals() {
-			return this.$store.getters["dashboardPage/upcomingMeals"];
+		upcomingMealsSummary() {
+			const upcomingMealsSummary = {};
+			const days = ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"];
+			for(const day of days) {
+				upcomingMealsSummary[day] = {
+					numMeals: 0
+				};
+			}
+			for(const meal of this.upcomingMeals) {
+				upcomingMealsSummary[meal.dayOfWeek].numMeals = upcomingMealsSummary[meal.dayOfWeek].numMeals + 1;
+			}
+			return upcomingMealsSummary;
 		},
 	},
+	async created() {
+		const favoriteMealsRes = await FavoriteMealService.getAll();
+		this.favoriteMeals = favoriteMealsRes.data;
+
+		const goalsRes = await GoalService.getAll();
+		this.goals = goalsRes.data;
+
+		const upcomingMealsRes = await UpcomingMealService.getAll();
+		this.upcomingMeals = upcomingMealsRes.data;
+	}
 };
 </script>
 

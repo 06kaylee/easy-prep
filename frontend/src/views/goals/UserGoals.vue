@@ -1,24 +1,24 @@
 <template>
-	<dashboard-layout changeWidth>
+	<dashboard-layout changeWidth isActive="goals">
 		<div class="main-container">
 			<header>
 				<h2>Your Goals</h2>
 				<h4>
-					<router-link to="/add-goal" class="new-goal">
+					<router-link to="/add" class="new-goal">
 						Add a new goal
 						<font-awesome-icon :icon="['fas', 'plus']" />
 					</router-link>
 				</h4>
 			</header>
-			<base-card v-for="goal in goals" :key="goal.id">
+			<base-card v-for="goal in goals" :key="goal._id">
 				<h2 class="goal-title">{{ goal.title }}</h2>
 				<div class="icons">
-					<router-link :to="'/edit-goals/' + goal.id" >
+					<router-link :to="'/edit/' + goal._id" >
 						<font-awesome-icon :icon="['fas', 'pen']" />
 					</router-link>
 					<a href="">
 						<font-awesome-icon
-							@click="removeGoal($event, goal.id)"
+							@click="removeGoal($event, goal._id)"
 							:icon="['fas', 'trash']"
 						/>
 					</a>
@@ -31,22 +31,29 @@
 
 <script>
 import DashboardLayout from "../../components/layout/DashboardLayout.vue";
+import GoalService from "../../services/GoalService";
 
 export default {
 	components: {
 		DashboardLayout,
 	},
-	computed: {
-		goals() {
-			return this.$store.getters["goals/goals"];
-		},
+	data() {
+		return {
+			goals: null
+		}
 	},
 	methods: {
-		removeGoal(event, id) {
+		async removeGoal(event, id) {
 			event.preventDefault();
-			this.$store.dispatch("goals/removeGoal", id);
+			const res = await GoalService.delete(id);
+			const deletedGoal = res.data;
+			this.goals = this.goals.filter(goal => goal._id !== deletedGoal._id);
 		},
 	},
+	async created() {
+		const res = await GoalService.getAll();
+		this.goals = res.data;
+	}
 };
 </script>
 

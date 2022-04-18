@@ -1,14 +1,14 @@
 <template>
-	<dashboard-layout changeWidth>
+	<dashboard-layout changeWidth isActive="upcoming-meals">
 		<div class="main-container">
 			<header>
 				<h2>Your Upcoming Meals</h2>
 			</header>
 
 			<upcoming-meal-day
-				v-for="upcomingMeal in upcomingMeals"
-				:key="upcomingMeal.dayOfWeek"
-				:dayOfWeek="upcomingMeal.dayOfWeek"
+				v-for="dayOfWeek in daysOfWeek"
+				:key="dayOfWeek"
+				:dayOfWeek="dayOfWeek"
 			></upcoming-meal-day>
 		</div>
 	</dashboard-layout>
@@ -23,11 +23,11 @@ export default {
 		DashboardLayout,
 		UpcomingMealDay,
 	},
-	computed: {
-		upcomingMeals() {
-			return this.$store.getters["upcomingMeals/upcomingMeals"];
-		},
-	},
+	data() {
+		return {
+			daysOfWeek: ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"]
+		}
+	}
 };
 </script>
 

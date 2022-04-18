@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const favoriteMealSchema = new Schema({
-    title: {
+    itemName: {
         type: String,
         minLength: 2,
         maxLength: 100,
@@ -13,21 +13,68 @@ const favoriteMealSchema = new Schema({
         type: String,
         required: true
     },
-    recipeInformation: {
-        servings: {
+    servings: {
+        type: Number,
+        required: true
+    },
+    readyTime: {
+        type: Number,
+        required: true
+    },
+    nutritionFacts: {
+        calories: {
             type: Number,
+            min: 0,
+            required: true
         },
-        readyTime: {
-            type: Number
+        totalFat: {
+            type: Number,
+            min: 0,
+            required: true
         },
-        nutritionStats: {
-            type: Array
+        cholesterol: {
+            type: Number,
+            min: 0,
+            required: true
         },
-        ingredientList: {
-            type: Array
+        sodium: {
+            type: Number,
+            min: 0,
+            required: true
         },
-        recipeUrl: {
-            type: String
+        totalCarbs: {
+            type: Number,
+            min: 0,
+            required: true
+        },
+        protein: {
+            type: Number,
+            min: 0,
+            required: true
+        }
+    },
+    ingredients: {
+        type: Array,
+        required: true
+    },
+    steps: {
+        type: Array,
+        required: true
+    },
+    notes: {
+        type: Array
+    },
+    recipeUrl: {
+        type: String,
+        required: function () {
+            return !this.userInput;
+        }
+    },
+    userInput: {
+        type: Boolean,
+        default: false,
+        required: function () {
+            return this.recipeUrl === '';
         }
     }
 });

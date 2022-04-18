@@ -1,5 +1,5 @@
 <template>
-	<dashboard-layout changeWidth>
+	<dashboard-layout changeWidth isActive="account-info">
 		<div class="main-container">
 			<header>
 				<h2>Your Account Information</h2>

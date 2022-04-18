@@ -11,6 +11,9 @@ router.get('/:id', favoriteMealController.getFavoriteMeal);
 // delete a favorite meal by id
 router.delete('/:id', favoriteMealController.deleteFavoriteMeal);
 
+// edit a favorite meal by id
+router.patch('/:id', favoriteMealController.editFavoriteMeal);
+
 // create a new favorite meal 
 router.post('/', favoriteMealController.addFavoriteMeal);
 

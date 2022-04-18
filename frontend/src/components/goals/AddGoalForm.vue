@@ -53,10 +53,11 @@
 </template>
 
 <script>
+import GoalService from "../../services/GoalService";
+
 export default {
 	data() {
 		return {
-			id: "",
 			title: "",
 			category: "",
 			startDate: "",
@@ -64,16 +65,15 @@ export default {
 		};
 	},
 	methods: {
-		submitForm() {
+		async submitForm() {
 			const newGoal = {
-				id: "4",
 				title: this.title,
 				category: this.category,
 				startDate: this.startDate,
 				endDate: this.endDate,
 			};
 
-			this.$store.dispatch("goals/addGoal", newGoal);
+			await GoalService.add(newGoal);
 			this.$router.replace("/goals");
 		},
 	},

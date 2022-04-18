@@ -1,5 +1,5 @@
 <template>
-	<form @submit.prevent="submitForm">
+	<form @submit.prevent="submitForm" v-if="selectedGoal">
 		<div class="form-control">
 			<label for="title" id="title-label">Title</label>
 			<input type="text" id="title" v-model="selectedGoal.title" />
@@ -59,6 +59,8 @@
 </template>
 
 <script>
+import GoalService from "../../services/GoalService";
+
 export default {
 	data() {
 		return {
@@ -80,9 +82,9 @@ export default {
 			this.$router.replace("/goals");
 		},
 	},
-	created() {
-		const goals = this.$store.getters["goals/goals"];
-		this.selectedGoal = goals.find((goal) => goal.id === this.id);
+	async created() {
+		const res = await GoalService.get(this.id);
+		this.selectedGoal = res.data;
 	},
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
 	<base-card class="main-container">
-		<h2>{{ upcomingMeal.dayOfWeek }}</h2>
+		<h2>{{ dayOfWeek }}</h2>
 		<base-button link to="/upcoming-meals" class="all-meals-btn"
 			>Back</base-button
 		>
@@ -14,15 +14,21 @@
 					<router-link :to="editMealLink">
 						<font-awesome-icon :icon="['fas', 'pen']" />
 					</router-link>
-					<font-awesome-icon :icon="['fas', 'x']" />
+					<font-awesome-icon @click="removeMeal(currentMeal._id)" :icon="['fas', 'x']" />
 				</div>
 
-				<h3>{{ currentMeal.item }}</h3>
+				<h3>{{ currentMeal.itemName }}</h3>
 
 				<div class="img-container">
-					<!-- {{ mealImgLink }}
-					<img :src="require('../../assets/' + mealImgLink)" alt="" /> -->
-					<img :src="mealImgLink" alt="" />
+					<img :src="require('../../assets/' + mealImgLink)" alt="" />
+				</div>
+
+				<div class="servings-container">
+					<p>Servings: {{ currentMeal.servings}}</p>
+				</div>
+
+				<div class="ready-time-container">
+					<p>Ready Time: {{ currentMeal.readyTime}}</p>
 				</div>
 
 				<div class="collapsible-container">
@@ -105,16 +111,17 @@
 			</base-card>
 			<base-button @click="nextMeal()">Next meal</base-button>
 		</div>
-		<p v-else>You don't have any meals planned!</p>
+		<p class="no-meals-paragraph" v-else>You don't have any meals planned!</p>
 	</base-card>
 </template>
 
 <script>
+import UpcomingMealService from "../../services/UpcomingMealService";
+
 export default {
 	props: ["dayOfWeek"],
 	data() {
 		return {
-			upcomingMeal: null,
 			meals: null,
 			currentMeal: null,
 			currentIndex: 0,
@@ -156,25 +163,41 @@ export default {
 					console.log("Error, there is no section to collapse");
 			}
 		},
+		async removeMeal(id) {
+			const res = await UpcomingMealService.delete(id);
+			const deletedMeal = res.data;
+			this.meals = this.meals.filter(meal => meal._id !== deletedMeal._id);
+			if(this.meals.length !== 0) {
+				this.currentMeal = this.meals[0];
+			}
+			else {
+				this.currentMeal = null;
+			}
+		}
 	},
 	computed: {
 		mealImgLink() {
-			return this.currentMeal.img.src;
+			return this.currentMeal.img;
 		},
 		editMealLink() {
-			return this.$route.path + "/edit/" + this.currentMeal.id;
+			return this.$route.path + "/edit/" + this.currentMeal._id;
 		},
 		addMealLink() {
 			return this.$route.path + "/add";
 		},
 	},
-	created() {
-		this.upcomingMeal = this.$store.getters["upcomingMeals/upcomingMeals"].find(
-			(upcomingMeal) => upcomingMeal.dayOfWeek === this.dayOfWeek
-		);
-		this.meals = this.upcomingMeal.meals;
-		if (this.meals.length !== 0) {
-			this.currentMeal = this.meals[0];
+	async created() {
+		try {
+			const res = await UpcomingMealService.getAllForDay(this.dayOfWeek);
+
+			this.meals = res.data;
+
+			if(this.meals.length !== 0) {
+				this.currentMeal = this.meals[0];
+			}
+		}
+		catch(err) {
+			console.log(err);
 		}
 	},
 };
@@ -191,6 +214,11 @@ export default {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	grid-gap: 1rem;
+}
+
+.no-meals-paragraph {
+	grid-column: 2 / 3;
+	text-align: center;
 }
 
 .meal-container .card {
@@ -271,7 +299,9 @@ export default {
 	font-size: 0.85rem;
 }
 
-.collapsible-container {
+.collapsible-container,
+.servings-container,
+.ready-time-container {
 	padding-bottom: 0.5rem;
 }
 
@@ -280,6 +310,7 @@ export default {
 	background-color: white;
 	cursor: pointer;
 	font-family: inherit;
+	font-size: inherit;
 }
 
 /* 

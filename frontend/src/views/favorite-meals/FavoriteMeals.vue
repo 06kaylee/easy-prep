@@ -1,16 +1,22 @@
 <template>
-	<dashboard-layout changeWidth>
+	<dashboard-layout changeWidth isActive="favorite-meals">
 		<div class="main-container">
 			<header>
 				<h2>Your Favorite Meals</h2>
+				<h4>
+					<router-link to="/favorite-meals/add" class="new-meal-link">
+						Add a favorite meal
+						<font-awesome-icon :icon="['fas', 'plus']" />
+					</router-link>
+				</h4>
 			</header>
 
 			<favorite-meal-item
 				v-for="favoriteMeal in favoriteMeals"
-				:key="favoriteMeal.id"
-				:id="favoriteMeal.id"
-				:title="favoriteMeal.title"
-				:imgLink="favoriteMeal.imgLink"
+				:key="favoriteMeal._id"
+				:id="favoriteMeal._id"
+				:itemName="favoriteMeal.itemName"
+				:img="favoriteMeal.img"
 			></favorite-meal-item>
 		</div>
 	</dashboard-layout>
@@ -19,17 +25,23 @@
 <script>
 import DashboardLayout from "../../components/layout/DashboardLayout.vue";
 import FavoriteMealItem from "../../components/favorite-meals/FavoriteMealItem.vue";
+import FavoriteMealService from "../../services/FavoriteMealService";
 
 export default {
 	components: {
 		DashboardLayout,
 		FavoriteMealItem,
 	},
-	computed: {
-		favoriteMeals() {
-			return this.$store.getters["favoriteMeals/favoriteMeals"];
-		},
+	data() {
+		return {
+			favoriteMeals: null
+		}
 	},
+	async created() {
+		const res = await FavoriteMealService.getAll();
+		const meals = res.data;
+		this.favoriteMeals = meals;
+	}
 };
 </script>
 
@@ -44,6 +56,12 @@ export default {
 	grid-column: 1 / 2;
 	display: flex;
 	justify-content: space-between;
+	padding-right: 2rem;
+}
+
+.new-meal-link {
+	text-decoration: none;
+	color: black;
 }
 
 /* if greater than or equal to 60rem */

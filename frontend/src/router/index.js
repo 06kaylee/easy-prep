@@ -2,13 +2,17 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "../views/HomePage.vue";
 import LoginModal from "../components/auth/LoginModal";
 import SignUpModal from "../components/auth/SignUpModal";
-import TheSearch from "../views/TheSearch.vue";
+import TheSearch from "../views/search/TheSearch.vue";
+import SearchResult from "../views/search/SearchResult.vue";
+import SearchResultDetail from "../views/search/SearchResultDetail.vue";
 import UserDashboard from "../views/UserDashboard.vue";
 import AccountInformation from "../views/settings/AccountInformation.vue";
 import PersonalInformation from "../views/settings/PersonalInformation.vue";
 import AddPersonalInformationPage from "../views/settings/AddPersonalInformationPage.vue";
 import FavoriteMeals from "../views/favorite-meals/FavoriteMeals.vue";
 import FavoriteMealsDetail from "../views/favorite-meals/FavoriteMealsDetail.vue";
+import AddFavoriteMealPage from "../views/favorite-meals/AddFavoriteMealPage.vue";
+import EditFavoriteMealPage from "../views/favorite-meals/EditFavoriteMealPage.vue";
 import UpcomingMeals from "../views/upcoming-meals/UpcomingMeals.vue";
 import UpcomingMealsDetail from "../views/upcoming-meals/UpcomingMealsDetail.vue";
 import EditUpcomingMealPage from "../views/upcoming-meals/EditUpcomingMealPage.vue";
@@ -27,6 +31,8 @@ const router = createRouter({
 		{ path: "/login", component: LoginModal },
 		{ path: "/sign-up", component: SignUpModal },
 		{ path: "/search", component: TheSearch },
+		{ path: "/search/results/", component: SearchResult },
+		{ path: "/search/results/:id", component: SearchResultDetail },
 		{ path: "/dashboard", component: UserDashboard },
 		{ path: "/account-info", component: AccountInformation },
 		{ path: "/personal-info", component: PersonalInformation },
@@ -40,6 +46,14 @@ const router = createRouter({
 			path: "/favorite-meals/:id",
 			component: FavoriteMealsDetail,
 			props: true,
+		},
+		{
+			path: "/favorite-meals/add",
+			component: AddFavoriteMealPage,
+		},
+		{
+			path: "/favorite-meals/:id/edit",
+			component: EditFavoriteMealPage
 		},
 		{ path: "/upcoming-meals", component: UpcomingMeals },
 		{
@@ -59,8 +73,8 @@ const router = createRouter({
 		{ path: "/budget", component: UserBudget },
 		{ path: "/edit-budget/:id", component: EditBudgetPage, props: true },
 		{ path: "/goals", component: UserGoals },
-		{ path: "/edit-goals/:id", component: EditGoalsPage, props: true },
-		{ path: "/add-goal", component: AddGoalPage },
+		{ path: "/edit/:id", component: EditGoalsPage, props: true },
+		{ path: "/add", component: AddGoalPage },
 		{ path: "/:notFound(.*)", component: NotFound },
 	],
 });

@@ -1,5 +1,5 @@
 <template>
-	<dashboard-layout changeWidth>
+	<dashboard-layout changeWidth isActive="budget">
 		<div class="main-container">
 			<header>
 				<h2>Your Budget</h2>
