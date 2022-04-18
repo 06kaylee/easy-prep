@@ -1,32 +1,36 @@
 <template>
-    <div v-if="results">
+	<div v-if="results">
 		<h1 class="result-title">Search Results</h1>
 		<div class="loading-container" v-if="isLoading">
 			<base-spinner></base-spinner>
 		</div>
 		<base-card class="results-container" v-if="!isLoading">
 			<base-card v-for="result in results" :key="result">
-				<h2 class="title">{{ result.title }}</h2>
-				<div class="img-container">
-					<img :src="result.image" alt="result.title" />
-				</div>
+				<router-link
+					:to="'/search/results/' + result.id + '?q=' + this.$route.query.q"
+				>
+					<h2 class="title">{{ result.title }}</h2>
+					<div class="img-container">
+						<img :src="result.image" alt="result.title" />
+					</div>
+				</router-link>
 			</base-card>
 		</base-card>
-    </div>
+	</div>
 </template>
 
 <script>
 import SearchService from "../../services/SearchService";
 
 export default {
-    data() {
-        return {
-            results: [],
-			isLoading: false
-        }
-    },
-    methods: {
-        openModal() {
+	data() {
+		return {
+			results: [],
+			isLoading: false,
+		};
+	},
+	methods: {
+		openModal() {
 			const modal = this.$refs.modal;
 			modal.showModal();
 		},
@@ -34,20 +38,21 @@ export default {
 			const modal = this.$refs.modal;
 			modal.close();
 		},
-    },
-    async created() {
+	},
+	async created() {
 		this.isLoading = true;
-        console.log(this.$route.query);
-		if((this.$route.query.q).indexOf(' ') !== -1) {
-			this.$route.query.q = (this.$route.query.q).replace(/\s+/g, '&');
+		console.log(this.$route.query);
+		if (this.$route.query.q.indexOf(" ") !== -1) {
+			this.$route.query.q = this.$route.query.q.replace(/\s+/g, "&");
 			console.log(this.$route.query.q);
 		}
 		const res = await SearchService.searchByName(this.$route.query.q);
 		console.log(res.data.results);
 		this.results = res.data.results;
+		this.$store.dispatch("searchResults/addResults", this.results);
 		this.isLoading = false;
-    }
-}
+	},
+};
 </script>
 
 <style scoped>
@@ -64,6 +69,12 @@ div > .results-container {
 
 div > .results-container > .card {
 	height: max(87%, 16rem);
+}
+
+div > .results-container > .card > a {
+	text-decoration: none;
+	color: black;
+	cursor: pointer;
 }
 
 .loading-container {

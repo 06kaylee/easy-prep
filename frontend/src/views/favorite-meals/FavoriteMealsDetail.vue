@@ -1,7 +1,9 @@
 <template>
 	<div>
 		<div class="back-btn-container">
-			<base-button link to="/favorite-meals">Back to all favorite meals</base-button>
+			<base-button link to="/favorite-meals"
+				>Back to all favorite meals</base-button
+			>
 		</div>
 
 		<div class="container" v-if="selectedFavoriteMeal">
@@ -13,7 +15,9 @@
 							<font-awesome-icon v-if="isLiked" :icon="['fas', 'heart']" />
 							<font-awesome-icon v-else :icon="['far', 'heart']" />
 						</button>
-						<router-link :to="'/favorite-meals/' + selectedFavoriteMeal._id + '/edit'">
+						<router-link
+							:to="'/favorite-meals/' + selectedFavoriteMeal._id + '/edit'"
+						>
 							<font-awesome-icon :icon="['fas', 'pen']" />
 						</router-link>
 					</div>
@@ -28,25 +32,40 @@
 			<dialog class="modal" ref="modal">
 				<div class="modal-content-container">
 					<button @click="closeModal" class="close-modal-btn">
-							<font-awesome-icon :icon="['fas', 'x']" />
+						<font-awesome-icon :icon="['fas', 'x']" />
 					</button>
 					<h2>Choose a Day</h2>
 					<form method="dialog">
 						<label for="day-of-week"></label>
 						<select name="day-of-week" id="day-of-week" v-model="dayToSaveTo">
-							<option v-for="dayOfWeek in daysOfWeek" :key="dayOfWeek" :value="dayOfWeek">{{ dayOfWeek }}</option>
+							<option
+								v-for="dayOfWeek in daysOfWeek"
+								:key="dayOfWeek"
+								:value="dayOfWeek"
+							>
+								{{ dayOfWeek }}
+							</option>
 						</select>
-						<base-button class="save-modal-btn" @click="saveToUpcomingMeals()">Save</base-button>
+						<base-button class="save-modal-btn" @click="saveToUpcomingMeals()"
+							>Save</base-button
+						>
 					</form>
 				</div>
 			</dialog>
 
 			<div class="img-container grid-col-span-3 medium-padding-bottom">
-				<img :src="require('../../assets/' + selectedFavoriteMeal.img)" alt="" />
+				<img
+					:src="require('../../assets/' + selectedFavoriteMeal.img)"
+					alt=""
+				/>
 			</div>
 			<ul class="main-ul grid-col-span-3">
-				<li class="light-padding-bottom">Servings: {{ selectedFavoriteMeal.servings }}</li>
-				<li class="light-padding-bottom">Ready Time: {{ selectedFavoriteMeal.readyTime }}</li>
+				<li class="light-padding-bottom">
+					Servings: {{ selectedFavoriteMeal.servings }}
+				</li>
+				<li class="light-padding-bottom">
+					Ready Time(minutes): {{ selectedFavoriteMeal.readyTime }}
+				</li>
 				<li class="light-padding-bottom collapsible-li">
 					<button @click="setCollapsible('nutrition facts')">
 						Nutrition Facts
@@ -58,10 +77,12 @@
 					</button>
 					<ul v-if="!isNutritionFactsCollapsed">
 						<li
-							v-for="nutritionFact in selectedFavoriteMeal.nutritionFacts"
+							v-for="(
+								nutritionFact, key
+							) in selectedFavoriteMeal.nutritionFacts"
 							:key="nutritionFact"
 						>
-							{{ nutritionFact }}
+							<p>{{ ingredientLabels[key].label }}: {{ nutritionFact }}</p>
 						</li>
 					</ul>
 				</li>
@@ -75,7 +96,10 @@
 						<font-awesome-icon v-else :icon="['fas', 'angle-up']" />
 					</button>
 					<ul v-if="!isIngredientListCollapsed">
-						<li v-for="ingredient in selectedFavoriteMeal.ingredients" :key="ingredient">
+						<li
+							v-for="ingredient in selectedFavoriteMeal.ingredients"
+							:key="ingredient"
+						>
 							{{ ingredient }}
 						</li>
 					</ul>
@@ -116,7 +140,9 @@
 				<li class="light-padding-bottom">
 					<p v-if="selectedFavoriteMeal.recipeUrl">
 						Recipe from:
-						<a :href="selectedFavoriteMeal.recipeUrl">{{ selectedFavoriteMeal.recipeUrl }}</a>
+						<a :href="selectedFavoriteMeal.recipeUrl">{{
+							selectedFavoriteMeal.recipeUrl
+						}}</a>
 					</p>
 					<p v-else>Recipe created by you</p>
 				</li>
@@ -141,7 +167,27 @@ export default {
 			isStepsCollapsed: true,
 			isNotesCollapsed: true,
 			daysOfWeek: ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"],
-			dayToSaveTo: 'Mon'
+			dayToSaveTo: "Mon",
+			ingredientLabels: {
+				calories: {
+					label: "Calories",
+				},
+				totalFat: {
+					label: "Total Fat",
+				},
+				cholesterol: {
+					label: "Cholesterol",
+				},
+				totalCarbs: {
+					label: "Total Carbs",
+				},
+				protein: {
+					label: "Protein",
+				},
+				sodium: {
+					label: "Sodium",
+				},
+			},
 		};
 	},
 	methods: {
@@ -195,15 +241,15 @@ export default {
 		async removeMeal() {
 			const res = await FavoriteMealService.delete(this.id);
 			console.log(res.data);
-			this.$router.replace('/favorite-meals');
+			this.$router.replace("/favorite-meals");
 		},
 		async saveToUpcomingMeals() {
 			const mealToSave = {
 				...this.selectedFavoriteMeal,
-				dayOfWeek: this.dayToSaveTo
+				dayOfWeek: this.dayToSaveTo,
 			};
 			await UpcomingMealService.add(mealToSave);
-		}
+		},
 	},
 	async created() {
 		const res = await FavoriteMealService.get(this.id);

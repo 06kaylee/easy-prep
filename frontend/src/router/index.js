@@ -32,7 +32,7 @@ const router = createRouter({
 		{ path: "/sign-up", component: SignUpModal },
 		{ path: "/search", component: TheSearch },
 		{ path: "/search/results/", component: SearchResult },
-		{ path: "/search/results/:id", component: SearchResultDetail },
+		{ path: "/search/results/:id", component: SearchResultDetail, props: true },
 		{ path: "/dashboard", component: UserDashboard },
 		{ path: "/account-info", component: AccountInformation },
 		{ path: "/personal-info", component: PersonalInformation },
@@ -53,7 +53,7 @@ const router = createRouter({
 		},
 		{
 			path: "/favorite-meals/:id/edit",
-			component: EditFavoriteMealPage
+			component: EditFavoriteMealPage,
 		},
 		{ path: "/upcoming-meals", component: UpcomingMeals },
 		{

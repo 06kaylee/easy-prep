@@ -14,7 +14,10 @@
 					<router-link :to="editMealLink">
 						<font-awesome-icon :icon="['fas', 'pen']" />
 					</router-link>
-					<font-awesome-icon @click="removeMeal(currentMeal._id)" :icon="['fas', 'x']" />
+					<font-awesome-icon
+						@click="removeMeal(currentMeal._id)"
+						:icon="['fas', 'x']"
+					/>
 				</div>
 
 				<h3>{{ currentMeal.itemName }}</h3>
@@ -24,11 +27,11 @@
 				</div>
 
 				<div class="servings-container">
-					<p>Servings: {{ currentMeal.servings}}</p>
+					<p>Servings: {{ currentMeal.servings }}</p>
 				</div>
 
 				<div class="ready-time-container">
-					<p>Ready Time: {{ currentMeal.readyTime}}</p>
+					<p>Ready Time(minutes): {{ currentMeal.readyTime }}</p>
 				</div>
 
 				<div class="collapsible-container">
@@ -42,10 +45,10 @@
 					</button>
 					<ul v-if="!isNutritionFactsCollapsed">
 						<li
-							v-for="nutritionFact in currentMeal.nutritionFacts"
+							v-for="(nutritionFact, key) in currentMeal.nutritionFacts"
 							:key="nutritionFact"
 						>
-							{{ nutritionFact }}
+							<p>{{ ingredientLabels[key].label }}: {{ nutritionFact }}</p>
 						</li>
 					</ul>
 				</div>
@@ -129,6 +132,26 @@ export default {
 			isIngredientListCollapsed: true,
 			isStepsCollapsed: true,
 			isNotesCollapsed: true,
+			ingredientLabels: {
+				calories: {
+					label: "Calories",
+				},
+				totalFat: {
+					label: "Total Fat",
+				},
+				cholesterol: {
+					label: "Cholesterol",
+				},
+				totalCarbs: {
+					label: "Total Carbs",
+				},
+				protein: {
+					label: "Protein",
+				},
+				sodium: {
+					label: "Sodium",
+				},
+			},
 		};
 	},
 	methods: {
@@ -166,14 +189,13 @@ export default {
 		async removeMeal(id) {
 			const res = await UpcomingMealService.delete(id);
 			const deletedMeal = res.data;
-			this.meals = this.meals.filter(meal => meal._id !== deletedMeal._id);
-			if(this.meals.length !== 0) {
+			this.meals = this.meals.filter((meal) => meal._id !== deletedMeal._id);
+			if (this.meals.length !== 0) {
 				this.currentMeal = this.meals[0];
-			}
-			else {
+			} else {
 				this.currentMeal = null;
 			}
-		}
+		},
 	},
 	computed: {
 		mealImgLink() {
@@ -192,11 +214,11 @@ export default {
 
 			this.meals = res.data;
 
-			if(this.meals.length !== 0) {
+			if (this.meals.length !== 0) {
 				this.currentMeal = this.meals[0];
+				console.log(this.currentMeal.nutritionFacts);
 			}
-		}
-		catch(err) {
+		} catch (err) {
 			console.log(err);
 		}
 	},
