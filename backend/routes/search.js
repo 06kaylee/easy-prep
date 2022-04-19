@@ -10,7 +10,7 @@ const API_KEY = process.env.API_KEY;
 router.get("/", async (req, res) => {
 	try {
 		await axios
-			.get(`${API_URL_COMPLEX}?query=${req.query.q}&number=1&apiKey=${API_KEY}`)
+			.get(`${API_URL_COMPLEX}?query=${req.query.q}&number=3&apiKey=${API_KEY}`)
 			.then((response) => {
 				res.send(response.data);
 			});
