@@ -17,4 +17,5 @@ router.patch('/:id', favoriteMealController.editFavoriteMeal);
 // create a new favorite meal 
 router.post('/', favoriteMealController.addFavoriteMeal);
 
+//export router
 module.exports = router;
