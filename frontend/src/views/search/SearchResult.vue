@@ -49,7 +49,6 @@ export default {
 		const res = await SearchService.searchByName(this.$route.query.q);
 		console.log(res.data.results);
 		this.results = res.data.results;
-		this.$store.dispatch("searchResults/addResults", this.results);
 		this.isLoading = false;
 	},
 };

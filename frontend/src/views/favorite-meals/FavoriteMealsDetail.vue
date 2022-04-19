@@ -8,24 +8,22 @@
 
 		<div class="container" v-if="selectedFavoriteMeal">
 			<header class="grid-col-span-3 medium-padding-bottom">
-				<h2>
-					{{ selectedFavoriteMeal.itemName }}
-					<div class="icons">
-						<button class="like-btn" @click="toggleLikeBtn">
-							<font-awesome-icon v-if="isLiked" :icon="['fas', 'heart']" />
-							<font-awesome-icon v-else :icon="['far', 'heart']" />
-						</button>
-						<router-link
-							:to="'/favorite-meals/' + selectedFavoriteMeal._id + '/edit'"
-						>
-							<font-awesome-icon :icon="['fas', 'pen']" />
-						</router-link>
-					</div>
-				</h2>
-				<button class="add-to-upcoming-btn" @click="openModal">
-					Add to upcoming meals
-					<font-awesome-icon :icon="['fas', 'plus']" />
-				</button>
+				<h2>{{ selectedFavoriteMeal.itemName }}</h2>
+				<div class="icons">
+					<button class="like-btn" @click="toggleLikeBtn">
+						<font-awesome-icon v-if="isLiked" :icon="['fas', 'heart']" />
+						<font-awesome-icon v-else :icon="['far', 'heart']" />
+					</button>
+					<router-link
+						:to="'/favorite-meals/' + selectedFavoriteMeal._id + '/edit'"
+						class="edit-btn"
+					>
+						<font-awesome-icon :icon="['fas', 'pen']" />
+					</router-link>
+					<button class="add-to-upcoming-btn" @click="openModal">
+						<font-awesome-icon :icon="['fas', 'plus']" />
+					</button>
+				</div>
 			</header>
 
 			<!-- modal pop up -->
@@ -54,10 +52,7 @@
 			</dialog>
 
 			<div class="img-container grid-col-span-3 medium-padding-bottom">
-				<img
-					:src="require('../../assets/' + selectedFavoriteMeal.img)"
-					alt=""
-				/>
+				<img :src="mealImgLink" alt="" />
 			</div>
 			<ul class="main-ul grid-col-span-3">
 				<li class="light-padding-bottom">
@@ -189,6 +184,11 @@ export default {
 				},
 			},
 		};
+	},
+	computed: {
+		mealImgLink() {
+			return this.selectedFavoriteMeal.img === 'sample-logo.jpg' ? require('../../assets/' + this.selectedFavoriteMeal.img) : this.selectedFavoriteMeal.img;
+		}
 	},
 	methods: {
 		toggleLikeBtn() {
@@ -332,6 +332,7 @@ export default {
 	font-size: inherit;
 	font-weight: bold;
 	cursor: pointer;
+	font-size: 1.3rem;
 }
 
 .grid-col-span-3 {
@@ -409,8 +410,11 @@ p styles for notes
 	border: none;
 	background: none;
 	font-size: 1.4rem;
-	padding-left: 0.5rem;
 	cursor: pointer;
+}
+
+.edit-btn {
+	align-self: center;
 }
 
 .fa-pen {
@@ -423,11 +427,9 @@ p styles for notes
 }
 
 .icons {
-	display: inline;
-}
+	display: flex;
+	gap: 1rem;
 
-.icons > button {
-	padding-right: 1.5rem;
 }
 
 .new-meal-link {

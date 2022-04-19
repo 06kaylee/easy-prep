@@ -1,20 +1,20 @@
 <template>
 	<div>
-		<div class="back-btn-container">
+		<div class="loading-container" v-if="isLoading">
+			<base-spinner></base-spinner>
+		</div>
+		<div class="main-content" v-else>
+			<div class="back-btn-container">
 			<base-button link :to="'/search/results?q=' + this.$route.query.q"
 				>Back to all search results</base-button
 			>
-		</div>
+			</div>
 
-		<div class="container" v-if="selectedResult">
+			<div class="container" v-if="selectedResult">
 			<header class="grid-col-span-3 medium-padding-bottom">
 				<h2>
 					{{ selectedResult.title }}
 				</h2>
-				<button class="add-to-upcoming-btn" @click="openModal">
-					Add to upcoming meals
-					<font-awesome-icon :icon="['fas', 'plus']" />
-				</button>
 			</header>
 
 			<!-- modal pop up -->
@@ -23,21 +23,30 @@
 					<button @click="closeModal" class="close-modal-btn">
 						<font-awesome-icon :icon="['fas', 'x']" />
 					</button>
-					<h2>Choose a Day</h2>
+					<h2>Where would you like to save?</h2>
 					<form method="dialog">
-						<label for="day-of-week"></label>
-						<select name="day-of-week" id="day-of-week" v-model="dayToSaveTo">
-							<option
-								v-for="dayOfWeek in daysOfWeek"
-								:key="dayOfWeek"
-								:value="dayOfWeek"
-							>
-								{{ dayOfWeek }}
-							</option>
-						</select>
-						<base-button class="save-modal-btn" @click="saveToUpcomingMeals()"
-							>Save</base-button
-						>
+						<div class="form-container">
+							<input type="radio" id="favorite-meals" name="meal-selection" value="favorite-meals" v-model="mealSelection">
+							<label for="favorite-meals">Favorite Meals</label><br>
+							<input type="radio" id="upcoming-meals" name="meal-selection" value="upcoming-meals" v-model="mealSelection">
+							<label for="upcoming-meals">Upcoming Meals</label><br>
+						</div>
+						<div class="form-container" v-if="mealSelection === 'upcoming-meals'">
+							<label for="day-of-week"></label>
+							<select name="day-of-week" id="day-of-week" v-model="dayToSaveTo">
+								<option
+									v-for="dayOfWeek in daysOfWeek"
+									:key="dayOfWeek"
+									:value="dayOfWeek"
+								>
+									{{ dayOfWeek }}
+								</option>
+							</select>
+							<base-button class="save-modal-btn" @click="saveToUpcomingMeals()">Save</base-button>
+						</div>
+						<div class="form-container" v-else>
+							<base-button class="save-modal-btn" @click="saveToFavoriteMeals()">Save</base-button>
+						</div>
 					</form>
 				</div>
 			</dialog>
@@ -139,13 +148,14 @@
 				<li class="light-padding-bottom">
 					<p>
 						Recipe from:
-						<a :href="selectedResult.sourceUrl">
+						<a :href="selectedResult.sourceUrl" class="recipe-url">
 							{{ selectedResult.sourceUrl }}
 						</a>
 					</p>
 				</li>
 			</ul>
-			<base-button v-if="!isLiked" @click="removeMeal">Save</base-button>
+			<base-button @click="openModal">Save</base-button>
+			</div>
 		</div>
 	</div>
 </template>
@@ -153,6 +163,7 @@
 <script>
 import SearchService from "../../services/SearchService";
 import UpcomingMealService from "../../services/UpcomingMealService";
+import FavoriteMealService from "../../services/FavoriteMealService";
 
 export default {
 	props: ["id"],
@@ -165,6 +176,8 @@ export default {
 			isNotesCollapsed: true,
 			daysOfWeek: ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"],
 			dayToSaveTo: "Mon",
+			mealSelection: '',
+			isLoading: false,
 			ingredientLabels: {
 				calories: {
 					label: "Calories",
@@ -219,17 +232,69 @@ export default {
 			this.dayToSaveTo = event.target.value;
 		},
 		async saveToUpcomingMeals() {
+			const ingredients = [];
+			const steps = [];
+			for(const ingredient of this.selectedResult.nutrition.ingredients) {
+				ingredients.push(ingredient.name);
+			}
+			for(const step of this.selectedResult.analyzedInstructions[0].steps) {
+				steps.push(step.step);
+			}
 			const mealToSave = {
-				...this.selectedResult,
 				dayOfWeek: this.dayToSaveTo,
+				itemName: this.selectedResult.title,
+				img: this.selectedResult.image,
+				servings: this.selectedResult.servings,
+				readyTime: this.selectedResult.readyInMinutes,
+				nutritionFacts: {
+					calories: this.selectedResult.nutrition.nutrients[0].amount,
+					totalFat: this.selectedResult.nutrition.nutrients[1].amount,
+					cholesterol: this.selectedResult.nutrition.nutrients[6].amount,
+					sodium: this.selectedResult.nutrition.nutrients[7].amount,
+					totalCarbs: this.selectedResult.nutrition.nutrients[3].amount,
+					protein: this.selectedResult.nutrition.nutrients[9].amount,
+				},
+				ingredients: ingredients,
+				steps: steps,
+				recipeUrl: this.selectedResult.sourceUrl
 			};
 			await UpcomingMealService.add(mealToSave);
 		},
+		async saveToFavoriteMeals() {
+			const ingredients = [];
+			const steps = [];
+			for(const ingredient of this.selectedResult.nutrition.ingredients) {
+				ingredients.push(ingredient.name);
+			}
+			for(const step of this.selectedResult.analyzedInstructions[0].steps) {
+				steps.push(step.step);
+			}
+			const mealToSave = {
+				itemName: this.selectedResult.title,
+				img: this.selectedResult.image,
+				servings: this.selectedResult.servings,
+				readyTime: this.selectedResult.readyInMinutes,
+				nutritionFacts: {
+					calories: this.selectedResult.nutrition.nutrients[0].amount,
+					totalFat: this.selectedResult.nutrition.nutrients[1].amount,
+					cholesterol: this.selectedResult.nutrition.nutrients[6].amount,
+					sodium: this.selectedResult.nutrition.nutrients[7].amount,
+					totalCarbs: this.selectedResult.nutrition.nutrients[3].amount,
+					protein: this.selectedResult.nutrition.nutrients[9].amount,
+				},
+				ingredients: ingredients,
+				steps: steps,
+				recipeUrl: this.selectedResult.sourceUrl
+			};
+			await FavoriteMealService.add(mealToSave);
+		},
 	},
 	async created() {
+		this.isLoading = true;
 		const res = await SearchService.getInfo(this.id);
-		// this.selectedResult = res.data.results;
+		console.log(res.data);
 		this.selectedResult = res.data;
+		this.isLoading = false;
 	},
 };
 </script>
@@ -337,6 +402,10 @@ export default {
 	list-style-type: none;
 }
 
+.recipe-url {
+	font-size: 0.8rem;
+}
+
 ul button {
 	border: none;
 	background: transparent;
@@ -409,5 +478,9 @@ p styles for notes
 .new-meal-link {
 	color: black;
 	text-decoration: none;
+}
+
+.loading-container {
+	margin-top: 15rem;
 }
 </style>

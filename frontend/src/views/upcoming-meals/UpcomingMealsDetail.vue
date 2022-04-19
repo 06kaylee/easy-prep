@@ -23,7 +23,7 @@
 				<h3>{{ currentMeal.itemName }}</h3>
 
 				<div class="img-container">
-					<img :src="require('../../assets/' + mealImgLink)" alt="" />
+					<img :src="mealImgLink" alt="" />
 				</div>
 
 				<div class="servings-container">
@@ -107,7 +107,7 @@
 				<div class="created-by-container">
 					<p v-if="currentMeal.recipeUrl">
 						Recipe from:
-						<a :href="currentMeal.recipeUrl">{{ currentMeal.recipeUrl }}</a>
+						<a :href="currentMeal.recipeUrl" class="recipe-link">{{ currentMeal.recipeUrl }}</a>
 					</p>
 					<p v-else>Recipe created by you</p>
 				</div>
@@ -198,15 +198,18 @@ export default {
 		},
 	},
 	computed: {
-		mealImgLink() {
-			return this.currentMeal.img;
-		},
+		// mealImgLink() {
+		// 	return this.currentMeal.img;
+		// },
 		editMealLink() {
 			return this.$route.path + "/edit/" + this.currentMeal._id;
 		},
 		addMealLink() {
 			return this.$route.path + "/add";
 		},
+		mealImgLink() {
+			return this.currentMeal.img === 'sample-logo.jpg' ? require('../../assets/' + this.currentMeal.img) : this.currentMeal.img;
+		}
 	},
 	async created() {
 		try {
@@ -309,6 +312,7 @@ export default {
 .img-container {
 	max-width: 100%;
 	max-height: 100%;
+	margin: 0.5rem 0 1rem 0;
 }
 
 .img-container img {
@@ -355,5 +359,9 @@ p styles for notes
 */
 .collapsible-container p {
 	margin-left: 1rem;
+}
+
+.recipe-link {
+	font-size: 0.75rem;
 }
 </style>

@@ -3,7 +3,7 @@
 		<router-link :to="favoriteMealDetailLink">
 			<h3 class="recipe-name">{{ itemName }}</h3>
 			<div class="img-container">
-				<img :src="require('../../assets/' + img)" :alt="itemName" />
+				<img :src="mealImgLink" :alt="itemName" />
 			</div>
 		</router-link>
 	</base-card>
@@ -29,6 +29,9 @@ export default {
 		favoriteMealDetailLink() {
 			return this.$route.path + "/" + this.id;
 		},
+		mealImgLink() {
+			return this.img === 'sample-logo.jpg' ? require('../../assets/' + this.img) : this.img;
+		}
 	},
 };
 </script>

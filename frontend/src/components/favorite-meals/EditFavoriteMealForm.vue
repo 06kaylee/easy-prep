@@ -128,6 +128,7 @@
 
 		<!-- Ingredients -->
 		<h3>Ingredients</h3>
+		{{selectedMeal.ingredients}}
 		<div
 			class="form-control ingredients"
 			v-for="(ingredient, index) in selectedMeal.ingredients"
