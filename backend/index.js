@@ -8,8 +8,6 @@ const searchRoutes = require("./routes/search");
 
 const app = express();
 
-const port = process.env.PORT || 3000;
-
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -25,6 +23,17 @@ app.use('/api/upcoming-meals', upcomingMealRoutes);
 
 // Search routes
 app.use('/api/search', searchRoutes);
+
+// handle production
+if(process.env.NODE_ENV === "production") {
+	// static folder 
+	app.use(express.static(__dirname + '/public'));
+
+	// spa
+	app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'));
+}
+
+const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
 	console.log(`Server is listening on port ${port}`);
