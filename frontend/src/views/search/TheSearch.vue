@@ -10,13 +10,19 @@
 						placeholder="Search by name, ingredient, genre, chef, etc."
 						v-model="searchQuery"
 					/>
-					<base-button link :to="searchResultsLink" class="search-btn-container">
-						<font-awesome-icon class="search-btn" :icon="['fas', 'magnifying-glass']" />
+					<base-button
+						link
+						:to="searchResultsLink"
+						class="search-btn-container"
+					>
+						<font-awesome-icon
+							class="search-btn"
+							:icon="['fas', 'magnifying-glass']"
+						/>
 					</base-button>
 					<a class="advanced-search" href="">Advanced Search</a>
 				</div>
 			</form>
-			
 		</div>
 
 		<div class="sample-recipes-container">
@@ -59,19 +65,19 @@ export default {
 			currentData: null,
 			currentIndex: 0,
 			sampleCardsCollapsed: false,
-			searchQuery: ''
+			searchQuery: "",
 		};
 	},
 	computed: {
 		searchResultsLink() {
 			// return `${this.$route.path}/results?q=${this.searchQuery}`;
 			return {
-				path: '/search/results/',
+				path: "/search/results/",
 				query: {
-					q: this.searchQuery
-				}
-			}
-		}
+					q: this.searchQuery,
+				},
+			};
+		},
 	},
 	methods: {
 		nextData() {
@@ -90,14 +96,14 @@ export default {
 			}
 		},
 		setInitialScreen() {
-			if(window.innerWidth <= 1200) {
+			if (window.innerWidth <= 1200) {
 				this.sampleCardsCollapsed = true;
 			}
 		},
 		submitSearch() {
 			console.log(this.searchQuery);
 			this.searchQuery = "";
-		}
+		},
 	},
 	created() {
 		this.currentData = this.sampleData[0];
@@ -139,9 +145,14 @@ form {
 #search-input {
 	width: 43rem;
 	padding: 0.8rem;
-	border: 2px solid lightgray;
+	border: 2px solid #94618e;
 	border-radius: 22px;
 	margin-bottom: 0.5rem;
+}
+
+#search-input:focus {
+	outline: none;
+	border: 2px solid #94618e;
 }
 
 .search-btn-container {
@@ -163,7 +174,7 @@ form {
 	display: flex;
 	justify-content: end;
 	font-size: 0.8rem;
-	color: blue;
+	color: black;
 }
 
 .sample-recipes-container {
@@ -179,6 +190,7 @@ form {
 	grid-template-columns: repeat(3, 1fr);
 	margin: 10rem auto;
 	align-items: center;
+	background: white;
 }
 
 @media screen and (max-width: 75rem) {

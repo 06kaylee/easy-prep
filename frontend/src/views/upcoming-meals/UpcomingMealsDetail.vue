@@ -107,7 +107,9 @@
 				<div class="created-by-container">
 					<p v-if="currentMeal.recipeUrl">
 						Recipe from:
-						<a :href="currentMeal.recipeUrl" class="recipe-link">{{ currentMeal.recipeUrl }}</a>
+						<a :href="currentMeal.recipeUrl" class="recipe-link">{{
+							currentMeal.recipeUrl
+						}}</a>
 					</p>
 					<p v-else>Recipe created by you</p>
 				</div>
@@ -208,8 +210,10 @@ export default {
 			return this.$route.path + "/add";
 		},
 		mealImgLink() {
-			return this.currentMeal.img === 'sample-logo.jpg' ? require('../../assets/' + this.currentMeal.img) : this.currentMeal.img;
-		}
+			return this.currentMeal.img === "sample-logo.jpg"
+				? require("../../assets/" + this.currentMeal.img)
+				: this.currentMeal.img;
+		},
 	},
 	async created() {
 		try {
@@ -239,6 +243,7 @@ export default {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	grid-gap: 1rem;
+	background: white;
 }
 
 .no-meals-paragraph {
@@ -316,6 +321,7 @@ export default {
 }
 
 .img-container img {
+	border-radius: 1rem;
 	width: 50%;
 	display: block;
 	margin: auto;

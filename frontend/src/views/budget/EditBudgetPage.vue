@@ -15,3 +15,9 @@ export default {
 	props: ["id"],
 };
 </script>
+
+<style scoped>
+.card {
+	background: white;
+}
+</style>

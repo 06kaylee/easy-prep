@@ -21,10 +21,10 @@ export default {
 		EditFavoriteMealForm,
 	},
 	data() {
-        return {
-            id: this.$route.params.id
-        }
-    },
+		return {
+			id: this.$route.params.id,
+		};
+	},
 	computed: {
 		allFavoriteMealsLink() {
 			return `/favorite-meals/${this.id}`;
@@ -34,6 +34,10 @@ export default {
 </script>
 
 <style scoped>
+.edit-container > .card {
+	background: white;
+}
+
 .back-btn {
 	height: fit-content;
 }

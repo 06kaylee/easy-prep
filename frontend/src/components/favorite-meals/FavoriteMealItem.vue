@@ -30,8 +30,10 @@ export default {
 			return this.$route.path + "/" + this.id;
 		},
 		mealImgLink() {
-			return this.img === 'sample-logo.jpg' ? require('../../assets/' + this.img) : this.img;
-		}
+			return this.img === "sample-logo.jpg"
+				? require("../../assets/" + this.img)
+				: this.img;
+		},
 	},
 };
 </script>
@@ -65,6 +67,7 @@ div .card:hover {
 }
 
 .img-container img {
+	border-radius: 1rem;
 	max-width: 80%;
 	max-height: 80%;
 }
