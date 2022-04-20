@@ -35,6 +35,9 @@ export default {
 </script>
 
 <style scoped>
+.edit-container > .card {
+	background: white;
+}
 .back-btn {
 	height: fit-content;
 }

@@ -1,5 +1,5 @@
 <template>
-	<div class>
+	<div class="add-meal-container">
 		<div class="back-btn-container">
 			<base-button class="back-btn" link :to="allMealsLink"
 				>Back to all meals</base-button
@@ -34,6 +34,9 @@ export default {
 </script>
 
 <style scoped>
+.add-meal-container .card {
+	background: white;
+}
 .back-btn {
 	height: fit-content;
 }

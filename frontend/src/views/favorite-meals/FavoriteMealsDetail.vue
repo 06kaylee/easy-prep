@@ -187,8 +187,10 @@ export default {
 	},
 	computed: {
 		mealImgLink() {
-			return this.selectedFavoriteMeal.img === 'sample-logo.jpg' ? require('../../assets/' + this.selectedFavoriteMeal.img) : this.selectedFavoriteMeal.img;
-		}
+			return this.selectedFavoriteMeal.img === "sample-logo.jpg"
+				? require("../../assets/" + this.selectedFavoriteMeal.img)
+				: this.selectedFavoriteMeal.img;
+		},
 	},
 	methods: {
 		toggleLikeBtn() {
@@ -271,6 +273,7 @@ export default {
 	margin: auto;
 	border-radius: 1rem;
 	animation: fadeIn 1s;
+	background: white;
 }
 
 .modal-content-container {
@@ -356,6 +359,7 @@ export default {
 	height: fit-content;
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
+	background: white;
 }
 
 .main-ul {
@@ -397,6 +401,7 @@ p styles for notes
 }
 
 .img-container img {
+	border-radius: 1rem;
 	max-width: 100%;
 	max-height: 100%;
 }
@@ -429,7 +434,6 @@ p styles for notes
 .icons {
 	display: flex;
 	gap: 1rem;
-
 }
 
 .new-meal-link {

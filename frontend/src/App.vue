@@ -27,4 +27,8 @@ export default {
 html {
 	font-family: "Roboto Mono", sans-serif;
 }
+
+body {
+	background: #f8eee7;
+}
 </style>

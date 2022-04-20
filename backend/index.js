@@ -13,24 +13,25 @@ app.use(cors());
 app.use(express.json());
 
 // Goal routes
-app.use('/api/goals', goalRoutes);
+app.use("/api/goals", goalRoutes);
 
 // Favorite meal routes
-app.use('/api/favorite-meals', favoriteMealRoutes);
+app.use("/api/favorite-meals", favoriteMealRoutes);
 
 // Upcoming meal routes
-app.use('/api/upcoming-meals', upcomingMealRoutes);
+app.use("/api/upcoming-meals", upcomingMealRoutes);
 
 // Search routes
-app.use('/api/search', searchRoutes);
+app.use("/api/search", searchRoutes);
 
 // handle production
-if(process.env.NODE_ENV === "production") {
-	// static folder 
-	app.use(express.static(__dirname + '/public'));
+if (process.env.NODE_ENV === "production") {
+	console.log("production");
+	// static folder
+	app.use(express.static(__dirname + "/public"));
 
 	// spa
-	app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'));
+	app.get(/.*/, (req, res) => res.sendFile(__dirname + "/public/index.html"));
 }
 
 const port = process.env.PORT || 3000;

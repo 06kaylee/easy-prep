@@ -11,7 +11,7 @@
 			/>
 		</div>
 
-        <!-- Image -->
+		<!-- Image -->
 		<h3 v-if="selectedMeal.userInput">Image</h3>
 		<div class="form-control" v-if="selectedMeal.userInput">
 			<input
@@ -46,8 +46,8 @@
 			/>
 		</div>
 
-        <!-- servings -->
-        <div class="form-control">
+		<!-- servings -->
+		<div class="form-control">
 			<label for="servings" id="servings-label">Servings</label>
 			<input
 				type="number"
@@ -57,8 +57,8 @@
 			/>
 		</div>
 
-        <!-- ready time -->
-        <div class="form-control">
+		<!-- ready time -->
+		<div class="form-control">
 			<label for="ready-time" id="ready-time-label">Ready Time(minutes)</label>
 			<input
 				type="number"
@@ -128,41 +128,95 @@
 
 		<!-- Ingredients -->
 		<h3>Ingredients</h3>
-		{{selectedMeal.ingredients}}
 		<div
 			class="form-control ingredients"
 			v-for="(ingredient, index) in selectedMeal.ingredients"
 			:key="index"
 		>
-			<input type="text" v-model="selectedMeal.ingredients[index]" :readonly="selectedMeal.recipeUrl" />
-			<a @click="addField(selectedMeal.ingredients)" @keyup.enter="addField(selectedMeal.ingredients)" tabindex="0">
+			<input
+				type="text"
+				v-model="selectedMeal.ingredients[index]"
+				:readonly="selectedMeal.recipeUrl"
+			/>
+			<a
+				@click="addField(selectedMeal.ingredients)"
+				@keyup.enter="addField(selectedMeal.ingredients)"
+				tabindex="0"
+			>
 				<font-awesome-icon :icon="['fas', 'plus']" />
 			</a>
-			<a @click="removeField(index, selectedMeal.ingredients)" @keyup.enter="removeField(index, selectedMeal.ingredients)" tabindex="0">
+			<a
+				@click="removeField(index, selectedMeal.ingredients)"
+				@keyup.enter="removeField(index, selectedMeal.ingredients)"
+				tabindex="0"
+			>
 				<font-awesome-icon :icon="['fas', 'minus']" />
 			</a>
 		</div>
 
 		<!-- Steps -->
 		<h3>Steps</h3>
-		<div class="form-control steps" v-for="(step, index) in selectedMeal.steps" :key="index">
-			<textarea v-model="selectedMeal.steps[index]" cols="10" rows="5" :readonly="selectedMeal.recipeUrl"></textarea>
-			<a @click="addField(selectedMeal.steps)" @keyup.enter="addField(selectedMeal.steps)" tabindex="0">
+		<div
+			class="form-control steps"
+			v-for="(step, index) in selectedMeal.steps"
+			:key="index"
+		>
+			<textarea
+				v-model="selectedMeal.steps[index]"
+				cols="10"
+				rows="5"
+				:readonly="selectedMeal.recipeUrl"
+			></textarea>
+			<a
+				@click="addField(selectedMeal.steps)"
+				@keyup.enter="addField(selectedMeal.steps)"
+				tabindex="0"
+			>
 				<font-awesome-icon :icon="['fas', 'plus']" />
 			</a>
-			<a @click="removeField(index, selectedMeal.steps)" @keyup.enter="removeField(index, selectedMeal.steps)" tabindex="0">
+			<a
+				@click="removeField(index, selectedMeal.steps)"
+				@keyup.enter="removeField(index, selectedMeal.steps)"
+				tabindex="0"
+			>
 				<font-awesome-icon :icon="['fas', 'minus']" />
 			</a>
 		</div>
 
 		<!-- Notes -->
-		<h3 v-if="selectedMeal.notes">Notes</h3>
-		<div class="form-control notes" v-for="(note, index) in selectedMeal.notes" :key="index">
-			<textarea v-model="selectedMeal.notes[index]" cols="30" rows="10"></textarea>
-			<a @click="addField(selectedMeal.notes)" @keyup.enter="addField(selectedMeal.notes)" tabindex="0">
+		<div v-if="selectedMeal.notes.length === 0" class="form-control-notes">
+			<h3 class="notes-heading">Notes</h3>
+			<a
+				@click="addField(selectedMeal.notes)"
+				@keyup.enter="addField(selectedMeal.notes)"
+				tabindex="0"
+			>
 				<font-awesome-icon :icon="['fas', 'plus']" />
 			</a>
-			<a @click="removeField(index, selectedMeal.notes)" @keyup.enter="removeField(index, selectedMeal.notes)" tabindex="0">
+		</div>
+		<h3 v-else>Notes</h3>
+		<div
+			class="form-control notes"
+			v-for="(note, index) in selectedMeal.notes"
+			:key="index"
+		>
+			<textarea
+				v-model="selectedMeal.notes[index]"
+				cols="30"
+				rows="10"
+			></textarea>
+			<a
+				@click="addField(selectedMeal.notes)"
+				@keyup.enter="addField(selectedMeal.notes)"
+				tabindex="0"
+			>
+				<font-awesome-icon :icon="['fas', 'plus']" />
+			</a>
+			<a
+				@click="removeField(index, selectedMeal.notes)"
+				@keyup.enter="removeField(index, selectedMeal.notes)"
+				tabindex="0"
+			>
 				<font-awesome-icon :icon="['fas', 'minus']" />
 			</a>
 		</div>
@@ -190,7 +244,7 @@ export default {
 	methods: {
 		async submitForm() {
 			const res = await FavoriteMealService.edit(this.id, this.selectedMeal);
-            console.log(res.data);
+			console.log(res.data);
 			this.$router.replace(`/favorite-meals/${this.id}`);
 		},
 		onFileChange(event) {
@@ -216,7 +270,7 @@ export default {
 	},
 	async created() {
 		const res = await FavoriteMealService.get(this.id);
-        this.selectedMeal = res.data;
+		this.selectedMeal = res.data;
 	},
 };
 </script>
@@ -302,5 +356,13 @@ input {
 
 textarea {
 	margin-bottom: 0.5rem;
+}
+
+.form-control-notes {
+	display: flex;
+}
+
+.notes-heading {
+	margin-right: 0.5rem;
 }
 </style>

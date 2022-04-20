@@ -64,6 +64,7 @@ div > .results-container {
 	align-items: center;
 	column-gap: 2rem;
 	padding: 1rem 2rem 1rem 2rem;
+	background: white;
 }
 
 div > .results-container > .card {
@@ -88,6 +89,7 @@ div > .results-container > .card > a {
 }
 
 .img-container img {
+	border-radius: 1rem;
 	max-width: 80%;
 	max-height: 80%;
 }

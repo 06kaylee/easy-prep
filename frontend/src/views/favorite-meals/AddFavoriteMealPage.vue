@@ -1,5 +1,5 @@
 <template>
-	<div class>
+	<div class="add-meal-container">
 		<div class="back-btn-container">
 			<base-button class="back-btn" link :to="allFavoriteMealsLink"
 				>Back to all favorite meals</base-button
@@ -20,15 +20,19 @@ export default {
 	components: {
 		AddFavoriteMealForm,
 	},
-    computed: {
-        allFavoriteMealsLink() {
-            return '/favorite-meals';
-        }
-    }
+	computed: {
+		allFavoriteMealsLink() {
+			return "/favorite-meals";
+		},
+	},
 };
 </script>
 
 <style scoped>
+.add-meal-container > .card {
+	background: white;
+}
+
 .back-btn {
 	height: fit-content;
 }

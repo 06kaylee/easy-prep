@@ -1,10 +1,10 @@
 <template>
 	<header class="primary-header">
 		<div id="logo-container">
-			<a href="/">
-				<img src="../../assets/sample-logo.jpg" alt="" />
-			</a>
-			<router-link to="/">LogoName</router-link>
+			<router-link to="/">
+				<img src="../../assets/Easy-Prep.png" alt="" />
+			</router-link>
+			<!-- <router-link to="/">EasyPrep</router-link> -->
 		</div>
 
 		<button
@@ -18,7 +18,11 @@
 		</button>
 
 		<nav>
-			<ul id="primary-navigation" class="primary-navigation" :class="{ 'show-nav': !navCollapsed }">
+			<ul
+				id="primary-navigation"
+				class="primary-navigation"
+				:class="{ 'show-nav': !navCollapsed }"
+			>
 				<li>
 					<router-link to="/login">Login</router-link>
 				</li>
@@ -45,16 +49,15 @@
 export default {
 	data() {
 		return {
-			navCollapsed: true
-		}
+			navCollapsed: true,
+		};
 	},
 	methods: {
 		toggleNav() {
 			this.navCollapsed = !this.navCollapsed;
-
-		}
-	}
-}
+		},
+	},
+};
 </script>
 
 <style scoped>
@@ -63,6 +66,7 @@ body {
 }
 
 .primary-header {
+	background: #94618e;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -88,7 +92,7 @@ body {
 
 .primary-navigation a {
 	text-decoration: none;
-	color: black;
+	color: #f8eee7;
 }
 
 .mobile-nav-toggle {
@@ -111,6 +115,11 @@ body {
 		transform: translateX(100%); /* move 100% of its width off the page */
 		transition: 0.5s ease;
 		gap: 2rem;
+		background: rgba(248, 238, 231, 0.79);
+	}
+
+	.primary-navigation a {
+		color: black;
 	}
 
 	.show-nav {
@@ -151,6 +160,8 @@ body {
 #logo-container img {
 	max-width: 100%;
 	max-height: 100%;
+	width: 7rem;
+	height: 4rem;
 }
 
 a:hover {

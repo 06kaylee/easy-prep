@@ -5,156 +5,183 @@
 		</div>
 		<div class="main-content" v-else>
 			<div class="back-btn-container">
-			<base-button link :to="'/search/results?q=' + this.$route.query.q"
-				>Back to all search results</base-button
-			>
+				<base-button link :to="'/search/results?q=' + this.$route.query.q"
+					>Back to all search results</base-button
+				>
 			</div>
 
 			<div class="container" v-if="selectedResult">
-			<header class="grid-col-span-3 medium-padding-bottom">
-				<h2>
-					{{ selectedResult.title }}
-				</h2>
-			</header>
+				<header class="grid-col-span-3 medium-padding-bottom">
+					<h2>
+						{{ selectedResult.title }}
+					</h2>
+				</header>
 
-			<!-- modal pop up -->
-			<dialog class="modal" ref="modal">
-				<div class="modal-content-container">
-					<button @click="closeModal" class="close-modal-btn">
-						<font-awesome-icon :icon="['fas', 'x']" />
-					</button>
-					<h2>Where would you like to save?</h2>
-					<form method="dialog">
-						<div class="form-container">
-							<input type="radio" id="favorite-meals" name="meal-selection" value="favorite-meals" v-model="mealSelection">
-							<label for="favorite-meals">Favorite Meals</label><br>
-							<input type="radio" id="upcoming-meals" name="meal-selection" value="upcoming-meals" v-model="mealSelection">
-							<label for="upcoming-meals">Upcoming Meals</label><br>
-						</div>
-						<div class="form-container" v-if="mealSelection === 'upcoming-meals'">
-							<label for="day-of-week"></label>
-							<select name="day-of-week" id="day-of-week" v-model="dayToSaveTo">
-								<option
-									v-for="dayOfWeek in daysOfWeek"
-									:key="dayOfWeek"
-									:value="dayOfWeek"
+				<!-- modal pop up -->
+				<dialog class="modal" ref="modal">
+					<div class="modal-content-container">
+						<button @click="closeModal" class="close-modal-btn">
+							<font-awesome-icon :icon="['fas', 'x']" />
+						</button>
+						<h2>Where would you like to save?</h2>
+						<form method="dialog">
+							<div class="form-container">
+								<input
+									type="radio"
+									id="favorite-meals"
+									name="meal-selection"
+									value="favorite-meals"
+									v-model="mealSelection"
+								/>
+								<label for="favorite-meals">Favorite Meals</label><br />
+								<input
+									type="radio"
+									id="upcoming-meals"
+									name="meal-selection"
+									value="upcoming-meals"
+									v-model="mealSelection"
+								/>
+								<label for="upcoming-meals">Upcoming Meals</label><br />
+							</div>
+							<div
+								class="form-container"
+								v-if="mealSelection === 'upcoming-meals'"
+							>
+								<label for="day-of-week"></label>
+								<select
+									name="day-of-week"
+									id="day-of-week"
+									v-model="dayToSaveTo"
 								>
-									{{ dayOfWeek }}
-								</option>
-							</select>
-							<base-button class="save-modal-btn" @click="saveToUpcomingMeals()">Save</base-button>
-						</div>
-						<div class="form-container" v-else>
-							<base-button class="save-modal-btn" @click="saveToFavoriteMeals()">Save</base-button>
-						</div>
-					</form>
-				</div>
-			</dialog>
+									<option
+										v-for="dayOfWeek in daysOfWeek"
+										:key="dayOfWeek"
+										:value="dayOfWeek"
+									>
+										{{ dayOfWeek }}
+									</option>
+								</select>
+								<base-button
+									class="save-modal-btn"
+									@click="saveToUpcomingMeals()"
+									>Save</base-button
+								>
+							</div>
+							<div class="form-container" v-else>
+								<base-button
+									class="save-modal-btn"
+									@click="saveToFavoriteMeals()"
+									>Save</base-button
+								>
+							</div>
+						</form>
+					</div>
+				</dialog>
 
-			<div class="img-container grid-col-span-3 medium-padding-bottom">
-				<img :src="selectedResult.image" :alt="selectedResult.title" />
-			</div>
-			<ul class="main-ul grid-col-span-3">
-				<li class="light-padding-bottom">
-					Servings: {{ selectedResult.servings }}
-				</li>
-				<li class="light-padding-bottom">
-					Ready Time(minutes): {{ selectedResult.readyInMinutes }}
-				</li>
-				<li class="light-padding-bottom collapsible-li">
-					<button @click="setCollapsible('nutrition facts')">
-						Nutrition Facts
-						<font-awesome-icon
-							v-if="isNutritionFactsCollapsed"
-							:icon="['fas', 'angle-down']"
-						/>
-						<font-awesome-icon v-else :icon="['fas', 'angle-up']" />
-					</button>
-					<ul v-if="!isNutritionFactsCollapsed">
-						<li>
-							<p>
-								{{ selectedResult.nutrition.nutrients[0].name }}:
-								{{ selectedResult.nutrition.nutrients[0].amount }}
-							</p>
-						</li>
-						<li>
-							<p>
-								{{ selectedResult.nutrition.nutrients[1].name }}:
-								{{ selectedResult.nutrition.nutrients[1].amount }}
-							</p>
-						</li>
-						<li>
-							<p>
-								{{ selectedResult.nutrition.nutrients[6].name }}:
-								{{ selectedResult.nutrition.nutrients[6].amount }}
-							</p>
-						</li>
-						<li>
-							<p>
-								{{ selectedResult.nutrition.nutrients[3].name }}:
-								{{ selectedResult.nutrition.nutrients[3].amount }}
-							</p>
-						</li>
-						<li>
-							<p>
-								{{ selectedResult.nutrition.nutrients[9].name }}:
-								{{ selectedResult.nutrition.nutrients[9].amount }}
-							</p>
-						</li>
-						<li>
-							<p>
-								{{ selectedResult.nutrition.nutrients[7].name }}:
-								{{ selectedResult.nutrition.nutrients[7].amount }}
-							</p>
-						</li>
-					</ul>
-				</li>
-				<li class="light-padding-bottom collapsible-li">
-					<button @click="setCollapsible('ingredient list')">
-						Ingredient List
-						<font-awesome-icon
-							v-if="isIngredientListCollapsed"
-							:icon="['fas', 'angle-down']"
-						/>
-						<font-awesome-icon v-else :icon="['fas', 'angle-up']" />
-					</button>
-					<ul v-if="!isIngredientListCollapsed">
-						<li
-							v-for="ingredient in selectedResult.nutrition.ingredients"
-							:key="ingredient"
-						>
-							{{ ingredient.name }}
-						</li>
-					</ul>
-				</li>
-				<li class="light-padding-bottom collapsible-li">
-					<button @click="setCollapsible('steps')">
-						Steps
-						<font-awesome-icon
-							v-if="isStepsCollapsed"
-							:icon="['fas', 'angle-down']"
-						/>
-						<font-awesome-icon v-else :icon="['fas', 'angle-up']" />
-					</button>
-					<ol v-if="!isStepsCollapsed">
-						<li
-							v-for="step in selectedResult.analyzedInstructions[0].steps"
-							:key="step"
-						>
-							{{ step.step }}
-						</li>
-					</ol>
-				</li>
-				<li class="light-padding-bottom">
-					<p>
-						Recipe from:
-						<a :href="selectedResult.sourceUrl" class="recipe-url">
-							{{ selectedResult.sourceUrl }}
-						</a>
-					</p>
-				</li>
-			</ul>
-			<base-button @click="openModal">Save</base-button>
+				<div class="img-container grid-col-span-3 medium-padding-bottom">
+					<img :src="selectedResult.image" :alt="selectedResult.title" />
+				</div>
+				<ul class="main-ul grid-col-span-3">
+					<li class="light-padding-bottom">
+						Servings: {{ selectedResult.servings }}
+					</li>
+					<li class="light-padding-bottom">
+						Ready Time(minutes): {{ selectedResult.readyInMinutes }}
+					</li>
+					<li class="light-padding-bottom collapsible-li">
+						<button @click="setCollapsible('nutrition facts')">
+							Nutrition Facts
+							<font-awesome-icon
+								v-if="isNutritionFactsCollapsed"
+								:icon="['fas', 'angle-down']"
+							/>
+							<font-awesome-icon v-else :icon="['fas', 'angle-up']" />
+						</button>
+						<ul v-if="!isNutritionFactsCollapsed">
+							<li>
+								<p>
+									{{ selectedResult.nutrition.nutrients[0].name }}:
+									{{ selectedResult.nutrition.nutrients[0].amount }}
+								</p>
+							</li>
+							<li>
+								<p>
+									{{ selectedResult.nutrition.nutrients[1].name }}:
+									{{ selectedResult.nutrition.nutrients[1].amount }}
+								</p>
+							</li>
+							<li>
+								<p>
+									{{ selectedResult.nutrition.nutrients[6].name }}:
+									{{ selectedResult.nutrition.nutrients[6].amount }}
+								</p>
+							</li>
+							<li>
+								<p>
+									{{ selectedResult.nutrition.nutrients[3].name }}:
+									{{ selectedResult.nutrition.nutrients[3].amount }}
+								</p>
+							</li>
+							<li>
+								<p>
+									{{ selectedResult.nutrition.nutrients[9].name }}:
+									{{ selectedResult.nutrition.nutrients[9].amount }}
+								</p>
+							</li>
+							<li>
+								<p>
+									{{ selectedResult.nutrition.nutrients[7].name }}:
+									{{ selectedResult.nutrition.nutrients[7].amount }}
+								</p>
+							</li>
+						</ul>
+					</li>
+					<li class="light-padding-bottom collapsible-li">
+						<button @click="setCollapsible('ingredient list')">
+							Ingredient List
+							<font-awesome-icon
+								v-if="isIngredientListCollapsed"
+								:icon="['fas', 'angle-down']"
+							/>
+							<font-awesome-icon v-else :icon="['fas', 'angle-up']" />
+						</button>
+						<ul v-if="!isIngredientListCollapsed">
+							<li
+								v-for="ingredient in selectedResult.nutrition.ingredients"
+								:key="ingredient"
+							>
+								{{ ingredient.name }}
+							</li>
+						</ul>
+					</li>
+					<li class="light-padding-bottom collapsible-li">
+						<button @click="setCollapsible('steps')">
+							Steps
+							<font-awesome-icon
+								v-if="isStepsCollapsed"
+								:icon="['fas', 'angle-down']"
+							/>
+							<font-awesome-icon v-else :icon="['fas', 'angle-up']" />
+						</button>
+						<ol v-if="!isStepsCollapsed">
+							<li
+								v-for="step in selectedResult.analyzedInstructions[0].steps"
+								:key="step"
+							>
+								{{ step.step }}
+							</li>
+						</ol>
+					</li>
+					<li class="light-padding-bottom">
+						<p>
+							Recipe from:
+							<a :href="selectedResult.sourceUrl" class="recipe-url">
+								{{ selectedResult.sourceUrl }}
+							</a>
+						</p>
+					</li>
+				</ul>
+				<base-button @click="openModal">Save</base-button>
 			</div>
 		</div>
 	</div>
@@ -176,7 +203,7 @@ export default {
 			isNotesCollapsed: true,
 			daysOfWeek: ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"],
 			dayToSaveTo: "Mon",
-			mealSelection: '',
+			mealSelection: "",
 			isLoading: false,
 			ingredientLabels: {
 				calories: {
@@ -234,10 +261,10 @@ export default {
 		async saveToUpcomingMeals() {
 			const ingredients = [];
 			const steps = [];
-			for(const ingredient of this.selectedResult.nutrition.ingredients) {
+			for (const ingredient of this.selectedResult.nutrition.ingredients) {
 				ingredients.push(ingredient.name);
 			}
-			for(const step of this.selectedResult.analyzedInstructions[0].steps) {
+			for (const step of this.selectedResult.analyzedInstructions[0].steps) {
 				steps.push(step.step);
 			}
 			const mealToSave = {
@@ -256,17 +283,17 @@ export default {
 				},
 				ingredients: ingredients,
 				steps: steps,
-				recipeUrl: this.selectedResult.sourceUrl
+				recipeUrl: this.selectedResult.sourceUrl,
 			};
 			await UpcomingMealService.add(mealToSave);
 		},
 		async saveToFavoriteMeals() {
 			const ingredients = [];
 			const steps = [];
-			for(const ingredient of this.selectedResult.nutrition.ingredients) {
+			for (const ingredient of this.selectedResult.nutrition.ingredients) {
 				ingredients.push(ingredient.name);
 			}
-			for(const step of this.selectedResult.analyzedInstructions[0].steps) {
+			for (const step of this.selectedResult.analyzedInstructions[0].steps) {
 				steps.push(step.step);
 			}
 			const mealToSave = {
@@ -284,7 +311,7 @@ export default {
 				},
 				ingredients: ingredients,
 				steps: steps,
-				recipeUrl: this.selectedResult.sourceUrl
+				recipeUrl: this.selectedResult.sourceUrl,
 			};
 			await FavoriteMealService.add(mealToSave);
 		},
@@ -302,9 +329,9 @@ export default {
 <style scoped>
 .modal {
 	max-width: 30rem;
-	max-height: 20rem;
+	max-height: 30rem;
 	width: 20rem;
-	height: 17rem;
+	height: 21rem;
 	border: none;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
 	padding: 2rem;
@@ -337,6 +364,11 @@ export default {
 
 .modal-content-container form {
 	display: grid;
+}
+
+.modal-content-container form > .form-container:nth-of-type(2) {
+	display: grid;
+	margin-top: 0.8rem;
 }
 
 .save-modal-btn {
@@ -396,6 +428,7 @@ export default {
 	height: fit-content;
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
+	background: white;
 }
 
 .main-ul {
@@ -441,6 +474,7 @@ p styles for notes
 }
 
 .img-container img {
+	border-radius: 1rem;
 	max-width: 100%;
 	max-height: 100%;
 }
