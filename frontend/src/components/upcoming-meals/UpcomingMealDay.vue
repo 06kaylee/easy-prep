@@ -1,7 +1,7 @@
 <template>
-	<router-link :to="upcomingMealDetailLink">
-		<base-card>
-			<h2>{{ dayOfWeek }}</h2>
+	<router-link class="upcoming-meal-detail-link" :to="upcomingMealDetailLink">
+		<base-card class="upcoming-meal-day-card">
+			<h2 id="day-of-week-name">{{ dayOfWeek }}</h2>
 		</base-card>
 	</router-link>
 </template>
@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style scoped>
-div .card {
+div .upcoming-meal-day-card {
 	margin: 0;
 	max-width: 30rem;
 	width: 16rem;
@@ -33,16 +33,16 @@ div .card {
 	align-items: center;
 }
 
-div .card a {
+div .upcoming-meal-day-card:hover {
+	opacity: 0.8;
+}
+
+.upcoming-meal-detail-link {
 	text-decoration: none;
 	color: black;
 }
 
-div .card h2 {
+#day-of-week-name {
 	font-size: 1.6rem;
-}
-
-div .card:hover {
-	opacity: 0.8;
 }
 </style>

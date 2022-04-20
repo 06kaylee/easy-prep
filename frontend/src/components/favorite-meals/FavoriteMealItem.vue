@@ -1,6 +1,6 @@
 <template>
-	<base-card>
-		<router-link :to="favoriteMealDetailLink">
+	<base-card class="favorite-meal-item-container">
+		<router-link class="favorite-meal-detail-link" :to="favoriteMealDetailLink">
 			<h3 class="recipe-name">{{ itemName }}</h3>
 			<div class="img-container">
 				<img :src="mealImgLink" :alt="itemName" />
@@ -39,19 +39,19 @@ export default {
 </script>
 
 <style scoped>
-div .card {
+div .favorite-meal-item-container {
 	padding: 1rem;
 	margin: 1rem 0.5rem 1rem 0;
 	max-width: 12rem;
 }
 
-div .card a {
-	text-decoration: none;
-	color: black;
+div .favorite-meal-item-container:hover {
+	opacity: 0.8;
 }
 
-div .card:hover {
-	opacity: 0.8;
+.favorite-meal-detail-link {
+	text-decoration: none;
+	color: black;
 }
 
 .recipe-name {

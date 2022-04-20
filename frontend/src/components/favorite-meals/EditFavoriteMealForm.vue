@@ -1,8 +1,8 @@
 <template>
-	<form @submit.prevent="submitForm" v-if="selectedMeal">
+	<form class="edit-favorite-meal-form" @submit.prevent="submitForm" v-if="selectedMeal">
 		<!-- Name of the item -->
 		<div class="form-control">
-			<label for="item-name" id="item-label">Item Name</label>
+			<label for="item-name" id="item-name-label">Item Name</label>
 			<input
 				type="text"
 				id="item-name"
@@ -42,7 +42,6 @@
 				id="item-image"
 				name="item-image"
 				accept="image/png, image/jpeg, image/jpg"
-				@change="onFileChange"
 			/>
 		</div>
 
@@ -143,14 +142,14 @@
 				@keyup.enter="addField(selectedMeal.ingredients)"
 				tabindex="0"
 			>
-				<font-awesome-icon :icon="['fas', 'plus']" />
+				<font-awesome-icon class="add-btn" :icon="['fas', 'plus']" />
 			</a>
 			<a
 				@click="removeField(index, selectedMeal.ingredients)"
 				@keyup.enter="removeField(index, selectedMeal.ingredients)"
 				tabindex="0"
 			>
-				<font-awesome-icon :icon="['fas', 'minus']" />
+				<font-awesome-icon class="remove-btn" :icon="['fas', 'minus']" />
 			</a>
 		</div>
 
@@ -172,26 +171,26 @@
 				@keyup.enter="addField(selectedMeal.steps)"
 				tabindex="0"
 			>
-				<font-awesome-icon :icon="['fas', 'plus']" />
+				<font-awesome-icon class="add-btn" :icon="['fas', 'plus']" />
 			</a>
 			<a
 				@click="removeField(index, selectedMeal.steps)"
 				@keyup.enter="removeField(index, selectedMeal.steps)"
 				tabindex="0"
 			>
-				<font-awesome-icon :icon="['fas', 'minus']" />
+				<font-awesome-icon class="remove-btn" :icon="['fas', 'minus']" />
 			</a>
 		</div>
 
 		<!-- Notes -->
-		<div v-if="selectedMeal.notes.length === 0" class="form-control-notes">
+		<div v-if="selectedMeal.notes.length === 0" class="form-control notes">
 			<h3 class="notes-heading">Notes</h3>
 			<a
 				@click="addField(selectedMeal.notes)"
 				@keyup.enter="addField(selectedMeal.notes)"
 				tabindex="0"
 			>
-				<font-awesome-icon :icon="['fas', 'plus']" />
+				<font-awesome-icon class="add-btn" :icon="['fas', 'plus']" />
 			</a>
 		</div>
 		<h3 v-else>Notes</h3>
@@ -210,14 +209,14 @@
 				@keyup.enter="addField(selectedMeal.notes)"
 				tabindex="0"
 			>
-				<font-awesome-icon :icon="['fas', 'plus']" />
+				<font-awesome-icon class="add-btn" :icon="['fas', 'plus']" />
 			</a>
 			<a
 				@click="removeField(index, selectedMeal.notes)"
 				@keyup.enter="removeField(index, selectedMeal.notes)"
 				tabindex="0"
 			>
-				<font-awesome-icon :icon="['fas', 'minus']" />
+				<font-awesome-icon class="remove-btn" :icon="['fas', 'minus']" />
 			</a>
 		</div>
 
@@ -247,20 +246,6 @@ export default {
 			console.log(res.data);
 			this.$router.replace(`/favorite-meals/${this.id}`);
 		},
-		onFileChange(event) {
-			const files = event.target.files || event.dataTransfer.files;
-			console.log(files);
-			if (!files.length) return;
-			this.createImage(files[0]);
-		},
-		createImage(file) {
-			const reader = new FileReader();
-
-			reader.onload = (event) => {
-				this.selectedMeal.img = event.target.result;
-			};
-			reader.readAsDataURL(file);
-		},
 		addField(fieldType) {
 			fieldType.push("");
 		},
@@ -276,11 +261,19 @@ export default {
 </script>
 
 <style scoped>
-form {
+.edit-favorite-meal-form {
 	padding-top: 0.6rem;
 }
 
-#item-label,
+input {
+	padding: 0.4rem;
+	border-radius: 0.2rem;
+	border: 1px solid black;
+	width: fit-content;
+	margin-bottom: 0.5rem;
+}
+
+#item-name-label,
 #servings-label,
 #ready-time-label {
 	display: block;
@@ -313,25 +306,37 @@ h3 {
 	grid-template-columns: repeat(3, auto);
 }
 
+.notes {
+	display: flex;
+}
+
+.notes-heading {
+	margin-right: 0.5rem;
+}
+
 .ingredients input,
 textarea {
 	width: 11rem;
 }
 
-a .fa-plus {
+textarea {
+	margin-bottom: 0.5rem;
+}
+
+.add-btn {
 	color: #70a86d;
 }
 
-a .fa-plus:hover {
+.add-btn:hover {
 	color: #8ed48a;
 	transition: 0.5s;
 }
 
-a .fa-minus {
+.remove-btn {
 	color: #fa0000;
 }
 
-a .fa-minus:hover {
+.remove-btn:hover {
 	color: #fc8181;
 	transition: 0.5s;
 }
@@ -340,29 +345,5 @@ a {
 	display: block;
 	width: fit-content;
 	height: fit-content;
-}
-
-.form-control:nth-of-type(2) label {
-	padding: 0 1.5rem 0 0.3rem;
-}
-
-input {
-	padding: 0.4rem;
-	border-radius: 0.2rem;
-	border: 1px solid black;
-	width: fit-content;
-	margin-bottom: 0.5rem;
-}
-
-textarea {
-	margin-bottom: 0.5rem;
-}
-
-.form-control-notes {
-	display: flex;
-}
-
-.notes-heading {
-	margin-right: 0.5rem;
 }
 </style>

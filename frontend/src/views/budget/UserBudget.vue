@@ -1,7 +1,7 @@
 <template>
 	<dashboard-layout changeWidth isActive="budget">
-		<div class="main-container">
-			<header>
+		<div class="all-budgets-container">
+			<header class="all-budgets-header">
 				<h2>Your Budget</h2>
 			</header>
 			<div
@@ -15,21 +15,21 @@
 						<font-awesome-icon :icon="['fas', 'pen']" />
 					</router-link>
 				</h3>
-				<base-card>
-					<div class="budget-card-item">
-						<p>Target Amount</p>
-						<p>${{ budget.stats.targetAmount }}/{{ budget.stats.timeline }}</p>
+				<base-card class="budget-content-container">
+					<div class="budget-content-item">
+						<p class="budget-item-title">Target Amount</p>
+						<p class="budget-item-value">${{ budget.stats.targetAmount }}/{{ budget.stats.timeline }}</p>
 					</div>
-					<div class="budget-card-item">
-						<p>Current Total</p>
-						<p>${{ budget.stats.currentTotal }}</p>
+					<div class="budget-content-item">
+						<p class="budget-item-title">Current Total</p>
+						<p class="budget-item-value">${{ budget.stats.currentTotal }}</p>
 					</div>
-					<div class="budget-card-item">
-						<p>Average Spent</p>
-						<p>${{ budget.stats.avgSpent }}/week</p>
+					<div class="budget-content-item">
+						<p class="budget-item-title">Average Spent</p>
+						<p class="budget-item-value">${{ budget.stats.avgSpent }}/week</p>
 					</div>
-					<div class="budget-card-item">
-						<p>Most Expensive Ingredients</p>
+					<div class="budget-content-item">
+						<p class="budget-item-title">Most Expensive Ingredients</p>
 						<ol>
 							<li
 								v-for="expensiveItem in budget.stats.mostExpensive"
@@ -61,25 +61,16 @@ export default {
 </script>
 
 <style scoped>
-.main-container {
+.all-budgets-container {
 	display: grid;
 	height: fit-content;
 	margin: 0.5rem 2rem 2rem 2rem;
 	grid-gap: 2rem;
 }
 
-.main-container header {
+.all-budgets-header {
 	display: flex;
 	justify-content: space-between;
-}
-
-.fa-pen {
-	color: black;
-	font-size: 1rem;
-}
-
-.fa-pen:hover {
-	color: grey;
 }
 
 .budget-category-container {
@@ -88,20 +79,8 @@ export default {
 	margin-bottom: 1rem;
 }
 
-.budget-category-container .card {
+.budget-category-container > .budget-content-container {
 	margin: 0;
-}
-
-.category-title {
-	grid-column: 1 / 3;
-	padding-bottom: 1rem;
-}
-
-.category-title a {
-	padding-left: 0.5rem;
-}
-
-.budget-category-container .card {
 	display: grid;
 	grid-template-areas:
 		"target target"
@@ -113,8 +92,17 @@ export default {
 	border-color: #ccc8c6;
 }
 
+.category-title {
+	grid-column: 1 / 3;
+	padding-bottom: 1rem;
+}
+
+.category-title a {
+	padding-left: 0.5rem;
+}
+
 @media screen and (min-width: 60rem) {
-	.budget-category-container .card {
+	.budget-category-container > .budget-content-container {
 		max-width: 33rem;
 		grid-template-areas:
 			"target target target"
@@ -125,13 +113,13 @@ export default {
 }
 
 @media screen and (min-width: 80rem) {
-	.budget-category-container .card {
+	.budget-category-container > .budget-content-container {
 		max-width: fit-content;
 		grid-template-areas: "target current average most-expensive";
 	}
 }
 
-.budget-card-item {
+.budget-content-item {
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
 	padding: 1rem;
 	margin: 1rem;
@@ -140,55 +128,60 @@ export default {
 	background-color: grey;
 }
 
-.budget-card-item p:nth-of-type(1) {
+.budget-item-title {
 	grid-column: 1 / 3;
 }
 
-.budget-card-item p:nth-of-type(2) {
+.budget-item-value {
 	grid-column: 1 / 3;
 	grid-row: 2 / 3;
 }
 
-.budget-category-container:nth-child(even) .budget-card-item {
+.budget-category-container:nth-child(even) .budget-content-item {
 	background-color: #efd9c1;
 }
 
-.budget-category-container:nth-child(odd) .budget-card-item {
+.budget-category-container:nth-child(odd) .budget-content-item {
 	background-color: #c7d8c6;
 }
 
-.budget-card-item:nth-of-type(1) {
+.budget-content-item:nth-of-type(1) {
 	grid-area: target;
 	text-align: center;
 }
 
-.budget-card-item:nth-of-type(2) {
+.budget-content-item:nth-of-type(2) {
 	grid-area: current;
 	text-align: center;
 }
 
-.budget-card-item:nth-of-type(3) {
+.budget-content-item:nth-of-type(3) {
 	grid-area: average;
 	text-align: center;
 }
 
-.budget-card-item:nth-of-type(4) {
+.budget-content-item:nth-of-type(4) {
 	grid-area: most-expensive;
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 }
 
-.budget-card-item:nth-of-type(4) p {
+.budget-content-item:nth-of-type(4) .budget-item-title {
 	grid-column: 1 / 5;
 	text-align: center;
 }
 
-.budget-card-item:nth-of-type(4) ol {
+.budget-content-item:nth-of-type(4) ol {
 	grid-column: 1 / 5;
 	margin: auto;
 }
 
-a:hover {
+.fa-pen {
+	color: black;
+	font-size: 1rem;
+}
+
+.fa-pen:hover {
 	color: grey;
 }
 </style>

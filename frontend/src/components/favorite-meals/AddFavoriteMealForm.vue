@@ -1,9 +1,9 @@
 <template>
-	<form @submit.prevent="submitForm">
+	<form class="add-favorite-meal-form" @submit.prevent="submitForm">
 		<!-- Name of the item -->
 		<div class="form-control">
-			<label for="item" id="item-label">Item Name</label>
-			<input type="text" id="item" v-model="itemName" />
+			<label for="item" id="item-name-label">Item Name</label>
+			<input type="text" id="item-name" v-model="itemName" />
 		</div>
 
 		<!-- Image selection -->
@@ -101,10 +101,10 @@
 		>
 			<input type="text" v-model="ingredients[index]" />
 			<a @click="addField(ingredients)" @keyup.enter="addField(ingredients)" tabindex="0">
-				<font-awesome-icon :icon="['fas', 'plus']" />
+				<font-awesome-icon class="add-btn" :icon="['fas', 'plus']" />
 			</a>
 			<a @click="removeField(index, ingredients)" @keyup.enter="removeField(index, ingredients)" tabindex="0">
-				<font-awesome-icon :icon="['fas', 'minus']" />
+				<font-awesome-icon class="remove-btn" :icon="['fas', 'minus']" />
 			</a>
 		</div>
 
@@ -113,10 +113,10 @@
 		<div class="form-control steps" v-for="(step, index) in steps" :key="index">
 			<textarea v-model="steps[index]" cols="10" rows="5"></textarea>
 			<a @click="addField(steps)" @keyup.enter="addField(steps)" tabindex="0">
-				<font-awesome-icon :icon="['fas', 'plus']" />
+				<font-awesome-icon class="add-btn" :icon="['fas', 'plus']" />
 			</a>
 			<a @click="removeField(index, steps)" @keyup.enter="removeField(index, steps)" tabindex="0">
-				<font-awesome-icon :icon="['fas', 'minus']" />
+				<font-awesome-icon class="remove-btn" :icon="['fas', 'minus']" />
 			</a>
 		</div>
 
@@ -125,10 +125,10 @@
 		<div class="form-control notes" v-for="(note, index) in notes" :key="index">
 			<textarea v-model="notes[index]" cols="30" rows="10"></textarea>
 			<a @click="addField(notes)" @keyup.enter="addField(notes)" tabindex="0">
-				<font-awesome-icon :icon="['fas', 'plus']" />
+				<font-awesome-icon class="add-btn" :icon="['fas', 'plus']" />
 			</a>
 			<a @click="removeField(index, notes)" @keyup.enter="removeField(index, notes)" tabindex="0">
-				<font-awesome-icon :icon="['fas', 'minus']" />
+				<font-awesome-icon class="remove-btn" :icon="['fas', 'minus']" />
 			</a>
 		</div>
 
@@ -196,7 +196,6 @@ export default {
 			};
 			const res = await FavoriteMealService.add(newMeal);
 			console.log(res.data);
-			// this.$store.dispatch("upcomingMeals/addMeal", { dayOfWeek, newMeal });
 			this.$router.replace('/favorite-meals');
 		},
 	},
@@ -204,49 +203,8 @@ export default {
 </script>
 
 <style scoped>
-form {
+.add-favorite-meal-form {
 	padding-top: 0.6rem;
-}
-
-#item-label,
-#start-date-label,
-#end-date-label {
-	display: block;
-	font-weight: bold;
-	padding-bottom: 0.3rem;
-}
-
-h3 {
-	font-size: 1rem;
-	padding-bottom: 0.3rem;
-}
-
-.form-control {
-	margin-bottom: 1rem;
-}
-
-.nutrition-facts {
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-}
-
-.nutrition-facts input {
-	justify-self: center;
-}
-
-.ingredients,
-.steps,
-.notes {
-	display: grid;
-	grid-template-columns: repeat(3, auto);
-}
-
-.ingredients {
-	grid-template-columns: repeat(3, auto);
-}
-
-.form-control:nth-of-type(2) label {
-	padding: 0 1.5rem 0 0.3rem;
 }
 
 input {
@@ -255,6 +213,28 @@ input {
 	border: 1px solid black;
 	width: fit-content;
 	margin-bottom: 0.5rem;
+}
+
+.form-control {
+	margin-bottom: 1rem;
+}
+
+#item-name-label {
+	display: block;
+	font-weight: bold;
+	padding-bottom: 0.3rem;
+}
+
+.nutrition-facts {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.ingredients,
+.steps,
+.notes {
+	display: grid;
+	grid-template-columns: repeat(3, auto);
 }
 
 .ingredients input,
@@ -266,20 +246,20 @@ textarea {
 	margin-bottom: 0.5rem;
 }
 
-a .fa-plus {
+.add-btn {
 	color: #70a86d;
 }
 
-a .fa-plus:hover {
+.add-btn:hover {
 	color: #8ed48a;
 	transition: 0.5s;
 }
 
-a .fa-minus {
+.remove-btn {
 	color: #fa0000;
 }
 
-a .fa-minus:hover {
+.remove-btn:hover {
 	color: #fc8181;
 	transition: 0.5s;
 }
@@ -288,9 +268,6 @@ a {
 	display: block;
 	width: fit-content;
 	height: fit-content;
-}
-
-a:hover {
 	cursor: pointer;
 }
 </style>

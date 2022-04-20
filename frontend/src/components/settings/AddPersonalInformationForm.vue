@@ -1,6 +1,6 @@
 <template>
-	<form @submit.prevent="submitForm">
-		<h2>Add to {{ selectedPersonalInfo.category }}</h2>
+	<form class="add-personal-info-form" @submit.prevent="submitForm">
+		<h2 class="personal-info-form-title">Add to {{ selectedPersonalInfo.category }}</h2>
 		<div class="form-control">
 			<input
 				type="text"
@@ -41,22 +41,21 @@ export default {
 </script>
 
 <style scoped>
-form {
+.add-personal-info-form {
 	padding-top: 0.6rem;
+}
+
+input {
+	padding: 0.4rem;
+	border-radius: 0.2rem;
+	border: 1px solid black;
 }
 
 .form-control {
 	margin-bottom: 1rem;
 }
 
-h2 {
+.personal-info-form-title {
 	padding-bottom: 1rem;
-}
-
-
-input {
-	padding: 0.4rem;
-	border-radius: 0.2rem;
-	border: 1px solid black;
 }
 </style>

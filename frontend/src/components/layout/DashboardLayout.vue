@@ -1,10 +1,10 @@
 <template>
-	<div class="container">
-		<base-card>
+	<div class="page-container">
+		<base-card class="sidebar-container">
 			<the-sidebar :isActive="isActive"></the-sidebar>
 		</base-card>
 
-		<base-card :class="{ 'page-width': changeWidth }">
+		<base-card class="remaining-page-container" :class="{ 'page-width': changeWidth }">
 			<slot></slot>
 		</base-card>
 	</div>
@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.page-container {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 	/* minmax defines a size range greater than or equal to min and less than or equal to max */
@@ -38,7 +38,7 @@ export default {
 	background: #f8eee7;
 }
 
-.card:nth-of-type(1) {
+.page-container > .sidebar-container {
 	grid-column: 1 / 3;
 	margin: 2rem 0 1rem 1rem;
 	max-height: 100vh;
@@ -46,7 +46,7 @@ export default {
 	background: white;
 }
 
-.card:nth-of-type(2) {
+.page-container > .remaining-page-container {
 	grid-column: 3 / 13;
 	margin: 2rem 2rem 1rem 1rem;
 	height: fit-content;

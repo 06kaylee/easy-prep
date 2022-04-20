@@ -1,16 +1,13 @@
 <template>
-	<header class="primary-header">
+	<header class="primary-nav-header">
 		<div id="logo-container">
 			<router-link to="/">
 				<img src="../../assets/Easy-Prep.png" alt="" />
 			</router-link>
-			<!-- <router-link to="/">EasyPrep</router-link> -->
 		</div>
 
 		<button
 			class="mobile-nav-toggle"
-			aria-controls="primary-navigation"
-			:aria-expanded="!navCollapsed"
 			@click="toggleNav"
 		>
 			<font-awesome-icon v-if="navCollapsed" :icon="['fas', 'bars']" />
@@ -19,8 +16,7 @@
 
 		<nav>
 			<ul
-				id="primary-navigation"
-				class="primary-navigation"
+				class="primary-nav-list"
 				:class="{ 'show-nav': !navCollapsed }"
 			>
 				<li>
@@ -65,32 +61,24 @@ body {
 	overflow-x: hidden;
 }
 
-.primary-header {
+.primary-nav-header {
 	background: #94618e;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	padding: 1em 5em 1em 5em;
 	box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-	/* offset-x, offset-y, blur-radius, spread-radius, color */
 }
 
-.primary-navigation {
+.primary-nav-list {
 	display: flex;
 	list-style: none;
 	padding: 0;
 	margin: 0;
 	gap: 4rem;
-	/* background: rgb(104, 160, 107); */
 }
 
-@supports (backdrop-filter: blur(0.5rem)) {
-	.primary-navigation {
-		backdrop-filter: blur(0.5rem);
-	}
-}
-
-.primary-navigation a {
+.primary-nav-list a {
 	text-decoration: none;
 	color: #f8eee7;
 }
@@ -99,14 +87,20 @@ body {
 	display: none;
 }
 
-@media screen and (max-width: 65rem) {
-	.primary-navigation {
-		gap: 2rem;
+@supports (backdrop-filter: blur(0.5rem)) {
+	.primary-nav-list {
+		backdrop-filter: blur(0.5rem);
+	}
+}
+
+@media screen and (max-width: 40rem) {
+	.primary-nav-header {
+		padding-left: 2rem;
 	}
 }
 
 @media screen and (max-width: 55em) {
-	.primary-navigation {
+	.primary-nav-list {
 		position: fixed;
 		inset: 0 0 0 65%;
 		z-index: 1000;
@@ -118,7 +112,7 @@ body {
 		background: rgba(248, 238, 231, 0.79);
 	}
 
-	.primary-navigation a {
+	.primary-nav-list a {
 		color: black;
 	}
 
@@ -139,9 +133,9 @@ body {
 	}
 }
 
-@media screen and (max-width: 40rem) {
-	.primary-header {
-		padding-left: 2rem;
+@media screen and (max-width: 65rem) {
+	.primary-nav-list {
+		gap: 2rem;
 	}
 }
 
@@ -160,11 +154,11 @@ body {
 #logo-container img {
 	max-width: 100%;
 	max-height: 100%;
-	width: 7rem;
+	width: 8rem;
 	height: 4rem;
 }
 
 a:hover {
-	color: grey;
+	color: rgba(255, 245, 239, 0.79);
 }
 </style>

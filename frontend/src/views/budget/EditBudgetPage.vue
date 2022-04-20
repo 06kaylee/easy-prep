@@ -1,5 +1,5 @@
 <template>
-	<base-card>
+	<base-card class="edit-budget-form-container">
 		<h2>Edit a Budget</h2>
 		<edit-budget-form :id="id"></edit-budget-form>
 	</base-card>
@@ -17,7 +17,7 @@ export default {
 </script>
 
 <style scoped>
-.card {
+.edit-budget-form-container {
 	background: white;
 }
 </style>

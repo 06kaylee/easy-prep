@@ -1,8 +1,8 @@
 <template>
-	<div class="sidebar-container">
+	<div class="sidebar">
 		<ul class="dashboard-ul">
 			<li>
-				<router-link to="/dashboard" :class="{ active: isActive === 'favorite-meals' }">Dashboard</router-link>
+				<router-link to="/dashboard" class="dashboard-ul-header" :class="{ active: isActive === 'favorite-meals' }">Dashboard</router-link>
 			</li>
 
 			<!--sub list of dashboard-->
@@ -23,7 +23,7 @@
 		</ul>
 
 		<ul class="settings-ul">
-			<li>
+			<li class="settings-ul-header">
 				Settings
 			</li>
 
@@ -52,15 +52,11 @@ export default {
 </script>
 
 <style scoped>
-.sidebar-container {
-	grid-column: 1 / 3;
-}
-
-.sidebar-container ul {
+.sidebar ul {
 	list-style-type: none;
 }
 
-.sidebar-container a {
+.sidebar a {
 	text-decoration: none;
 	color: black;
 }
@@ -77,18 +73,12 @@ a:hover {
 	padding-bottom: 1rem;
 }
 
-.dashboard-ul > li:first-child a {
+.dashboard-ul-header,
+.settings-ul-header {
 	font-weight: 800;
 }
 
-.dashboard-ul li {
-	padding-bottom: 0.4rem;
-}
-
-.settings-ul > li:first-child {
-	font-weight: 800;
-}
-
+.dashboard-ul li,
 .settings-ul li {
 	padding-bottom: 0.4rem;
 }

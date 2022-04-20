@@ -1,8 +1,8 @@
 <template>
-	<button v-if="!link" :class="mode">
+	<button v-if="!link">
 		<slot></slot>
 	</button>
-	<router-link v-else :to="to" :class="mode">
+	<router-link v-else :to="to">
 		<slot></slot>
 	</router-link>
 </template>
@@ -20,11 +20,6 @@ export default {
 			required: false,
 			default: "/",
 		},
-		mode: {
-			type: String,
-			required: false,
-			default: null,
-		},
 	},
 };
 </script>
@@ -41,7 +36,7 @@ a {
 	cursor: pointer;
 	border-radius: 14px;
 	width: fit-content;
-	transition: 0.4s;
+	transition: 0.7s;
 }
 
 a:hover,
@@ -50,24 +45,5 @@ button:hover,
 button:active {
 	background-color: #94618e;
 	border-color: #946183;
-}
-
-.flat {
-	background-color: transparent;
-	color: #946183;
-	border: none;
-}
-
-.outline {
-	background-color: transparent;
-	border-color: #94618e;
-	color: #94618e;
-}
-
-.flat:hover,
-.flat:active,
-.outline:hover,
-.outline:active {
-	background-color: #946183;
 }
 </style>

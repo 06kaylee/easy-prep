@@ -1,13 +1,12 @@
 <template>
-	<form @submit.prevent="submitForm" v-if="selectedGoal">
-		<div class="form-control">
+	<form class="edit-goal-form" @submit.prevent="submitForm" v-if="selectedGoal">
+		<div class="form-control title">
 			<label for="title" id="title-label">Title</label>
 			<input type="text" id="title" v-model="selectedGoal.title" />
-			<!-- if isEditing is true, fill in the values. if not, keep values blank -->
 		</div>
 
-		<div class="form-control">
-			<h3>Category</h3>
+		<div class="form-control category">
+			<h3 id="category-title">Category</h3>
 			<input
 				type="radio"
 				id="fitness"
@@ -36,7 +35,7 @@
 			<label for="other">Other</label>
 		</div>
 
-		<div class="form-control">
+		<div class="form-control date">
 			<label for="start-date" id="start-date-label">Start Date</label>
 			<input
 				type="date"
@@ -90,19 +89,17 @@ export default {
 </script>
 
 <style scoped>
-form {
+.edit-goal-form {
 	padding-top: 0.6rem;
 }
 
-#title-label,
-#start-date-label,
-#end-date-label {
-	display: block;
-	font-weight: bold;
-	padding-bottom: 0.3rem;
+input {
+	padding: 0.4rem;
+	border-radius: 0.2rem;
+	border: 1px solid black;
 }
 
-h3 {
+#category-title {
 	font-size: 1rem;
 	padding-bottom: 0.3rem;
 }
@@ -111,16 +108,24 @@ h3 {
 	margin-bottom: 1rem;
 }
 
-.form-control:nth-of-type(2) label {
+.category label {
 	padding: 0 1.5rem 0 0.3rem;
 }
 
-.form-control:nth-of-type(3) {
+.date {
 	display: grid;
 	grid-template-areas:
 		"start end"
 		"start-date end-date";
 	column-gap: 2rem;
+}
+
+#title-label,
+#start-date-label,
+#end-date-label {
+	display: block;
+	font-weight: bold;
+	padding-bottom: 0.3rem;
 }
 
 #start-date-label {
@@ -137,11 +142,5 @@ h3 {
 
 #end-date {
 	grid-area: end-date;
-}
-
-input {
-	padding: 0.4rem;
-	border-radius: 0.2rem;
-	border: 1px solid black;
 }
 </style>

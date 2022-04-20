@@ -1,10 +1,10 @@
 <template>
-	<base-card>
-		<div class="container">
+	<base-card class="login-base-card">
+		<div class="login-container">
 			<div class="img-container">
 				<img src="../../assets/sample-img.jpg" alt="" />
 			</div>
-			<form>
+			<form class="login-form">
 				<div class="form-control">
 					<label for="email">Email</label>
 					<input type="text" id="email" name="email" />
@@ -14,7 +14,6 @@
 					<label for="password">Password</label>
 					<input type="password" id="password" name="password" />
 				</div>
-
 				<base-button>Login</base-button>
 			</form>
 		</div>
@@ -22,14 +21,18 @@
 </template>
 
 <style scoped>
-.container {
+.login-base-card {
+	background: white;
+}
+
+.login-container {
 	max-width: 30rem;
 	display: grid;
 	grid-template-columns: repeat(6, 1fr);
 	grid-auto-rows: minmax(min-content, max-content);
 }
 
-form {
+.login-form {
 	grid-column: 2 / 3;
 	grid-row: 1 / 3;
 	display: flex;
@@ -48,14 +51,6 @@ form {
 	border: 1px solid black;
 	border-radius: 6px;
 	padding: 4px;
-}
-
-#email:focus {
-	border: 2px solid #688c6a;
-}
-
-#password:focus {
-	border: 2px solid #688c6a;
 }
 
 .img-container {
