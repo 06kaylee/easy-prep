@@ -1,12 +1,12 @@
 <template>
-	<div class="edit-container">
+	<div class="edit-favorite-meal-container">
 		<div class="back-btn-container">
 			<base-button class="back-btn" link :to="allFavoriteMealsLink"
 				>Back</base-button
 			>
 		</div>
 
-		<base-card>
+		<base-card class="edit-favorite-meal-form-container">
 			<h2>Edit a Favorite Meal</h2>
 			<edit-favorite-meal-form :id="id"></edit-favorite-meal-form>
 		</base-card>
@@ -34,7 +34,7 @@ export default {
 </script>
 
 <style scoped>
-.edit-container > .card {
+.edit-favorite-meal-form-container {
 	background: white;
 }
 

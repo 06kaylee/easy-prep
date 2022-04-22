@@ -1,5 +1,5 @@
 <template>
-	<base-card>
+	<base-card class="add-goal-form-container">
 		<h2>Add a Goal</h2>
 		<add-goal-form :isEditing="false"></add-goal-form>
 	</base-card>
@@ -16,7 +16,7 @@ export default {
 </script>
 
 <style scoped>
-.card {
+.add-goal-form-container {
 	background: white;
 }
 </style>

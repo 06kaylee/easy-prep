@@ -1,23 +1,15 @@
 import { createStore } from "vuex";
 import dashboardPageModule from "./modules/dashboardPage.js";
-import goalsModule from "./modules/goals.js";
-import favoriteMealsModule from "./modules/favoriteMeals.js";
-import upcomingMealsModule from "./modules/upcomingMeals.js";
 import budgetModule from "./modules/budget.js";
 import accountInfoModule from "./modules/accountInfo.js";
 import personalInfoModule from "./modules/personalInfo.js";
-import searchResultsModule from "./modules/searchResults.js";
 
 export default createStore({
 	modules: {
 		dashboardPage: dashboardPageModule,
-		goals: goalsModule,
-		favoriteMeals: favoriteMealsModule,
-		upcomingMeals: upcomingMealsModule,
 		budget: budgetModule,
 		accountInfo: accountInfoModule,
 		personalInfo: personalInfoModule,
-		searchResults: searchResultsModule,
 	},
 	state: {
 		// return {}
