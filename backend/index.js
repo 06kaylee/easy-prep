@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const conn = require("./conn");
 const cors = require("cors");
@@ -5,6 +6,7 @@ const goalRoutes = require("./routes/goals");
 const favoriteMealRoutes = require("./routes/favorite-meals");
 const upcomingMealRoutes = require("./routes/upcoming-meals");
 const searchRoutes = require("./routes/search");
+const path = require("path");
 
 const app = express();
 
@@ -26,12 +28,11 @@ app.use("/api/search", searchRoutes);
 
 // handle production
 if (process.env.NODE_ENV === "production") {
-	console.log("production");
 	// static folder
-	app.use(express.static(__dirname + "/public"));
+	app.use(express.static(`${__dirname}/public`));
 
 	// spa
-	app.get(/.*/, (req, res) => res.sendFile(__dirname + "/public/index.html"));
+	app.get(/.*/, (req, res) => res.sendFile(__dirname + "../dist/index.html"));
 }
 
 const port = process.env.PORT || 3000;

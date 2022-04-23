@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-require("dotenv").config();
+
+console.log(process.env);
 
 // setting up mongo connection to db
 const url = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@cluster1.pzfrv.mongodb.net/mealPlannerDb?retryWrites=true&w=majority`;
