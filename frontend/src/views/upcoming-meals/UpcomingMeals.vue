@@ -1,6 +1,6 @@
 <template>
 	<dashboard-layout changeWidth isActive="upcoming-meals">
-		<div class="main-container">
+		<div class="all-upcoming-days-container">
 			<header>
 				<h2>Your Upcoming Meals</h2>
 			</header>
@@ -32,33 +32,33 @@ export default {
 </script>
 
 <style scoped>
-.main-container {
+.all-upcoming-days-container {
 	display: grid;
 	grid-template-columns: 1fr;
 	padding: 1.5rem;
 	gap: 2rem;
 }
 
-.main-container header {
+.all-upcoming-days-container header {
 	grid-column: 1 / 2;
 }
 
 @media screen and (min-width: 55rem) {
-	.main-container {
+	.all-upcoming-days-container {
 		grid-template-columns: repeat(2, 1fr);
 	}
 
-	.main-container header {
+	.all-upcoming-days-container header {
 		grid-column: 1 / 3;
 	}
 }
 
 @media screen and (min-width: 80rem) {
-	.main-container {
+	.all-upcoming-days-container {
 		grid-template-columns: repeat(3, 1fr);
 	}
 
-	.main-container header {
+	.all-upcoming-days-container header {
 		grid-column: 1 / 4;
 	}
 }

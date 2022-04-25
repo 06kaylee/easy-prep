@@ -1,12 +1,12 @@
 <template>
 	<div>
-		<div class="search-bar-container">
+		<div class="search-page-container">
 			<h2>Find Your Next Favorite Meal</h2>
-			<form @submit.prevent="submitSearch">
-				<div class="search-bar">
+			<div class="search-bar-container" @submit.prevent="submitSearch">
+				<form class="search-bar-form">
 					<input
 						type="text"
-						id="search-input"
+						id="search-bar-input"
 						placeholder="Search by name, ingredient, genre, chef, etc."
 						v-model="searchQuery"
 					/>
@@ -20,26 +20,30 @@
 							:icon="['fas', 'magnifying-glass']"
 						/>
 					</base-button>
-					<a class="advanced-search" href="">Advanced Search</a>
-				</div>
-			</form>
+				</form>
+				<a class="advanced-search-link" href="">Advanced Search</a>
+			</div>
 		</div>
 
 		<div class="sample-recipes-container">
-			<base-card v-if="!sampleCardsCollapsed">
+			<base-card class="recipe-cards-container" v-if="!sampleCardsCollapsed">
 				<base-card v-for="sampleItem in sampleData" :key="sampleItem">
-					<h2 class="title">{{ sampleItem.title }}</h2>
-					<div class="img-container">
-						<img :src="require('../../assets/sample-logo.jpg')" alt="" />
-					</div>
+					<router-link :to="'/search/results/' + sampleItem._id">
+						<h2 class="recipe-title">{{ sampleItem.title }}</h2>
+						<div class="img-container">
+							<img :src="sampleItem.image" alt="" />
+						</div>
+					</router-link>
 				</base-card>
 			</base-card>
-			<base-card v-else>
+			<base-card class="recipe-cards-container" v-else>
 				<base-card class="recipe-card">
-					<h2 class="title">{{ currentData.title }}</h2>
-					<div class="img-container">
-						<img :src="require('../../assets/sample-logo.jpg')" alt="" />
-					</div>
+					<router-link :to="'/search/results/' + currentData._id">
+						<h2 class="recipe-title">{{ currentData.title }}</h2>
+						<div class="img-container">
+							<img :src="currentData.image" alt="" />
+						</div>
+					</router-link>
 				</base-card>
 				<base-button @click="nextData" class="next-data-btn">Next</base-button>
 			</base-card>
@@ -48,20 +52,12 @@
 </template>
 
 <script>
+import SearchService from '../../services/SearchService';
+
 export default {
 	data() {
 		return {
-			sampleData: [
-				{
-					title: "Easy Dinners",
-				},
-				{
-					title: "Breakfast Classics",
-				},
-				{
-					title: "On the Go Meals",
-				},
-			],
+			sampleData: [],
 			currentData: null,
 			currentIndex: 0,
 			sampleCardsCollapsed: false,
@@ -70,9 +66,8 @@ export default {
 	},
 	computed: {
 		searchResultsLink() {
-			// return `${this.$route.path}/results?q=${this.searchQuery}`;
 			return {
-				path: "/search/results/",
+				path: "/search/results",
 				query: {
 					q: this.searchQuery,
 				},
@@ -101,11 +96,22 @@ export default {
 			}
 		},
 		submitSearch() {
-			console.log(this.searchQuery);
-			this.searchQuery = "";
+			this.$router.push(this.searchResultsLink);
 		},
 	},
-	created() {
+	async created() {
+		const res = await SearchService.getRandom();
+		// console.log(res.data.recipes);
+		// for(const recipe of res.data.recipes) {
+		// 	const newRecipe = {};
+		// 	newRecipe.id = recipe.id;
+		// 	newRecipe.title = recipe.title;
+		// 	newRecipe.image = recipe.image;
+		// 	newRecipe.date = new Date();
+		// 	this.sampleData.push(newRecipe);
+		// }
+		this.sampleData = res.data;
+		console.log(this.sampleData);
 		this.currentData = this.sampleData[0];
 		window.addEventListener("resize", this.toggleCollapsedCards);
 		this.setInitialScreen();
@@ -117,7 +123,7 @@ export default {
 </script>
 
 <style scoped>
-.search-bar-container {
+.search-page-container {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	margin-top: 2rem;
@@ -125,24 +131,25 @@ export default {
 	margin-top: 7.5rem;
 }
 
-.search-bar-container h2 {
+.search-page-container h2 {
 	grid-column: 1 / 5;
 	display: flex;
 	justify-content: center;
 	font-size: 1.8rem;
 }
 
-form {
+.search-bar-container {
+	grid-column: 1 / 5;
+	display: grid;
+	justify-content: center;
+	grid-template-columns: repeat(4, auto);
+}
+
+.search-bar-form {
 	grid-column: 1 / 5;
 }
 
-.search-bar {
-	display: grid;
-	justify-content: center;
-	grid-template-columns: repeat(2, auto);
-}
-
-#search-input {
+#search-bar-input {
 	width: 43rem;
 	padding: 0.8rem;
 	border: 2px solid #94618e;
@@ -150,9 +157,15 @@ form {
 	margin-bottom: 0.5rem;
 }
 
-#search-input:focus {
+#search-bar-input:focus {
 	outline: none;
 	border: 2px solid #94618e;
+}
+
+.advanced-search-link {
+	font-size: 0.9rem;
+	color: black;
+	grid-column: 4 / 5;
 }
 
 .search-btn-container {
@@ -163,26 +176,7 @@ form {
 	color: white;
 }
 
-.search-bar > a:nth-of-type(1) {
-	color: black;
-	display: flex;
-	align-items: center;
-	font-size: 1rem;
-}
-
-.advanced-search {
-	display: flex;
-	justify-content: end;
-	font-size: 0.8rem;
-	color: black;
-}
-
-.sample-recipes-container {
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-}
-
-.sample-recipes-container > .card {
+.sample-recipes-container > .recipe-cards-container {
 	grid-column: 1 / 5;
 	max-width: 70rem;
 	width: 80%;
@@ -191,17 +185,32 @@ form {
 	margin: 10rem auto;
 	align-items: center;
 	background: white;
+	gap: 2rem;
 }
 
+.recipe-cards-container .card {
+	height: 90%;
+}
+
+.recipe-cards-container .card > a {
+	text-decoration: none;
+	color: black;
+}
+
+/* if screen is less than or equal to 75rem */
 @media screen and (max-width: 75rem) {
-	.sample-recipes-container > .card {
+	.sample-recipes-container > .recipe-cards-container {
 		display: flex;
 		justify-content: space-between;
 		width: 50%;
 	}
+
+	.recipe-cards-container .card {
+		width: 60%;
+	}
 }
 
-.title {
+.recipe-title {
 	text-align: center;
 }
 

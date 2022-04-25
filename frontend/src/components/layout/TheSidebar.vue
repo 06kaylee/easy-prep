@@ -19,6 +19,9 @@
 				<li class="sublist" :class="{ active: isActive === 'budget' }">
 					<router-link to="/budget">Budget</router-link>
 				</li>
+				<li class="sublist" :class="{ active: isActive === 'grocery-list' }">
+					<router-link to="/grocery-list">Grocery List</router-link>
+				</li>
 			</ul>
 		</ul>
 

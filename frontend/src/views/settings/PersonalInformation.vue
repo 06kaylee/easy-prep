@@ -1,10 +1,10 @@
 <template>
 	<dashboard-layout changeWidth isActive="personal-info">
-		<div class="main-container">
+		<div class="personal-info-container">
 			<header>
 				<h2>Your Personal Information</h2>
 			</header>
-			<div class="card-container">
+			<div class="info-container">
 				<base-card v-for="restriction in restrictions" :key="restriction.id">
 					<header>
 						<h3>{{ restriction.category }}</h3>
@@ -51,11 +51,11 @@ export default {
 </script>
 
 <style scoped>
-.main-container {
+.personal-info-container {
 	padding: 0.5rem 2rem 0 2rem;
 }
 
-.main-container header {
+.personal-info-container header {
 	display: flex;
 	justify-content: space-between;
 }
@@ -64,40 +64,40 @@ export default {
 	color: black;
 }
 
-.card-container {
+.info-container {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	gap: 1rem;
 }
 
 @media screen and (max-width: 65rem) {
-	.card-container {
+	.info-container {
 		grid-template-columns: repeat(2, 1fr);
 	}
 }
 
 @media screen and (max-width: 45rem) {
-	.card-container {
+	.info-container {
 		grid-template-columns: 1fr;
 	}
 }
 
-.card-container .card {
+.info-container .card {
 	max-width: 15rem;
 	margin: 2rem 0;
 }
 
-.card-container .card header {
+.info-container .card header {
 	display: flex;
 	justify-content: space-between;
 }
 
-.card-container .card ul {
+.info-container .card ul {
 	list-style-type: none;
 	padding-top: 1.5rem;
 }
 
-.card-container .card li {
+.info-container .card li {
 	padding-bottom: 1.5rem;
 }
 

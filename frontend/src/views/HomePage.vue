@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="home-page-container">
 		<ul>
 			<li>
 				<font-awesome-icon :icon="['fas', 'square-check']" />
@@ -24,7 +24,7 @@
 </template>
 
 <style scoped>
-.container {
+.home-page-container {
 	border-radius: 12px;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
 	padding: 1rem;
@@ -33,21 +33,22 @@
 	display: grid;
 	grid-template-columns: repeat(10, 1fr);
 	font-size: 1em;
+	background: white;
 }
 
-.container ul {
+.home-page-container ul {
 	grid-column: 1 / 7;
 	padding-left: 20px;
 	list-style-type: none;
 }
 
-.container ul li {
+.home-page-container ul li {
 	padding: 20px 0;
 	vertical-align: baseline;
 	display: table;
 }
 
-.container ul li p {
+.home-page-container ul li p {
 	display: table-cell;
 	padding-left: 20px;
 }

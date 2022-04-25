@@ -1,12 +1,12 @@
 <template>
-	<div class="edit-container">
+	<div class="edit-upcoming-meal-container">
 		<div class="back-btn-container">
 			<base-button class="back-btn" link :to="allMealsLink"
 				>Back to all meals</base-button
 			>
 		</div>
 
-		<base-card>
+		<base-card class="edit-upcoming-meal-form-container">
 			<h2>Edit an Upcoming Meal</h2>
 			<edit-upcoming-meal-form :id="id"></edit-upcoming-meal-form>
 		</base-card>
@@ -35,9 +35,34 @@ export default {
 </script>
 
 <style scoped>
-.edit-container > .card {
+.edit-upcoming-meal-form-container {
 	background: white;
+	max-height: 45rem;
+	overflow: auto;
 }
+
+::-webkit-scrollbar {
+    width: 1.2em;
+}
+
+::-webkit-scrollbar-track {
+    background: white;
+	border-radius: 100vh;
+	margin-block: 0.4em;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c7c4c4;
+	border-radius: 100vh;
+	border: 0.25em solid white;
+}
+
+@supports (scrollbar-color: #c7c4c4 white) {
+	* {
+		scrollbar-color: #c7c4c4 white;
+	}
+}
+
 .back-btn {
 	height: fit-content;
 }

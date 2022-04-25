@@ -1,12 +1,12 @@
 <template>
-	<div>
+	<div class="favorite-meal-detail-container">
 		<div class="back-btn-container">
 			<base-button link to="/favorite-meals"
 				>Back to all favorite meals</base-button
 			>
 		</div>
 
-		<div class="container" v-if="selectedFavoriteMeal">
+		<div class="detail-item-container" v-if="selectedFavoriteMeal">
 			<header class="grid-col-span-3 medium-padding-bottom">
 				<h2>{{ selectedFavoriteMeal.itemName }}</h2>
 				<div class="icons">
@@ -54,7 +54,7 @@
 			<div class="img-container grid-col-span-3 medium-padding-bottom">
 				<img :src="mealImgLink" alt="" />
 			</div>
-			<ul class="main-ul grid-col-span-3">
+			<ul class="detail-main-ul grid-col-span-3">
 				<li class="light-padding-bottom">
 					Servings: {{ selectedFavoriteMeal.servings }}
 				</li>
@@ -350,7 +350,7 @@ export default {
 	padding-bottom: 1.5rem;
 }
 
-.container {
+.detail-item-container {
 	border-radius: 12px;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
 	padding: 2rem;
@@ -362,7 +362,7 @@ export default {
 	background: white;
 }
 
-.main-ul {
+.detail-main-ul {
 	list-style-type: none;
 }
 
@@ -406,7 +406,7 @@ p styles for notes
 	max-height: 100%;
 }
 
-.container > header {
+.detail-item-container > header {
 	display: flex;
 	justify-content: space-between;
 }
@@ -420,9 +420,6 @@ p styles for notes
 
 .edit-btn {
 	align-self: center;
-}
-
-.fa-pen {
 	color: black;
 	font-size: 1.1rem;
 }
@@ -434,10 +431,5 @@ p styles for notes
 .icons {
 	display: flex;
 	gap: 1rem;
-}
-
-.new-meal-link {
-	color: black;
-	text-decoration: none;
 }
 </style>

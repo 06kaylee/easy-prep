@@ -1,6 +1,6 @@
 <template>
 	<dashboard-layout changeWidth isActive="account-info">
-		<div class="main-container">
+		<div class="account-info-container">
 			<header>
 				<h2>Your Account Information</h2>
 				<a href="">
@@ -53,11 +53,11 @@ export default {
 </script>
 
 <style scoped>
-.main-container {
+.account-info-container {
 	padding: 0.5rem 2rem 0 2rem;
 }
 
-.main-container header {
+.account-info-container header {
 	display: flex;
 	justify-content: space-between;
 }

@@ -22,6 +22,7 @@ import EditBudgetPage from "../views/budget/EditBudgetPage.vue";
 import UserGoals from "../views/goals/UserGoals.vue";
 import EditGoalsPage from "../views/goals/EditGoalsPage.vue";
 import AddGoalPage from "../views/goals/AddGoalPage.vue";
+import GroceryList from "../views/GroceryList.vue";
 import NotFound from "../views/NotFound.vue";
 
 const router = createRouter({
@@ -31,7 +32,7 @@ const router = createRouter({
 		{ path: "/login", component: LoginModal },
 		{ path: "/sign-up", component: SignUpModal },
 		{ path: "/search", component: TheSearch },
-		{ path: "/search/results/", component: SearchResult },
+		{ path: "/search/results", component: SearchResult },
 		{ path: "/search/results/:id", component: SearchResultDetail, props: true },
 		{ path: "/dashboard", component: UserDashboard },
 		{ path: "/account-info", component: AccountInformation },
@@ -75,6 +76,7 @@ const router = createRouter({
 		{ path: "/goals", component: UserGoals },
 		{ path: "/edit/:id", component: EditGoalsPage, props: true },
 		{ path: "/add", component: AddGoalPage },
+		{ path: "/grocery-list", component: GroceryList },
 		{ path: "/:notFound(.*)", component: NotFound },
 	],
 });

@@ -1,14 +1,14 @@
 <template>
-	<base-card class="main-container">
+	<base-card class="upcoming-meal-detail-container">
 		<h2>{{ dayOfWeek }}</h2>
-		<base-button link to="/upcoming-meals" class="all-meals-btn"
+		<base-button link to="/upcoming-meals" class="all-upcoming-days-meals-btn"
 			>Back</base-button
 		>
 		<base-button link :to="addMealLink" class="add-meal-btn"
 			>Add a meal</base-button
 		>
 
-		<div class="meal-container" v-if="currentMeal">
+		<div class="upcoming-meal-item-container" v-if="currentMeal">
 			<base-card>
 				<div class="icons">
 					<router-link :to="editMealLink">
@@ -200,9 +200,6 @@ export default {
 		},
 	},
 	computed: {
-		// mealImgLink() {
-		// 	return this.currentMeal.img;
-		// },
 		editMealLink() {
 			return this.$route.path + "/edit/" + this.currentMeal._id;
 		},
@@ -233,7 +230,7 @@ export default {
 </script>
 
 <style scoped>
-#app .main-container {
+#app .upcoming-meal-detail-container {
 	border-radius: 12px;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
 	padding: 2rem;
@@ -251,14 +248,14 @@ export default {
 	text-align: center;
 }
 
-.meal-container .card {
+.upcoming-meal-item-container .card {
 	max-width: 100%;
 	width: 100%;
 	height: fit-content;
 	display: grid;
 }
 
-.all-meals-btn {
+.all-upcoming-days-btn {
 	width: fit-content;
 	height: fit-content;
 	grid-column: 1 / 2;
@@ -272,20 +269,20 @@ export default {
 	justify-self: end;
 }
 
-.main-container h2 {
+.upcoming-meal-detail-container h2 {
 	grid-column: 2 / 3;
 	grid-row: 1 / 2;
 	text-align: center;
 }
 
-.meal-container {
+.upcoming-meal-item-container {
 	grid-column: 2 / 4;
 	grid-row: 2 / 3;
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 }
 
-.meal-container > button {
+.upcoming-meal-item-container > button {
 	justify-self: center;
 	align-self: center;
 }
@@ -310,7 +307,7 @@ export default {
 	color: black;
 }
 
-.main-container .card h3 {
+.upcoming-meal-detail-container .card h3 {
 	text-align: center;
 }
 

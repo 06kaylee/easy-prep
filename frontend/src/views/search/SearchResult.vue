@@ -1,15 +1,16 @@
 <template>
-	<div v-if="results">
-		<h1 class="result-title">Search Results</h1>
+	<div class="search-results-container" v-if="results">
+		<h1 class="results-title">Search Results</h1>
 		<div class="loading-container" v-if="isLoading">
 			<base-spinner></base-spinner>
 		</div>
-		<base-card class="results-container" v-if="!isLoading">
-			<base-card v-for="result in results" :key="result">
+		<base-card class="all-results-container" v-if="!isLoading">
+			<base-card class="result-item-container" v-for="result in results" :key="result">
 				<router-link
-					:to="'/search/results/' + result.id + '?q=' + this.$route.query.q"
+					:to="'/search/results/' + result.id"
+					class="search-result-detail-link"
 				>
-					<h2 class="title">{{ result.title }}</h2>
+					<h2 class="result-item-title">{{ result.title }}</h2>
 					<div class="img-container">
 						<img :src="result.image" alt="result.title" />
 					</div>
@@ -46,7 +47,10 @@ export default {
 			this.$route.query.q = this.$route.query.q.replace(/\s+/g, "&");
 			console.log(this.$route.query.q);
 		}
+		console.log(this.$route.query.q);
 		const res = await SearchService.searchByName(this.$route.query.q);
+		console.log(res);
+		// const res = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?query=${this.$route.query.q}&number=3&apiKey=442a798793cb4b3db353b620dda6dea3`);
 		console.log(res.data.results);
 		this.results = res.data.results;
 		this.isLoading = false;
@@ -55,7 +59,7 @@ export default {
 </script>
 
 <style scoped>
-div > .results-container {
+.search-results-container > .all-results-container {
 	max-width: 70rem;
 	width: 80%;
 	display: grid;
@@ -67,11 +71,11 @@ div > .results-container {
 	background: white;
 }
 
-div > .results-container > .card {
+.result-item-container {
 	height: max(87%, 16rem);
 }
 
-div > .results-container > .card > a {
+.search-result-detail-link {
 	text-decoration: none;
 	color: black;
 	cursor: pointer;
@@ -94,12 +98,12 @@ div > .results-container > .card > a {
 	max-height: 80%;
 }
 
-.result-title {
+.results-title {
 	text-align: center;
 	margin-top: 3rem;
 }
 
-.title {
+.result-item-title {
 	text-align: center;
 }
 </style>

@@ -3,14 +3,14 @@
 		<div class="loading-container" v-if="isLoading">
 			<base-spinner></base-spinner>
 		</div>
-		<div class="main-content" v-else>
+		<div class="search-result-detail-container" v-else>
 			<div class="back-btn-container">
-				<base-button link :to="'/search/results?q=' + this.$route.query.q"
-					>Back to all search results</base-button
+				<base-button @click="backBtn"
+					>Back</base-button
 				>
 			</div>
 
-			<div class="container" v-if="selectedResult">
+			<div class="detail-content-container" v-if="selectedResult">
 				<header class="grid-col-span-3 medium-padding-bottom">
 					<h2>
 						{{ selectedResult.title }}
@@ -81,7 +81,7 @@
 				<div class="img-container grid-col-span-3 medium-padding-bottom">
 					<img :src="selectedResult.image" :alt="selectedResult.title" />
 				</div>
-				<ul class="main-ul grid-col-span-3">
+				<ul class="detail-main-ul grid-col-span-3">
 					<li class="light-padding-bottom">
 						Servings: {{ selectedResult.servings }}
 					</li>
@@ -315,6 +315,9 @@ export default {
 			};
 			await FavoriteMealService.add(mealToSave);
 		},
+		backBtn() {
+			this.$router.back();
+		}
 	},
 	async created() {
 		this.isLoading = true;
@@ -419,7 +422,7 @@ export default {
 	padding-bottom: 1.5rem;
 }
 
-.container {
+.detail-content-container {
 	border-radius: 12px;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
 	padding: 2rem;
@@ -431,7 +434,7 @@ export default {
 	background: white;
 }
 
-.main-ul {
+.detail-main-ul {
 	list-style-type: none;
 }
 
@@ -479,7 +482,7 @@ p styles for notes
 	max-height: 100%;
 }
 
-.container > header {
+.detail-content-container > header {
 	display: flex;
 	justify-content: space-between;
 }
@@ -507,11 +510,6 @@ p styles for notes
 
 .icons > button {
 	padding-right: 1.5rem;
-}
-
-.new-meal-link {
-	color: black;
-	text-decoration: none;
 }
 
 .loading-container {

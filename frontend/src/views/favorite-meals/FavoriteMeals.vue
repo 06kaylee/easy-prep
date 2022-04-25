@@ -1,10 +1,10 @@
 <template>
 	<dashboard-layout changeWidth isActive="favorite-meals">
-		<div class="main-container">
+		<div class="all-favorite-meals-container">
 			<header>
 				<h2>Your Favorite Meals</h2>
 				<h4>
-					<router-link to="/favorite-meals/add" class="new-meal-link">
+					<router-link to="/favorite-meals/add" class="add-favorite-meal-link">
 						Add a favorite meal
 						<font-awesome-icon :icon="['fas', 'plus']" />
 					</router-link>
@@ -34,54 +34,55 @@ export default {
 	},
 	data() {
 		return {
-			favoriteMeals: null
-		}
+			favoriteMeals: null,
+		};
 	},
 	async created() {
 		const res = await FavoriteMealService.getAll();
+		console.log(res);
 		const meals = res.data;
 		this.favoriteMeals = meals;
-	}
+	},
 };
 </script>
 
 <style scoped>
-.main-container {
+.all-favorite-meals-container {
 	padding: 0.5rem 0rem 0 1.5rem;
 	display: grid;
 	grid-template-columns: 1fr;
 }
 
-.main-container header {
+.all-favorite-meals-container header {
 	grid-column: 1 / 2;
 	display: flex;
 	justify-content: space-between;
 	padding-right: 2rem;
 }
 
-.new-meal-link {
+.add-favorite-meal-link {
 	text-decoration: none;
 	color: black;
 }
 
-/* if greater than or equal to 60rem */
+/* if greater than or equal to 45rem */
 @media screen and (min-width: 45rem) {
-	.main-container {
+	.all-favorite-meals-container {
 		grid-template-columns: repeat(2, 1fr);
 	}
 
-	.main-container header {
+	.all-favorite-meals-container header {
 		grid-column: 1 / 3;
 	}
 }
 
 /* if greater than or equal to 60rem */
 @media screen and (min-width: 60rem) {
-	.main-container {
+	.all-favorite-meals-container {
 		grid-template-columns: repeat(3, 1fr);
 	}
 
-	.main-container header {
+	.all-favorite-meals-container header {
 		grid-column: 1 / 4;
 	}
 }

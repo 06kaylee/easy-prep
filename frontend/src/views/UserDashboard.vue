@@ -1,6 +1,6 @@
 <template>
 	<dashboard-layout changeWidth isActive="dashboard">
-		<div class="content-container" v-if="upcomingMeals">
+		<div class="dashboard-container" v-if="upcomingMeals">
 			<header id="welcome-msg">
 				<h2>Welcome, name</h2>
 			</header>
@@ -123,17 +123,17 @@ export default {
 </script>
 
 <style scoped>
-.content-container .card {
+.dashboard-container .card {
 	margin: 0;
 	max-width: none;
 }
 
-.content-container .card h2 {
+.dashboard-container .card h2 {
 	display: flex;
 	justify-content: center;
 }
 
-.content-container {
+.dashboard-container {
 	padding: 2rem;
 	display: grid;
 	grid-template-areas:
@@ -152,9 +152,9 @@ export default {
 	grid-area: welcome;
 }
 
-.content-container .card:nth-of-type(1),
-.content-container .card:nth-of-type(2),
-.content-container .card:nth-of-type(3) {
+.dashboard-container .card:nth-of-type(1),
+.dashboard-container .card:nth-of-type(2),
+.dashboard-container .card:nth-of-type(3) {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -168,30 +168,30 @@ export default {
 	width: 60%;
 }
 
-.content-container .card:nth-of-type(1) {
+.dashboard-container .card:nth-of-type(1) {
 	grid-area: favorite-meals;
 }
 
-.content-container .card:nth-of-type(2) {
+.dashboard-container .card:nth-of-type(2) {
 	grid-area: goals;
 }
 
-.content-container .card:nth-of-type(3) {
+.dashboard-container .card:nth-of-type(3) {
 	grid-area: dietary-restrictions;
 }
 
-.content-container .card:nth-of-type(4) {
+.dashboard-container .card:nth-of-type(4) {
 	grid-area: upcoming-meals;
 }
 
-.content-container .card:nth-of-type(5) {
+.dashboard-container .card:nth-of-type(5) {
 	grid-area: budget;
 }
 
 /* min width means that if the device width is greater than or equal to 50 rem... */
 
 @media screen and (min-width: 60rem) {
-	.content-container {
+	.dashboard-container {
 		grid-template-areas:
 			"welcome welcome welcome"
 			"favorite-meals goals goals"
@@ -201,7 +201,7 @@ export default {
 }
 
 @media screen and (min-width: 90em) {
-	.content-container {
+	.dashboard-container {
 		grid-template-areas:
 			"welcome welcome welcome welcome"
 			"favorite-meals goals dietary-restrictions upcoming-meals"

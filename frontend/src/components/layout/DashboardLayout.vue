@@ -49,8 +49,32 @@ export default {
 .page-container > .remaining-page-container {
 	grid-column: 3 / 13;
 	margin: 2rem 2rem 1rem 1rem;
+	max-height: 86vh;
 	height: fit-content;
+	overflow: auto;
 	background: white;
+}
+
+::-webkit-scrollbar {
+    width: 1.5em;
+}
+
+::-webkit-scrollbar-track {
+    background: white;
+	border-radius: 100vh;
+	margin-block: 0.4em;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c7c4c4;
+	border-radius: 100vh;
+	border: 0.25em solid white;
+}
+
+@supports (scrollbar-color: #f4d3cb white) {
+	* {
+		scrollbar-color: #f4d3cb white;
+	}
 }
 
 .page-width {
