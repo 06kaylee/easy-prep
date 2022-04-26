@@ -39,6 +39,9 @@ router.get("/random", async(req, res) => {
 			console.log(testRecipeDate);
 			let today = moment().subtract(1, 'd');
 			if(today.isAfter(testDateMoment)) {
+				// remove old recipes
+				console.log("removing recipes");
+				await RandomRecipe.deleteMany();
 				// get new recipes
 				const newRecipesRes = await axios.get(`${API_URL_RANDOM}?number=3&apiKey=${API_KEY}`);
 				const newRecipes = [];
