@@ -3,14 +3,18 @@
 		<div class="all-upcoming-days-container">
 			<header>
 				<h2>Your Upcoming Meals</h2>
-				<base-button @click="openModal">
-					Auto generate
+				<base-button v-if="upcomingMealsExist" @click="openModal">
+					Auto Generate
 				</base-button>
+				<base-button v-else link to="/upcoming-meals/auto-generate">Auto Generate</base-button>
 			</header>
 
 			<!-- modal asking to remove meals -->
 			<dialog class="modal" ref="modal">
-				<div class="modal-content-container">
+				<div class="loading-container" v-if="isLoading">
+					<base-spinner></base-spinner>
+				</div>
+				<div class="modal-content-container" v-else>
 					<button @click="closeModal" class="close-modal-btn">
 						<font-awesome-icon :icon="['fas', 'x']" />
 					</button>
@@ -34,6 +38,7 @@
 <script>
 import DashboardLayout from "../../components/layout/DashboardLayout.vue";
 import UpcomingMealDay from "../../components/upcoming-meals/UpcomingMealDay.vue";
+import UpcomingMealService from "../../services/UpcomingMealService";
 
 export default {
 	components: {
@@ -42,7 +47,10 @@ export default {
 	},
 	data() {
 		return {
-			daysOfWeek: ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"]
+			daysOfWeek: ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"],
+			upcomingMeals: null,
+			upcomingMealsExist: false,
+			isLoading: false
 		}
 	},
 	methods: {
@@ -54,10 +62,21 @@ export default {
 			const modal = this.$refs.modal;
 			modal.close();
 		},
-		removeMeals() {
-			console.log("remove meals");
+		async removeMeals() {
+			this.isLoading = true;
+			for(const meal of this.upcomingMeals) {
+				await UpcomingMealService.delete(meal._id);
+			}
+			this.isLoading = false;
 			// take user to auto generate page
 			this.$router.push('/upcoming-meals/auto-generate');
+		}
+	},
+	async created() {
+		const res = await UpcomingMealService.getAll();
+		this.upcomingMeals = res.data;
+		if(this.upcomingMeals.length > 0) {
+			this.upcomingMealsExist = true;
 		}
 	}
 };
@@ -91,6 +110,9 @@ export default {
 	justify-content: space-evenly;
 }
 
+.loading-container {
+	margin-top: 4rem;
+}
 
 .save-modal-btn {
 	height: fit-content;

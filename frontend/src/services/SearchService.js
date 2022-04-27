@@ -36,6 +36,22 @@ class SearchService {
 		console.log("here in service");
 		return axios.get(`${url}/random`);
 	}
+
+	// get auto generate
+	static getAuto(
+		numMeals,
+		cuisine,
+		diet,
+		allergies,
+		dislikes,
+		ingredients,
+		maxReadyTime
+	) {
+		console.log("here in service for auto");
+		return axios.get(
+			`${url}/auto-generate?number=${numMeals}&cuisine=${cuisine}&diet=${diet}&intolerances=${allergies}&excludeIngredients=${dislikes}&includeIngredients=${ingredients}&maxReadyTime=${maxReadyTime}`
+		);
+	}
 }
 
 export default SearchService;

@@ -1,11 +1,13 @@
 <template>
 	<dashboard-layout changeWidth isActive="grocery-list">
-		<div class="grocery-list-container">
+		<div class="grocery-list-container" >
 			<header>
 				<h2>Your Grocery List</h2>
 			</header>
 
-			<div class="grocery-list-form-container">
+            <p class="no-meals" v-if="uniqueIngredients.length === 0">You don't have any upcoming meals!</p>
+
+			<div class="grocery-list-form-container" v-else>
                 <form class="grocery-list-form">
                     <div class="ingredient-container" v-for="ingredient in uniqueIngredients" :key="ingredient">
                         <input type="checkbox" :id="ingredient" :name="ingredient" :value="ingredient" @click="toggleChecked(ingredient)">
@@ -81,5 +83,9 @@ export default {
 
 .checked-input {
     text-decoration: line-through;
+}
+
+.no-meals {
+    margin-top: 1rem;
 }
 </style>
