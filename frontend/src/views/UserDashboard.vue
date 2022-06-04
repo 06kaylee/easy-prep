@@ -1,5 +1,5 @@
 <template>
-	<dashboard-layout changeWidth isActive="dashboard">
+	<dashboard-layout>
 		<div class="dashboard-container" v-if="upcomingMeals">
 			<header id="welcome-msg">
 				<h2>Welcome, name</h2>

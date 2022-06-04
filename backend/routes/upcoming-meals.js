@@ -2,19 +2,18 @@ const express = require("express");
 const upcomingMealController = require("../controllers/upcoming-meal-controller");
 const router = express.Router();
 
-// get all meals
-router.get("/", upcomingMealController.allUpcomingMeals);
+router
+    .route('/')
+    .get(upcomingMealController.allUpcomingMeals)
+    .post(upcomingMealController.addUpcomingMeal);
 
-// get all meals for a day
-router.get("/:dayOfWeek", upcomingMealController.allUpcomingMealsForDay);
+router
+    .route('/:id')
+    .patch(upcomingMealController.editUpcomingMeal)
+    .delete(upcomingMealController.deleteUpcomingMeal);
 
-// add a new meal
-router.post("/", upcomingMealController.addUpcomingMeal);
-
-// edit a meal by id
-router.patch("/:id", upcomingMealController.editUpcomingMeal);
-
-// delete a meal by id
-router.delete("/:id", upcomingMealController.deleteUpcomingMeal);
+router
+    .route('/:dayOfWeek')
+    .get(upcomingMealController.allUpcomingMealsForDay);
 
 module.exports = router;

@@ -1,12 +1,15 @@
 <template>
-	<dashboard-layout changeWidth isActive="upcoming-meals">
+	<dashboard-layout>
 		<div class="all-upcoming-days-container">
 			<header>
 				<h2>Your Upcoming Meals</h2>
-				<base-button v-if="upcomingMealsExist" @click="openModal">
-					Auto Generate
-				</base-button>
-				<base-button v-else link to="/upcoming-meals/auto-generate">Auto Generate</base-button>
+				<div>
+					<base-button v-if="upcomingMealsExist" @click="openModal">
+						Auto Generate
+					</base-button>
+					<base-button v-else link to="/upcoming-meals/auto-generate">Auto Generate</base-button>
+					<base-button>Export</base-button>
+				</div>
 			</header>
 
 			<!-- modal asking to remove meals -->

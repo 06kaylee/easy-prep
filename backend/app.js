@@ -1,12 +1,9 @@
-require("dotenv").config();
 const express = require("express");
-const conn = require("./conn");
 const cors = require("cors");
 const goalRoutes = require("./routes/goals");
 const favoriteMealRoutes = require("./routes/favorite-meals");
 const upcomingMealRoutes = require("./routes/upcoming-meals");
 const searchRoutes = require("./routes/search");
-const path = require("path");
 
 const app = express();
 
@@ -35,8 +32,4 @@ if (process.env.NODE_ENV === "production") {
 	app.get(/.*/, (req, res) => res.sendFile(__dirname + "../dist/index.html"));
 }
 
-const port = process.env.PORT || 3000;
-
-app.listen(port, () => {
-	console.log(`Server is listening on port ${port}`);
-});
+module.exports = app;

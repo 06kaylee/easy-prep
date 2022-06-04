@@ -1,5 +1,5 @@
 <template>
-	<dashboard-layout changeWidth isActive="favorite-meals">
+	<dashboard-layout>
 		<div class="all-favorite-meals-container">
 			<header>
 				<h2>Your Favorite Meals</h2>

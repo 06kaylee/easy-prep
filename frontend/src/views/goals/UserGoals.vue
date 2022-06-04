@@ -1,5 +1,5 @@
 <template>
-	<dashboard-layout changeWidth isActive="goals">
+	<dashboard-layout>
 		<div class="all-goals-container">
 			<header>
 				<h2>Your Goals</h2>

@@ -48,7 +48,7 @@
 							v-for="(nutritionFact, key) in currentMeal.nutritionFacts"
 							:key="nutritionFact"
 						>
-							<p>{{ ingredientLabels[key].label }}: {{ nutritionFact }}</p>
+							<p><span class="bold-nutrition-label">{{ ingredientLabels[key].label }}:</span> {{ nutritionFact }}</p>
 						</li>
 					</ul>
 				</div>
@@ -78,7 +78,7 @@
 						/>
 						<font-awesome-icon v-else :icon="['fas', 'angle-up']" />
 					</button>
-					<ol v-if="!isStepsCollapsed">
+					<ol v-if="!isStepsCollapsed" class="steps-container">
 						<li v-for="step in currentMeal.steps" :key="step">
 							{{ step }}
 						</li>
@@ -366,5 +366,9 @@ p styles for notes
 
 .recipe-link {
 	font-size: 0.75rem;
+}
+
+.bold-nutrition-label {
+	font-weight: bold;
 }
 </style>

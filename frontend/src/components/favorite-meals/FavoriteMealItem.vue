@@ -1,7 +1,7 @@
 <template>
 	<base-card class="favorite-meal-item-container">
 		<router-link class="favorite-meal-detail-link" :to="favoriteMealDetailLink">
-			<h3 class="recipe-name">{{ itemName }}</h3>
+			<h3 class="recipe-name" :title="itemName">{{ itemName }}</h3>
 			<div class="img-container">
 				<img :src="mealImgLink" :alt="itemName" />
 			</div>
@@ -42,7 +42,10 @@ export default {
 div .favorite-meal-item-container {
 	padding: 1rem;
 	margin: 1rem 0.5rem 1rem 0;
-	max-width: 12rem;
+	max-width: 20rem;
+	max-height: 20rem;
+	width: 14rem;
+	height: 12rem;
 }
 
 div .favorite-meal-item-container:hover {
@@ -56,19 +59,22 @@ div .favorite-meal-item-container:hover {
 
 .recipe-name {
 	text-align: center;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
 .img-container {
-	max-width: 200px;
-	max-height: 200px;
+	width: 12rem;
+	height: 8rem;
 	display: flex;
 	justify-content: center;
-	align-content: center;
 }
 
 .img-container img {
 	border-radius: 1rem;
 	max-width: 80%;
 	max-height: 80%;
+	align-self: center;
 }
 </style>

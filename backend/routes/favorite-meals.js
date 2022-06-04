@@ -2,20 +2,16 @@ const express = require("express");
 const router = express.Router();
 const favoriteMealController = require("../controllers/favorite-meal-controller");
 
-// get all favorite meals
-router.get('/', favoriteMealController.allFavoriteMeals);
+router
+    .route('/')
+    .get(favoriteMealController.allFavoriteMeals)
+    .post(favoriteMealController.addFavoriteMeal);
 
-// get a favorite meal by id
-router.get('/:id', favoriteMealController.getFavoriteMeal);
-
-// delete a favorite meal by id
-router.delete('/:id', favoriteMealController.deleteFavoriteMeal);
-
-// edit a favorite meal by id
-router.patch('/:id', favoriteMealController.editFavoriteMeal);
-
-// create a new favorite meal 
-router.post('/', favoriteMealController.addFavoriteMeal);
+router
+    .route('/:id')
+    .get(favoriteMealController.getFavoriteMeal)
+    .patch(favoriteMealController.editFavoriteMeal)
+    .delete(favoriteMealController.deleteFavoriteMeal);
 
 //export router
 module.exports = router;

@@ -1,8 +1,9 @@
 <template>
-	<dashboard-layout changeWidth isActive="grocery-list">
+	<dashboard-layout>
 		<div class="grocery-list-container" >
 			<header>
 				<h2>Your Grocery List</h2>
+                <base-button>Export</base-button>
 			</header>
 
             <p class="no-meals" v-if="uniqueIngredients.length === 0">You don't have any upcoming meals!</p>
@@ -45,7 +46,7 @@ export default {
     async created() {
         const res = await UpcomingMealService.getAll();
         const upcomingMeals = res.data;
-        const ingredientArrays = upcomingMeals.map(row => row.ingredients);
+        const ingredientArrays = upcomingMeals.map(upcomingMeal => upcomingMeal.ingredients);
         const ingredients = [].concat(...ingredientArrays);
         for(const ingredient of ingredients) {
             this.counts[ingredient] = (this.counts[ingredient] || 0) + 1;
@@ -57,6 +58,11 @@ export default {
 </script>
 
 <style scoped>
+header {
+    display: flex;
+    justify-content: space-between;
+}
+
 .grocery-list-container {
     padding: 0.5rem 0rem 0rem 1.5rem;
 }

@@ -29,7 +29,7 @@
 			<base-card class="recipe-cards-container" v-if="!sampleCardsCollapsed">
 				<base-card v-for="sampleItem in sampleData" :key="sampleItem">
 					<router-link :to="'/search/results/' + sampleItem._id">
-						<h2 class="recipe-title">{{ sampleItem.title }}</h2>
+						<h2 :title="sampleItem.title" class="recipe-title">{{ sampleItem.title }}</h2>
 						<div class="img-container">
 							<img :src="sampleItem.image" alt="" />
 						</div>
@@ -39,7 +39,7 @@
 			<base-card class="recipe-cards-container" v-else>
 				<base-card class="recipe-card">
 					<router-link :to="'/search/results/' + currentData._id">
-						<h2 class="recipe-title">{{ currentData.title }}</h2>
+						<h2 :title="currentData.title" class="recipe-title">{{ currentData.title }}</h2>
 						<div class="img-container">
 							<img :src="currentData.image" alt="" />
 						</div>
@@ -190,6 +190,7 @@ export default {
 
 .recipe-cards-container .card {
 	height: 90%;
+	width: 18rem;
 }
 
 .recipe-cards-container .card > a {
@@ -212,20 +213,21 @@ export default {
 
 .recipe-title {
 	text-align: center;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
-.img-container {
-	max-width: 200px;
-	max-height: 200px;
+.img-container { 
+	height: 10rem;
 	display: flex;
 	justify-content: center;
-	align-content: center;
-	margin: 0 auto;
 }
 
 .img-container img {
+	border-radius: 1rem;
 	max-width: 80%;
-	max-height: 80%;
+	align-self: center;
 }
 
 .next-data-btn {

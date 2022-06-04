@@ -1,33 +1,10 @@
 <template>
 	<div class="page-container">
-		<base-card class="sidebar-container">
-			<the-sidebar :isActive="isActive"></the-sidebar>
-		</base-card>
-
-		<base-card class="remaining-page-container" :class="{ 'page-width': changeWidth }">
+		<base-card class="remaining-page-container">
 			<slot></slot>
 		</base-card>
 	</div>
 </template>
-
-<script>
-import TheSidebar from "./TheSidebar.vue";
-export default {
-	components: {
-		TheSidebar,
-	},
-	props: {
-		changeWidth: {
-			type: Boolean,
-			required: false,
-			default: false,
-		},
-		isActive: {
-			type: String,
-		},
-	},
-};
-</script>
 
 <style scoped>
 .page-container {
@@ -38,18 +15,11 @@ export default {
 	background: #f8eee7;
 }
 
-.page-container > .sidebar-container {
-	grid-column: 1 / 3;
-	margin: 2rem 0 1rem 1rem;
-	max-height: 100vh;
-	height: 86vh;
-	background: white;
-}
-
 .page-container > .remaining-page-container {
 	grid-column: 3 / 13;
-	margin: 2rem 2rem 1rem 1rem;
 	max-height: 86vh;
+	max-width: 90rem;
+	width: 80rem;
 	height: fit-content;
 	overflow: auto;
 	background: white;
@@ -75,9 +45,5 @@ export default {
 	* {
 		scrollbar-color: #f4d3cb white;
 	}
-}
-
-.page-width {
-	max-width: 95% !important;
 }
 </style>

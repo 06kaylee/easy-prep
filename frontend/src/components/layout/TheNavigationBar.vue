@@ -30,11 +30,39 @@
 						><font-awesome-icon :icon="['fas', 'magnifying-glass']"
 					/></router-link>
 				</li>
-				<li>
-					<router-link to="/dashboard">Dashboard</router-link>
+				<li class="dropdown">
+					<router-link class="dropdown-btn" to="/dashboard" @mouseover="enableDashboardDropdown">Dashboard</router-link>
+					<ul v-if="showDashboardDropdown" class="dropdown-content" @mouseleave="hideDashboardDropdown">
+						<li>
+							<router-link to="/favorite-meals">Favorite Meals</router-link>
+						</li>
+						<li>
+							<router-link to="/goals">Goals</router-link>
+						</li>
+						<li>
+							<router-link to="/upcoming-meals">Upcoming Meals</router-link>
+						</li>
+						<li>
+							<router-link to="/budget">Budget</router-link>
+						</li>
+						<li>
+							<router-link to="/grocery-list">Grocery List</router-link>
+						</li>
+					</ul>
 				</li>
 				<li>
 					<a href="">Sign Out</a>
+				</li>
+				<li class="dropdown">
+					<a class="dropdown-btn" @mouseover="enableSettingsDropdown">Settings</a>
+					<ul v-if="showSettingsDropdown" class="dropdown-content" @mouseleave="hideSettingsDropdown">
+						<li>
+							<router-link to="/account-info">Account</router-link>
+						</li>
+						<li>
+							<router-link to="/personal-info">Personal</router-link>
+						</li>
+					</ul>
 				</li>
 			</ul>
 		</nav>
@@ -46,12 +74,26 @@ export default {
 	data() {
 		return {
 			navCollapsed: true,
+			showDashboardDropdown: false,
+			showSettingsDropdown: false,
 		};
 	},
 	methods: {
 		toggleNav() {
 			this.navCollapsed = !this.navCollapsed;
 		},
+		enableDashboardDropdown() {
+			this.showDashboardDropdown = true;
+		},
+		hideDashboardDropdown() {
+			this.showDashboardDropdown = false;
+		},
+		enableSettingsDropdown() {
+			this.showSettingsDropdown = true;
+		},
+		hideSettingsDropdown() {
+			this.showSettingsDropdown = false;
+		}
 	},
 };
 </script>
@@ -156,6 +198,33 @@ body {
 	max-height: 100%;
 	width: 8rem;
 	height: 4rem;
+}
+
+.dropdown {
+	position: relative;
+	display: inline-block;
+}
+
+.dropdown-content {
+	position: absolute;
+	top: 1.8rem;
+	background-color: white;
+	min-width: 11rem;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+	z-index: 1;
+	list-style: none;
+	border-radius: 5px;
+}
+
+.dropdown-content a {
+	color: black;
+	padding: 1rem;
+	text-decoration: none;
+	display: block;
+}
+
+.dropdown-content a:hover {
+	color: grey;
 }
 
 a:hover {

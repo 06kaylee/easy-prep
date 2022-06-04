@@ -1,5 +1,5 @@
 <template>
-	<dashboard-layout changeWidth isActive="personal-info">
+	<dashboard-layout>
 		<div class="personal-info-container">
 			<header>
 				<h2>Your Personal Information</h2>

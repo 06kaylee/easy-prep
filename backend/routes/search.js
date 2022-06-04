@@ -5,15 +5,18 @@ const axios = require("axios");
 const moment = require("moment");
 const RandomRecipe = require("../models/random-recipe");
 const API_URL_COMPLEX = process.env.API_URL_COMPLEX;
-const API_URL_INFO = process.env.API_URL_INFO;
+const API_URL_EXTRACT = process.env.API_URL_EXTRACT;
 const API_URL_RANDOM = process.env.API_URL_RANDOM;
 const API_KEY = process.env.API_KEY;
+const BASE_API_URL = process.env.BASE_API_URL;
+const APP_ID = process.env.APP_ID;
+const APP_KEY = process.env.APP_KEY;
 
 // GET all results of searching by name
 router.get("/", async (req, res) => {
 	try {
 		await axios
-			.get(`${API_URL_COMPLEX}?query=${req.query.q}&number=3&apiKey=${API_KEY}`)
+			.get(`${BASE_API_URL}?type=public&q=${req.query.q}&app_id=${APP_ID}&app_key=${APP_KEY}`)
 			.then((response) => {
 				res.send(response.data);
 			});
@@ -22,14 +25,24 @@ router.get("/", async (req, res) => {
 	}
 });
 
+router.get("/auto-generate", async (req, res) => {
+	try {
+		console.log("here in backend for auto generate");
+		await axios
+			.get(
+				`${API_URL_COMPLEX}?number=${req.query.number}&cuisine=${req.query.cuisine}&diet=${req.query.diet}&intolerances=${req.query.intolerances}&excludeIngredients=${req.query.excludeIngredients}&includeIngredients=${req.query.includeIngredients}&maxReadyTime=${req.query.maxReadyTime}&instructionsRequired=true&sort=random&apiKey=${API_KEY}`
+			)
+			.then((response) => {
+				res.send(response.data);
+			});
+	} catch (err) {
+		console.log(`Error while trying to get recipes for auto generate: ${err}`);
+	}
+});
+
 // GET random recipes
 router.get("/random", async(req, res) => {
 	try {
-		// await axios.get(`${API_URL_RANDOM}?number=3&apiKey=${API_KEY}`)
-		// 	.then((response) => {
-		// 		res.send(response.data);
-		// 	})
-		// get all random recipes
 		const randomRecipes = await RandomRecipe.find({});
 
 		// if there are random recipes
@@ -98,13 +111,30 @@ router.get("/:id", async (req, res) => {
 		const id = req.params.id;
 		await axios
 			.get(
-				`${API_URL_INFO}/${id}/information?&includeNutrition=true&apiKey=${API_KEY}`
+				`${BASE_API_URL}/${id}?type=public&app_id=${APP_ID}&app_key=${APP_KEY}`
 			)
 			.then((response) => {
 				res.send(response.data);
 			});
 	} catch (err) {
-		console.log(`Error while trying to search by name: ${err}`);
+		console.log(`Error while trying to search by id: ${err}`);
+	}
+});
+
+
+// Extract info about recipe
+router.get("/:url", async (req, res) => {
+	try {
+		const url = req.params.url;
+		await axios
+			.get(
+				`${API_URL_EXTRACT}?url=${url}&analyze=true&forceExtraction=true&apiKey=${API_KEY}`
+			)
+			.then((response) => {
+				res.send(response.data);
+			});
+	} catch (err) {
+		console.log(`Error while trying to search by id: ${err}`);
 	}
 });
 

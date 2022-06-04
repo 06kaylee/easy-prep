@@ -31,6 +31,11 @@ class SearchService {
 		return axios.get(`${url}/${id}`);
 	}
 
+	// extract info
+	static extractInfo(recipeUrl) {
+		return axios.get(`${url}/${recipeUrl}`);
+	}
+
 	// get random meals
 	static getRandom() {
 		console.log("here in service");

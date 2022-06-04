@@ -13,7 +13,7 @@
 			<div class="detail-content-container" v-if="selectedResult">
 				<header class="grid-col-span-3 medium-padding-bottom">
 					<h2>
-						{{ selectedResult.title }}
+						{{ selectedResult.label }}
 					</h2>
 				</header>
 
@@ -78,15 +78,16 @@
 					</div>
 				</dialog>
 
+				<!-- TODO edamam api doesn't have servings or steps. and nutrient facts are weird -->
 				<div class="img-container grid-col-span-3 medium-padding-bottom">
 					<img :src="selectedResult.image" :alt="selectedResult.title" />
 				</div>
 				<ul class="detail-main-ul grid-col-span-3">
-					<li class="light-padding-bottom">
+					<!-- <li class="light-padding-bottom">
 						Servings: {{ selectedResult.servings }}
-					</li>
+					</li> -->
 					<li class="light-padding-bottom">
-						Ready Time(minutes): {{ selectedResult.readyInMinutes }}
+						Ready Time(minutes): {{ selectedResult.totalTime }}
 					</li>
 					<li class="light-padding-bottom collapsible-li">
 						<button @click="setCollapsible('nutrition facts')">
@@ -147,14 +148,14 @@
 						</button>
 						<ul v-if="!isIngredientListCollapsed">
 							<li
-								v-for="ingredient in selectedResult.nutrition.ingredients"
+								v-for="ingredient in selectedResult.ingredientLines"
 								:key="ingredient"
 							>
-								{{ ingredient.name }}
+								{{ ingredient }}
 							</li>
 						</ul>
 					</li>
-					<li class="light-padding-bottom collapsible-li">
+					<!-- <li class="light-padding-bottom collapsible-li">
 						<button @click="setCollapsible('steps')">
 							Steps
 							<font-awesome-icon
@@ -171,12 +172,12 @@
 								{{ step.step }}
 							</li>
 						</ol>
-					</li>
+					</li> -->
 					<li class="light-padding-bottom">
 						<p>
 							Recipe from:
-							<a :href="selectedResult.sourceUrl" class="recipe-url">
-								{{ selectedResult.sourceUrl }}
+							<a :href="selectedResult.url" class="recipe-url">
+								{{ selectedResult.url }}
 							</a>
 						</p>
 					</li>
@@ -193,7 +194,7 @@ import UpcomingMealService from "../../services/UpcomingMealService";
 import FavoriteMealService from "../../services/FavoriteMealService";
 
 export default {
-	props: ["id"],
+	props: ["slug"],
 	data() {
 		return {
 			selectedResult: null,
@@ -317,13 +318,23 @@ export default {
 		},
 		backBtn() {
 			this.$router.back();
+		},
+		formatId(slug) {
+			const urlChunks = slug.split('-');
+			let id = urlChunks.at(-1);
+			id = 'recipe_' + id;
+			return id;
 		}
 	},
 	async created() {
 		this.isLoading = true;
-		const res = await SearchService.getInfo(this.id);
-		console.log(res.data);
-		this.selectedResult = res.data;
+		const id = this.formatId(this.slug);
+		const initalRecipeRes = await SearchService.getInfo(id);
+		console.log(initalRecipeRes.data.recipe);
+		const url = initalRecipeRes.data.recipe.url;
+		const fullRecipeRes = await SearchService.extractInfo(url);
+		console.log(fullRecipeRes.data);
+		this.selectedResult = fullRecipeRes.data;
 		this.isLoading = false;
 	},
 };
