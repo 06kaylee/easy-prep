@@ -16,7 +16,9 @@ const APP_KEY = process.env.APP_KEY;
 router.get("/", async (req, res) => {
 	try {
 		await axios
-			.get(`${BASE_API_URL}?type=public&q=${req.query.q}&app_id=${APP_ID}&app_key=${APP_KEY}`)
+			.get(
+				`${BASE_API_URL}?type=public&q=${req.query.q}&app_id=${APP_ID}&app_key=${APP_KEY}`
+			)
 			.then((response) => {
 				res.send(response.data);
 			});
@@ -41,55 +43,57 @@ router.get("/auto-generate", async (req, res) => {
 });
 
 // GET random recipes
-router.get("/random", async(req, res) => {
+router.get("/random", async (req, res) => {
 	try {
 		const randomRecipes = await RandomRecipe.find({});
 
 		// if there are random recipes
-		if(randomRecipes.length !== 0) {
+		if (randomRecipes.length !== 0) {
 			const testRecipeDate = randomRecipes[0].date;
-			const testDateMoment = moment(testRecipeDate, 'MM-DD-YYYY');
+			const testDateMoment = moment(testRecipeDate, "MM-DD-YYYY");
 			console.log(testRecipeDate);
-			let today = moment().subtract(1, 'd');
-			if(today.isAfter(testDateMoment)) {
+			let today = moment().subtract(1, "d");
+			if (today.isAfter(testDateMoment)) {
 				// remove old recipes
 				console.log("removing recipes");
 				await RandomRecipe.deleteMany();
 				// get new recipes
-				const newRecipesRes = await axios.get(`${API_URL_RANDOM}?number=3&apiKey=${API_KEY}`);
+				const newRecipesRes = await axios.get(
+					`${API_URL_RANDOM}?number=3&apiKey=${API_KEY}`
+				);
 				const newRecipes = [];
-				for(const recipe of newRecipesRes.data.recipes) {
+				for (const recipe of newRecipesRes.data.recipes) {
 					const newRecipe = {};
 					newRecipe._id = recipe.id;
 					newRecipe.title = recipe.title;
 					newRecipe.image = recipe.image;
 					const date = new Date();
-					const newDate = moment(date).format('MM-DD-YYYY');
+					const newDate = moment(date).format("MM-DD-YYYY");
 					newRecipe.date = newDate;
 					newRecipes.push(newRecipe);
 				}
-				console.log("day expired");	
+				console.log("day expired");
 				console.log(newRecipes);
 				// save to db
 				const savedNewRecipes = await RandomRecipe.insertMany(newRecipes);
 				res.send(savedNewRecipes);
-			}
-			else {
+			} else {
 				console.log("sending old recipes");
 				res.send(randomRecipes);
 			}
-		}
-		else {
+		} else {
 			// get new recipes
-			const newRecipesRes = await axios.get(`${API_URL_RANDOM}?number=3&apiKey=${API_KEY}`);
+			const newRecipesRes = await axios.get(
+				`${API_URL_RANDOM}?number=3&apiKey=${API_KEY}`
+			);
 			const newRecipes = [];
-			for(const recipe of newRecipesRes.data.recipes) {
+			for (const recipe of newRecipesRes.data.recipes) {
 				const newRecipe = {};
 				newRecipe._id = recipe.id;
 				newRecipe.title = recipe.title;
 				newRecipe.image = recipe.image;
 				const date = new Date();
-				const newDate = moment(date).format('MM-DD-YYYY');
+				const newDate = moment(date).format("MM-DD-YYYY");
 				newRecipe.date = newDate;
 				newRecipes.push(newRecipe);
 			}
@@ -99,16 +103,16 @@ router.get("/random", async(req, res) => {
 			const savedNewRecipes = await RandomRecipe.insertMany(newRecipes);
 			res.send(savedNewRecipes);
 		}
-	}
-	catch(err) {
+	} catch (err) {
 		console.log(`Error while trying to get random recipes: ${err}`);
 	}
-})
+});
 
 // GET more info about recipe
 router.get("/:id", async (req, res) => {
 	try {
 		const id = req.params.id;
+		console.log(req.protocol + "://" + req.get("host") + req.originalUrl);
 		await axios
 			.get(
 				`${BASE_API_URL}/${id}?type=public&app_id=${APP_ID}&app_key=${APP_KEY}`
@@ -121,14 +125,13 @@ router.get("/:id", async (req, res) => {
 	}
 });
 
-
 // Extract info about recipe
-router.get("/:url", async (req, res) => {
+router.get("/:url/analyze", async (req, res) => {
 	try {
 		const url = req.params.url;
 		await axios
 			.get(
-				`${API_URL_EXTRACT}?url=${url}&analyze=true&forceExtraction=true&apiKey=${API_KEY}`
+				`${API_URL_EXTRACT}?url=${url}&analyze=true&forceExtraction=true&includeNutrition=true&apiKey=${API_KEY}`
 			)
 			.then((response) => {
 				res.send(response.data);

@@ -16,7 +16,7 @@
 
 // export default SearchService;
 
-import axios from 'axios';
+import axios from "axios";
 
 const url = "/api/search";
 
@@ -31,9 +31,9 @@ class SearchService {
 		return axios.get(`${url}/${id}`);
 	}
 
-	// extract info
-	static extractInfo(recipeUrl) {
-		return axios.get(`${url}/${recipeUrl}`);
+	// analyze info
+	static analyzeRecipe(recipeUrl) {
+		return axios.get(`${url}/${recipeUrl}/analyze`);
 	}
 
 	// get random meals

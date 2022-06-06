@@ -5,15 +5,13 @@
 		</div>
 		<div class="search-result-detail-container" v-else>
 			<div class="back-btn-container">
-				<base-button @click="backBtn"
-					>Back</base-button
-				>
+				<base-button @click="backBtn">Back</base-button>
 			</div>
 
 			<div class="detail-content-container" v-if="selectedResult">
 				<header class="grid-col-span-3 medium-padding-bottom">
 					<h2>
-						{{ selectedResult.label }}
+						{{ selectedResult.title }}
 					</h2>
 				</header>
 
@@ -83,11 +81,11 @@
 					<img :src="selectedResult.image" :alt="selectedResult.title" />
 				</div>
 				<ul class="detail-main-ul grid-col-span-3">
-					<!-- <li class="light-padding-bottom">
-						Servings: {{ selectedResult.servings }}
-					</li> -->
 					<li class="light-padding-bottom">
-						Ready Time(minutes): {{ selectedResult.totalTime }}
+						Servings: {{ selectedResult.servings }}
+					</li>
+					<li class="light-padding-bottom">
+						Ready Time(minutes): {{ selectedResult.readyInMinutes }}
 					</li>
 					<li class="light-padding-bottom collapsible-li">
 						<button @click="setCollapsible('nutrition facts')">
@@ -148,14 +146,14 @@
 						</button>
 						<ul v-if="!isIngredientListCollapsed">
 							<li
-								v-for="ingredient in selectedResult.ingredientLines"
+								v-for="ingredient in selectedResult.extendedIngredients"
 								:key="ingredient"
 							>
-								{{ ingredient }}
+								{{ ingredient.original }}
 							</li>
 						</ul>
 					</li>
-					<!-- <li class="light-padding-bottom collapsible-li">
+					<li class="light-padding-bottom collapsible-li">
 						<button @click="setCollapsible('steps')">
 							Steps
 							<font-awesome-icon
@@ -172,12 +170,12 @@
 								{{ step.step }}
 							</li>
 						</ol>
-					</li> -->
+					</li>
 					<li class="light-padding-bottom">
 						<p>
 							Recipe from:
-							<a :href="selectedResult.url" class="recipe-url">
-								{{ selectedResult.url }}
+							<a :href="selectedResult.sourceUrl" class="recipe-url">
+								{{ selectedResult.sourceUrl }}
 							</a>
 						</p>
 					</li>
@@ -320,19 +318,19 @@ export default {
 			this.$router.back();
 		},
 		formatId(slug) {
-			const urlChunks = slug.split('-');
+			const urlChunks = slug.split("-");
 			let id = urlChunks.at(-1);
-			id = 'recipe_' + id;
+			id = "recipe_" + id;
 			return id;
-		}
+		},
 	},
 	async created() {
 		this.isLoading = true;
 		const id = this.formatId(this.slug);
 		const initalRecipeRes = await SearchService.getInfo(id);
-		console.log(initalRecipeRes.data.recipe);
-		const url = initalRecipeRes.data.recipe.url;
-		const fullRecipeRes = await SearchService.extractInfo(url);
+		let url = initalRecipeRes.data.recipe.url;
+		url = encodeURIComponent(url);
+		const fullRecipeRes = await SearchService.analyzeRecipe(url);
 		console.log(fullRecipeRes.data);
 		this.selectedResult = fullRecipeRes.data;
 		this.isLoading = false;
