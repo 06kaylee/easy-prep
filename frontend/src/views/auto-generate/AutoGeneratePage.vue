@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import AutoGenerateForm from "../../components/upcoming-meals/AutoGenerateForm.vue";
+import AutoGenerateForm from "../../components/auto-generate/AutoGenerateForm.vue";
 export default {
 	components: {
 		AutoGenerateForm,

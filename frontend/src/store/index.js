@@ -3,6 +3,7 @@ import dashboardPageModule from "./modules/dashboardPage.js";
 import budgetModule from "./modules/budget.js";
 import accountInfoModule from "./modules/accountInfo.js";
 import personalInfoModule from "./modules/personalInfo.js";
+import customizeGenerationModule from "./modules/customizeGeneration.js";
 
 export default createStore({
 	modules: {
@@ -10,6 +11,7 @@ export default createStore({
 		budget: budgetModule,
 		accountInfo: accountInfoModule,
 		personalInfo: personalInfoModule,
+		customizeGeneration: customizeGenerationModule,
 	},
 	state: {
 		// return {}

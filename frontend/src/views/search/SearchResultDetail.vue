@@ -76,7 +76,6 @@
 					</div>
 				</dialog>
 
-				<!-- TODO edamam api doesn't have servings or steps. and nutrient facts are weird -->
 				<div class="img-container grid-col-span-3 medium-padding-bottom">
 					<img :src="selectedResult.image" :alt="selectedResult.title" />
 				</div>
@@ -96,7 +95,7 @@
 							/>
 							<font-awesome-icon v-else :icon="['fas', 'angle-up']" />
 						</button>
-						<ul v-if="!isNutritionFactsCollapsed">
+						<ul v-if="!isNutritionFactsCollapsed && selectedResult.nutrition">
 							<li>
 								<p>
 									{{ selectedResult.nutrition.nutrients[0].name }}:
@@ -144,7 +143,7 @@
 							/>
 							<font-awesome-icon v-else :icon="['fas', 'angle-up']" />
 						</button>
-						<ul v-if="!isIngredientListCollapsed">
+						<ul v-if="!isIngredientListCollapsed && selectedResult.extendedIngredients">
 							<li
 								v-for="ingredient in selectedResult.extendedIngredients"
 								:key="ingredient"
@@ -162,7 +161,7 @@
 							/>
 							<font-awesome-icon v-else :icon="['fas', 'angle-up']" />
 						</button>
-						<ol v-if="!isStepsCollapsed">
+						<ol v-if="!isStepsCollapsed && selectedResult.analyzedInstructions[0].steps">
 							<li
 								v-for="step in selectedResult.analyzedInstructions[0].steps"
 								:key="step"
@@ -170,6 +169,9 @@
 								{{ step.step }}
 							</li>
 						</ol>
+						<ul v-else-if="!isStepsCollapsed && !selectedResult.analyzedInstructions[0].steps">
+							<li>{{ selectedResult.analyzedInstructions[0] }}</li>
+						</ul>
 					</li>
 					<li class="light-padding-bottom">
 						<p>
@@ -227,6 +229,28 @@ export default {
 		};
 	},
 	methods: {
+		checkProperties(recipe) {
+			const usedKeys = ['analyzedInstructions', 'extendedIngredients', 'image', 'nutrition.nutrients', 'readyInMinutes', 'servings', 'sourceUrl', 'title'];
+			for(const key in recipe) {
+				if(usedKeys.includes(key)) {
+					if(Array.isArray(recipe[key]) && recipe[key].length === 0) {
+						recipe[key].push('Check recipe');
+					}
+					else if(recipe[key] === -1) {
+						recipe[key] = 'Check recipe';
+					}
+				}
+				// if(usedKeys.includes(key) && (recipe[key] === -1 || (Array.isArray(recipe[key]) && recipe[key].length === 0))) {
+				// 	if(Array.isArray(recipe[key])) {
+				// 		recipe[key].push('Check recipe');
+				// 	}
+				// 	else {
+				// 		recipe[key] = 'Check recipe';
+				// 	}
+				// }
+			}
+			console.log(recipe.analyzedInstructions);
+		},
 		openModal() {
 			const modal = this.$refs.modal;
 			modal.showModal();
@@ -333,6 +357,7 @@ export default {
 		const fullRecipeRes = await SearchService.analyzeRecipe(url);
 		console.log(fullRecipeRes.data);
 		this.selectedResult = fullRecipeRes.data;
+		this.checkProperties(this.selectedResult);
 		this.isLoading = false;
 	},
 };

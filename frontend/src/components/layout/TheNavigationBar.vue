@@ -104,7 +104,7 @@ body {
 }
 
 .primary-nav-header {
-	background: #94618e;
+	background: white;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -122,7 +122,7 @@ body {
 
 .primary-nav-list a {
 	text-decoration: none;
-	color: #f8eee7;
+	color: black;
 }
 
 .mobile-nav-toggle {

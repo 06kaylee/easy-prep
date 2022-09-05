@@ -17,7 +17,8 @@ import UpcomingMeals from "../views/upcoming-meals/UpcomingMeals.vue";
 import UpcomingMealsDetail from "../views/upcoming-meals/UpcomingMealsDetail.vue";
 import EditUpcomingMealPage from "../views/upcoming-meals/EditUpcomingMealPage.vue";
 import AddUpcomingMealPage from "../views/upcoming-meals/AddUpcomingMealPage.vue";
-import AutoGeneratePage from "../views/upcoming-meals/AutoGeneratePage.vue";
+import AutoGeneratePage from "../views/auto-generate/AutoGeneratePage.vue";
+import CustomizeGenerationPage from "../views/auto-generate/CustomizeGenerationPage.vue";
 import UserBudget from "../views/budget/UserBudget.vue";
 import EditBudgetPage from "../views/budget/EditBudgetPage.vue";
 import UserGoals from "../views/goals/UserGoals.vue";
@@ -75,6 +76,10 @@ const router = createRouter({
 		{
 			path: "/upcoming-meals/auto-generate",
 			component: AutoGeneratePage
+		},
+		{
+			path: "/upcoming-meals/auto-generate/customize",
+			component: CustomizeGenerationPage
 		},
 		{ path: "/budget", component: UserBudget },
 		{ path: "/edit-budget/:id", component: EditBudgetPage, props: true },

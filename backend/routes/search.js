@@ -3,7 +3,10 @@ const express = require("express");
 const router = express.Router();
 const axios = require("axios");
 const moment = require("moment");
+const redis = require("redis");
 const RandomRecipe = require("../models/random-recipe");
+const REDIS_PORT = process.env.REDIS_PORT || 6379;
+const client = redis.createClient(REDIS_PORT);
 const API_URL_COMPLEX = process.env.API_URL_COMPLEX;
 const API_URL_EXTRACT = process.env.API_URL_EXTRACT;
 const API_URL_RANDOM = process.env.API_URL_RANDOM;
@@ -15,17 +18,26 @@ const APP_KEY = process.env.APP_KEY;
 // GET all results of searching by name
 router.get("/", async (req, res) => {
 	try {
-		await axios
-			.get(
-				`${BASE_API_URL}?type=public&q=${req.query.q}&app_id=${APP_ID}&app_key=${APP_KEY}`
-			)
-			.then((response) => {
-				res.send(response.data);
-			});
+		// client.get(req.query.q, async (err, results) => {
+		// 	if(results) {
+		// 		console.log('SENDING OLD RESULTS');
+		// 		res.send(results);
+		// 	}
+		// 	else {
+		// 		console.log('GETTING NEW RESULTS');
+		// 		const newResults = await axios.get(`${BASE_API_URL}?type=public&q=${req.query.q}&app_id=${APP_ID}&app_key=${APP_KEY}`);
+		// 		client.setEx(req.query.q, 3600, JSON.stringify(newResults));
+		// 	}
+		// })
+		const newResults = await axios.get(`${BASE_API_URL}?type=public&q=${req.query.q}&app_id=${APP_ID}&app_key=${APP_KEY}`);
+		// client.setEx(req.query.q, 3600, newResults);
+		res.send(newResults.data);
 	} catch (err) {
 		console.log(`Error while trying to search by name: ${err}`);
 	}
 });
+
+//TODO cache middleware
 
 router.get("/auto-generate", async (req, res) => {
 	try {
@@ -112,7 +124,6 @@ router.get("/random", async (req, res) => {
 router.get("/:id", async (req, res) => {
 	try {
 		const id = req.params.id;
-		console.log(req.protocol + "://" + req.get("host") + req.originalUrl);
 		await axios
 			.get(
 				`${BASE_API_URL}/${id}?type=public&app_id=${APP_ID}&app_key=${APP_KEY}`
