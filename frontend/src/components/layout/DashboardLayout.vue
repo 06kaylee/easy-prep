@@ -1,25 +1,23 @@
 <template>
 	<div class="page-container">
-		<base-card class="remaining-page-container">
-			<slot></slot>
-		</base-card>
+		<slot></slot>
 	</div>
 </template>
 
 <style scoped>
 .page-container {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 	/* minmax defines a size range greater than or equal to min and less than or equal to max */
-	grid-gap: 1rem;
-	background: #f8eee7;
+	max-width: 100%;
+	width: 100%;
+	overflow: auto;
 }
 
 .page-container > .remaining-page-container {
 	grid-column: 3 / 13;
 	max-height: 86vh;
-	max-width: 90rem;
-	width: 80rem;
+	max-width: 75rem;
+	width: 72rem;
 	height: fit-content;
 	overflow: auto;
 	background: white;

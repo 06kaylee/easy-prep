@@ -2,9 +2,6 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "../views/HomePage.vue";
 import LoginModal from "../components/auth/LoginModal";
 import SignUpModal from "../components/auth/SignUpModal";
-import TheSearch from "../views/search/TheSearch.vue";
-import SearchResult from "../views/search/SearchResult.vue";
-import SearchResultDetail from "../views/search/SearchResultDetail.vue";
 import UserDashboard from "../views/UserDashboard.vue";
 import AccountInformation from "../views/settings/AccountInformation.vue";
 import PersonalInformation from "../views/settings/PersonalInformation.vue";
@@ -21,9 +18,6 @@ import AutoGeneratePage from "../views/auto-generate/AutoGeneratePage.vue";
 import CustomizeGenerationPage from "../views/auto-generate/CustomizeGenerationPage.vue";
 import UserBudget from "../views/budget/UserBudget.vue";
 import EditBudgetPage from "../views/budget/EditBudgetPage.vue";
-import UserGoals from "../views/goals/UserGoals.vue";
-import EditGoalsPage from "../views/goals/EditGoalsPage.vue";
-import AddGoalPage from "../views/goals/AddGoalPage.vue";
 import GroceryList from "../views/GroceryList.vue";
 import NotFound from "../views/NotFound.vue";
 
@@ -33,9 +27,6 @@ const router = createRouter({
 		{ path: "/", component: HomePage },
 		{ path: "/login", component: LoginModal },
 		{ path: "/sign-up", component: SignUpModal },
-		{ path: "/search", component: TheSearch },
-		{ path: "/search/results", component: SearchResult },
-		{ path: "/search/results/:slug", component: SearchResultDetail, props: true },
 		{ path: "/dashboard", component: UserDashboard },
 		{ path: "/account-info", component: AccountInformation },
 		{ path: "/personal-info", component: PersonalInformation },
@@ -83,9 +74,6 @@ const router = createRouter({
 		},
 		{ path: "/budget", component: UserBudget },
 		{ path: "/edit-budget/:id", component: EditBudgetPage, props: true },
-		{ path: "/goals", component: UserGoals },
-		{ path: "/edit/:id", component: EditGoalsPage, props: true },
-		{ path: "/add", component: AddGoalPage },
 		{ path: "/grocery-list", component: GroceryList },
 		{ path: "/:notFound(.*)", component: NotFound },
 	],

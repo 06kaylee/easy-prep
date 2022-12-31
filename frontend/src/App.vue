@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="app">
 		<the-navigation-bar></the-navigation-bar>
 		<router-view></router-view>
 	</div>
@@ -16,7 +16,7 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
 
 * {
 	box-sizing: border-box;
@@ -25,11 +25,10 @@ export default {
 }
 
 html {
-	font-family: "Roboto Mono", sans-serif;
+	font-family: "Rubik", sans-serif;
 }
 
-body {
-	background: #f8eee7;
-	/* overflow: hidden; */
+.app {
+	display: flex;
 }
 </style>

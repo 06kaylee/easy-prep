@@ -2,7 +2,7 @@
 	<dashboard-layout>
 		<div class="dashboard-container" v-if="upcomingMeals">
 			<header id="welcome-msg">
-				<h2>Welcome, name</h2>
+				<h2>Your Dashboard</h2>
 			</header>
 
 			<base-card>
@@ -15,20 +15,10 @@
 			</base-card>
 
 			<base-card>
-				<div class="goal-container">
-					<a>
-						<h2 v-if="numGoals > 1">{{ numGoals }} Goals</h2>
-						<h2 v-else>{{ numGoals }} Goal</h2>
-					</a>
-				</div>
-			</base-card>
-
-			<base-card>
-				<div class="restriction-container">
-					<a>
-						<h2 v-if="numDietaryRestrictions > 1">{{ numDietaryRestrictions }} Dietary Restrictions</h2>
-						<h2 v-else>{{ numDietaryRestrictions }} Dietary Restriction</h2>
-					</a>
+				<div class="budget-container">
+					<p>Money spent</p>
+					<p>This Month: ${{ currentMonthMoneySpent }}</p>
+					<p>Last Month: ${{ lastMonthMoneySpent }}</p>
 				</div>
 			</base-card>
 
@@ -50,14 +40,6 @@
 					</ul>
 				</div>
 			</base-card>
-
-			<base-card>
-				<div class="budget-container">
-					<p>Money spent</p>
-					<p>This Month: ${{ currentMonthMoneySpent }}</p>
-					<p>Last Month: ${{ lastMonthMoneySpent }}</p>
-				</div>
-			</base-card>
 		</div>
 	</dashboard-layout>
 </template>
@@ -65,7 +47,6 @@
 <script>
 import DashboardLayout from "../components/layout/DashboardLayout.vue";
 import FavoriteMealService from "../services/FavoriteMealService";
-import GoalService from "../services/GoalService";
 import UpcomingMealService from "../services/UpcomingMealService";
 
 export default {
@@ -82,12 +63,6 @@ export default {
 	computed: {
 		numFavoriteMeals() {
 			return this.favoriteMeals.length;
-		},
-		numGoals() {
-			return this.goals.length;
-		},
-		numDietaryRestrictions() {
-			return this.$store.getters["dashboardPage/numDietaryRestrictions"];
 		},
 		currentMonthMoneySpent() {
 			return this.$store.getters["dashboardPage/currentMonthMoneySpent"];
@@ -113,9 +88,6 @@ export default {
 		const favoriteMealsRes = await FavoriteMealService.getAll();
 		this.favoriteMeals = favoriteMealsRes.data;
 
-		const goalsRes = await GoalService.getAll();
-		this.goals = goalsRes.data;
-
 		const upcomingMealsRes = await UpcomingMealService.getAll();
 		this.upcomingMeals = upcomingMealsRes.data;
 	}
@@ -139,10 +111,9 @@ export default {
 	grid-template-areas:
 		"welcome"
 		"favorite-meals"
-		"goals"
-		"dietary-restrictions"
+		"budget"
 		"upcoming-meals"
-		"budget";
+		;
 	gap: 1.5rem;
 	/* width: min(95%, 70rem); */
 }
@@ -150,6 +121,7 @@ export default {
 #welcome-msg {
 	text-align: left;
 	grid-area: welcome;
+	height: fit-content;
 }
 
 .dashboard-container .card:nth-of-type(1),
@@ -162,9 +134,7 @@ export default {
 	text-align: center;
 }
 
-.favmeal-container,
-.goal-container,
-.restriction-container {
+.favmeal-container {
 	width: 60%;
 }
 
@@ -173,39 +143,31 @@ export default {
 }
 
 .dashboard-container .card:nth-of-type(2) {
-	grid-area: goals;
-}
-
-.dashboard-container .card:nth-of-type(3) {
-	grid-area: dietary-restrictions;
-}
-
-.dashboard-container .card:nth-of-type(4) {
-	grid-area: upcoming-meals;
-}
-
-.dashboard-container .card:nth-of-type(5) {
 	grid-area: budget;
 }
 
-/* min width means that if the device width is greater than or equal to 50 rem... */
+.dashboard-container .card:nth-of-type(3) {
+	grid-area: upcoming-meals;
+}
 
-@media screen and (min-width: 60rem) {
+/* min width means that if the device width is greater than or equal to */
+
+@media screen and (min-width: 700px) {
 	.dashboard-container {
 		grid-template-areas:
 			"welcome welcome welcome"
-			"favorite-meals goals goals"
-			"upcoming-meals dietary-restrictions dietary-restrictions"
-			"upcoming-meals budget budget";
+			"favorite-meals budget budget"
+			"upcoming-meals upcoming-meals"
+			"upcoming-meals upcoming-meals";
 	}
 }
 
-@media screen and (min-width: 90em) {
+@media screen and (min-width: 980px) {
 	.dashboard-container {
 		grid-template-areas:
 			"welcome welcome welcome welcome"
-			"favorite-meals goals dietary-restrictions upcoming-meals"
-			"budget budget budget upcoming-meals";
+			"favorite-meals budget budget budget"
+			"upcoming-meals upcoming-meals upcoming-meals upcoming-meals";
 	}
 }
 

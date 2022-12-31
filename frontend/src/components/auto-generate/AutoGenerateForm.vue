@@ -187,6 +187,11 @@ export default {
 				this.numMeals[day] = event.target.value;
 			}
 		},
+		setNumMealsCustom(event) {
+			for(const day in this.isActive) {
+				this.numMealsCustom[day] = event.target.value;
+			}
+		},
 		getRandomIndex(obj) {
 			const keys = Object.keys(obj);
 			return keys[Math.floor(Math.random() * keys.length)];
@@ -213,19 +218,10 @@ export default {
 			this.recipeResults = meals;
 			this.currentMeal = this.recipeResults[0];
 		},
-		customizeGenerationSetup() {
-			// if user chooses all days to have the same number of meals
-			if(Object.keys(this.numMeals).length === 0) {
-				const numMealsObj = {};
-				for(const day in this.isActive) {
-					numMealsObj[day] = this.numMeals;
-				}
-				this.$store.dispatch('customizeGeneration/setNumMeals', numMealsObj);
-			}
-			// user chooses to customize the number of meals for each day
-			else {
-				this.$store.dispatch('customizeGeneration/setNumMeals', this.numMeals);
-			}
+		customizeGenerationSetup(numMealsChoice) {
+			// if num meals choice is customize, set meals to custom meals
+			const numMeals = numMealsChoice === 'customize' ? this.numMealsCustom : this.numMeals;
+			this.$store.dispatch('customizeGeneration/setNumMeals', numMeals);
 			this.$store.dispatch('customizeGeneration/setDaysPicked', this.isActive);
 			this.$router.push('/upcoming-meals/auto-generate/customize');
 		},
@@ -277,7 +273,7 @@ export default {
 		},
 		async submitForm() {
 			if(this.generationMethod === 'customize') {
-				this.customizeGenerationSetup();
+				this.customizeGenerationSetup(this.numMealsChoice);
 			}
 			else {
 				this.getRecipes(this.numMealsObj);

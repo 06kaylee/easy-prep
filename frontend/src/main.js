@@ -17,6 +17,11 @@ import { faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { faRotateLeft } from "@fortawesome/free-solid-svg-icons";
+import { faHouse } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarDays } from "@fortawesome/free-regular-svg-icons";
+import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import BaseButton from "./components/ui/BaseButton.vue";
 import BaseCard from "./components/ui/BaseCard.vue";
@@ -43,7 +48,12 @@ library.add(
 	faAngleUp,
 	faAngleRight,
 	faBars,
-	faRotateLeft
+	faRotateLeft,
+	faHouse,
+	faCalendarDays,
+	faCartShopping,
+	faStarRegular,
+	faStar
 );
 
 app.component("font-awesome-icon", FontAwesomeIcon);

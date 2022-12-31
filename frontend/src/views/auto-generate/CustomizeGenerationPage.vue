@@ -26,7 +26,7 @@
 		</div>
 
         <base-card id="favorite-meals-container">
-            <base-card v-for="meal in favoriteMeals" :key="meal" id="favorite-meal-card" draggable @dragstart="startDrag($event, meal)">
+            <base-card v-for="meal in numMeals" :key="meal" id="favorite-meal-card"> <!-- drag item from -->
                 <div class="favorite-meal-img-container">
                     <img :src="meal.img" :alt="meal.itemName">
                 </div>
@@ -42,10 +42,10 @@
         </base-card>
 
         <base-card id="days-picked-container">
-            <div class="day-container" v-for="(value, day) in daysPicked" :key="day">
+            <!-- <div class="day-container" v-for="(value, day) in daysPicked" :key="day">
                 <p>{{ day }}</p>
-                <base-card v-for="numMeals in numMeals[day]" :key="numMeals" id="selected-recipe-container"></base-card>
-            </div>
+                <base-card v-for="numMeals in parseInt(numMeals[day])" :key="numMeals" id="selected-recipe-container"></base-card> drag item to
+            </div> -->
         </base-card>
 
         <div class="btn-container">
@@ -65,6 +65,14 @@ export default {
             daysPicked: null
         }
     },
+    // computed: {
+    //     getFavoriteList() {
+    //         return this.favoriteMeals.filter((meal) => meal.list === 1);
+    //     },
+    //     getChosenList() {
+    //         return this.favoriteMeals.filter((meal) => meal.list === 2);
+    //     }
+    // },
     methods: {
         startDrag(event, favoriteMeal) {
             event.dataTransfer.dropEffect = 'move';
@@ -80,9 +88,12 @@ export default {
     async created() {
         const res = await FavoriteMealService.getAll();
         this.favoriteMeals = res.data;
-        console.log(this.favoriteMeals);
+        for (let favoriteMeal of this.favoriteMeals) {
+            favoriteMeal.list = 1
+        }
         this.numMeals = this.$store.getters['customizeGeneration/numMeals'];
         this.daysPicked = this.$store.getters['customizeGeneration/daysPicked'];
+        console.log(this.numMeals);
     }
 }
 </script>

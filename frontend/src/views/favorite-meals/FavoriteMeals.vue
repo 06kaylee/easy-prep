@@ -1,23 +1,27 @@
 <template>
 	<dashboard-layout>
-		<div class="all-favorite-meals-container">
-			<header>
-				<h2>Your Favorite Meals</h2>
+		<div class="FavoriteMeals">
+			<header class="FavoriteMeals_header">
+				<h2>My Favorite Meals</h2>
 				<h4>
-					<router-link to="/favorite-meals/add" class="add-favorite-meal-link">
+					<router-link to="/favorite-meals/add" class="FavoriteMeals_header_addMeal">
 						Add a favorite meal
 						<font-awesome-icon :icon="['fas', 'plus']" />
 					</router-link>
 				</h4>
 			</header>
 
-			<favorite-meal-item
-				v-for="favoriteMeal in favoriteMeals"
-				:key="favoriteMeal._id"
-				:id="favoriteMeal._id"
-				:itemName="favoriteMeal.itemName"
-				:img="favoriteMeal.img"
-			></favorite-meal-item>
+			<div class="FavoriteMeals_container">
+				<favorite-meal-item
+					v-for="favoriteMeal in favoriteMeals"
+					:key="favoriteMeal._id"
+					:id="favoriteMeal._id"
+					:item-name="favoriteMeal.itemName"
+					:img="favoriteMeal.img"
+					:ready-time="favoriteMeal.readyTime"
+					:servings="favoriteMeal.servings"
+				></favorite-meal-item>
+			</div>
 		</div>
 	</dashboard-layout>
 </template>
@@ -46,44 +50,33 @@ export default {
 };
 </script>
 
-<style scoped>
-.all-favorite-meals-container {
-	padding: 0.5rem 0rem 0 1.5rem;
-	display: grid;
-	grid-template-columns: 1fr;
-}
+<style lang="scss" scoped>
+.FavoriteMeals {
+	padding: 1.5rem;
 
-.all-favorite-meals-container header {
-	grid-column: 1 / 2;
-	display: flex;
-	justify-content: space-between;
-	padding-right: 2rem;
-}
+	&_header {
+		display: flex;
+		justify-content: space-between;
+		margin-top: 1rem;
 
-.add-favorite-meal-link {
-	text-decoration: none;
-	color: black;
-}
-
-/* if greater than or equal to 45rem */
-@media screen and (min-width: 45rem) {
-	.all-favorite-meals-container {
-		grid-template-columns: repeat(2, 1fr);
+		&_addMeal {
+			text-decoration: none;
+			color: black;
+		}
 	}
 
-	.all-favorite-meals-container header {
-		grid-column: 1 / 3;
-	}
-}
+	&_container {
+		display: grid;
+		grid-template-columns: 1fr;
+		margin-top: 5rem;
 
-/* if greater than or equal to 60rem */
-@media screen and (min-width: 60rem) {
-	.all-favorite-meals-container {
-		grid-template-columns: repeat(3, 1fr);
-	}
+		@media screen and (min-width: 760px) {
+			grid-template-columns: repeat(2, 1fr);
+		}
 
-	.all-favorite-meals-container header {
-		grid-column: 1 / 4;
+		@media screen and (min-width: 980px) {
+			grid-template-columns: repeat(3, 1fr);
+		}
 	}
 }
 </style>

@@ -5,7 +5,7 @@ const app = require('./app.js');
 dotenv.config({ path: './.env' });
 
 // setting up mongo connection to db
-const url = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@cluster1.pzfrv.mongodb.net/mealPlannerDb?retryWrites=true&w=majority`;
+const url = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@cluster0.5yatb.mongodb.net/mealPlannerDb?retryWrites=true&w=majority`;
 const conn = mongoose.connect(url)
   .then(() => {
     console.log("MongoDB connection open");
