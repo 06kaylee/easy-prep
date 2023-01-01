@@ -7,7 +7,7 @@ import AccountInformation from "../views/settings/AccountInformation.vue";
 import PersonalInformation from "../views/settings/PersonalInformation.vue";
 import AddPersonalInformationPage from "../views/settings/AddPersonalInformationPage.vue";
 import FavoriteMeals from "../views/favorite-meals/FavoriteMeals.vue";
-import FavoriteMealsDetail from "../views/favorite-meals/FavoriteMealsDetail.vue";
+import FavoriteMealDetail from "../views/favorite-meals/FavoriteMealDetail.vue";
 import AddFavoriteMealPage from "../views/favorite-meals/AddFavoriteMealPage.vue";
 import EditFavoriteMealPage from "../views/favorite-meals/EditFavoriteMealPage.vue";
 import UpcomingMeals from "../views/upcoming-meals/UpcomingMeals.vue";
@@ -38,7 +38,7 @@ const router = createRouter({
 		{ path: "/favorite-meals", component: FavoriteMeals },
 		{
 			path: "/favorite-meals/:id",
-			component: FavoriteMealsDetail,
+			component: FavoriteMealDetail,
 			props: true,
 		},
 		{
@@ -66,11 +66,11 @@ const router = createRouter({
 		},
 		{
 			path: "/upcoming-meals/auto-generate",
-			component: AutoGeneratePage
+			component: AutoGeneratePage,
 		},
 		{
 			path: "/upcoming-meals/auto-generate/customize",
-			component: CustomizeGenerationPage
+			component: CustomizeGenerationPage,
 		},
 		{ path: "/budget", component: UserBudget },
 		{ path: "/edit-budget/:id", component: EditBudgetPage, props: true },
