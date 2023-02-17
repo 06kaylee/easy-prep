@@ -1,5 +1,9 @@
 <template>
-	<form class="edit-upcoming-meal-form" @submit.prevent="submitForm" v-if="selectedMeal">
+	<form
+		class="edit-upcoming-meal-form"
+		@submit.prevent="submitForm"
+		v-if="selectedMeal"
+	>
 		<!-- Name of the item -->
 		<div class="form-control">
 			<label for="item" id="item-name-label">Item Name</label>
@@ -43,6 +47,42 @@
 				accept="image/png, image/jpeg, image/jpg"
 				@change="onFileChange"
 			/>
+		</div>
+
+		<h3>Meal Type</h3>
+		<div class="form-control">
+			<label for="breakfast">
+				<input
+					type="radio"
+					id="breakfast"
+					name="breakfast"
+					value="breakfast"
+					v-model="selectedMeal.mealType"
+				/>
+				Breakfast
+			</label>
+
+			<label for="lunch">
+				<input
+					type="radio"
+					id="lunch"
+					name="lunch"
+					value="lunch"
+					v-model="selectedMeal.mealType"
+				/>
+				Lunch
+			</label>
+
+			<label for="dinner">
+				<input
+					type="radio"
+					id="dinner"
+					name="dinner"
+					value="dinner"
+					v-model="selectedMeal.mealType"
+				/>
+				Dinner
+			</label>
 		</div>
 
 		<!-- servings -->

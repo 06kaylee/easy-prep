@@ -4,7 +4,10 @@
 			<header class="FavoriteMeals_header">
 				<h2>My Favorite Meals</h2>
 				<h4>
-					<router-link to="/favorite-meals/add" class="FavoriteMeals_header_addMeal">
+					<router-link
+						to="/favorite-meals/add"
+						class="FavoriteMeals_header_addMeal"
+					>
 						Add a favorite meal
 						<font-awesome-icon :icon="['fas', 'plus']" />
 					</router-link>
@@ -68,6 +71,7 @@ export default {
 	&_container {
 		display: grid;
 		grid-template-columns: 1fr;
+		gap: 1rem;
 		margin-top: 5rem;
 
 		@media screen and (min-width: 760px) {

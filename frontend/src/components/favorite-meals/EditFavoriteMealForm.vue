@@ -1,5 +1,9 @@
 <template>
-	<form class="edit-favorite-meal-form" @submit.prevent="submitForm" v-if="selectedMeal">
+	<form
+		class="edit-favorite-meal-form"
+		@submit.prevent="submitForm"
+		v-if="selectedMeal"
+	>
 		<!-- Name of the item -->
 		<div class="form-control">
 			<label for="item-name" id="item-name-label">Item Name</label>
@@ -12,25 +16,51 @@
 		</div>
 
 		<!-- Image -->
-		<h3 v-if="selectedMeal.userInput">Image</h3>
-		<div class="form-control" v-if="selectedMeal.userInput">
+		<h3>Image</h3>
+		<div class="form-control">
 			<input
-				type="radio"
-				id="keep"
-				name="img-choice"
-				v-model="imageOption"
-				value="keep"
+				type="file"
+				id="item-image"
+				name="item-image"
+				accept="image/png, image/jpeg, image/jpg"
+				@change="onFileChange"
 			/>
-			<label for="keep">Keep the same image</label>
+		</div>
 
-			<input
-				type="radio"
-				id="change"
-				name="img-choice"
-				v-model="imageOption"
-				value="change"
-			/>
-			<label for="change">Change the image</label>
+		<h3>Meal Type</h3>
+		<div class="form-control">
+			<label for="breakfast">
+				<input
+					type="radio"
+					id="breakfast"
+					name="breakfast"
+					value="breakfast"
+					v-model="selectedMeal.mealType"
+				/>
+				Breakfast
+			</label>
+
+			<label for="lunch">
+				<input
+					type="radio"
+					id="lunch"
+					name="lunch"
+					value="lunch"
+					v-model="selectedMeal.mealType"
+				/>
+				Lunch
+			</label>
+
+			<label for="dinner">
+				<input
+					type="radio"
+					id="dinner"
+					name="dinner"
+					value="dinner"
+					v-model="selectedMeal.mealType"
+				/>
+				Dinner
+			</label>
 		</div>
 
 		<div
@@ -242,6 +272,8 @@ export default {
 	},
 	methods: {
 		async submitForm() {
+			console.log(this.imageOption);
+			console.log(this.selectedMeal);
 			const res = await FavoriteMealService.edit(this.id, this.selectedMeal);
 			console.log(res.data);
 			this.$router.replace(`/favorite-meals/${this.id}`);
@@ -304,10 +336,6 @@ h3 {
 .notes {
 	display: grid;
 	grid-template-columns: repeat(3, auto);
-}
-
-.notes {
-	display: flex;
 }
 
 .notes-heading {

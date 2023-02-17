@@ -5,7 +5,12 @@
 			<h3>Days to Generate For</h3>
 			<div class="form-control days-selection-container">
 				<div v-for="dayOfWeek in daysOfWeek" :key="dayOfWeek">
-					<input type="button" :value="dayOfWeek" @click="toggleActive(dayOfWeek)" :class="{ 'active-btn': isActive[dayOfWeek] }">
+					<input
+						type="button"
+						:value="dayOfWeek"
+						@click="toggleActive(dayOfWeek)"
+						:class="{ 'active-btn': isActive[dayOfWeek] }"
+					/>
 
 					<!-- if the user chooses to customize the number of meals for each day -->
 					<input
@@ -20,29 +25,42 @@
 				</div>
 			</div>
 
-			
-
 			{{ isActive }}
-			<br>
+			<br />
 			{{ numMeals }}
-			<br>
+			<br />
 			{{ numMealsCustom }}
 			<!-- choose if all meals will be the same number of meals or if there's a custom amount -->
 			<h3>Number of Meals Per Day</h3>
 			<div class="form-control num-meals-per-day-container">
 				<label for="same-num-meals">
-					<input type="radio" id="same-num-meals" name="num-of-meals" value="same" v-model="numMealsChoice">
+					<input
+						type="radio"
+						id="same-num-meals"
+						name="num-of-meals"
+						value="same"
+						v-model="numMealsChoice"
+					/>
 					All the same number of meals
 				</label>
 
 				<label for="customize-num-meals">
-					<input type="radio" id="customize-num-meals" name="num-of-meals" value="customize" v-model="numMealsChoice">
+					<input
+						type="radio"
+						id="customize-num-meals"
+						name="num-of-meals"
+						value="customize"
+						v-model="numMealsChoice"
+					/>
 					Customize
 				</label>
 			</div>
 
 			<!-- if user wants all the chosen days to have the same number of meals -->
-			<div class="form-control" v-if="numMealsChoice === 'same' && !isActiveEmpty">
+			<div
+				class="form-control"
+				v-if="numMealsChoice === 'same' && !isActiveEmpty"
+			>
 				<label for="num-meals"></label>
 				<input
 					type="number"
@@ -58,31 +76,59 @@
 			<h3>Generation method</h3>
 			<div class="form-control generation-method-container">
 				<label for="random-generation">
-					<input type="radio" id="random-generation" name="generation-method" value="random" v-model="generationMethod">
+					<input
+						type="radio"
+						id="random-generation"
+						name="generation-method"
+						value="random"
+						v-model="generationMethod"
+					/>
 					Random
 				</label>
 
 				<label for="customize-generation">
-					<input type="radio" id="customize-generation" name="generation-method" value="customize" v-model="generationMethod">
+					<input
+						type="radio"
+						id="customize-generation"
+						name="generation-method"
+						value="customize"
+						v-model="generationMethod"
+					/>
 					Customize
 				</label>
 			</div>
 
-			<div class="form-control meals-for-generation-container" v-if="generationMethod === 'random'">
+			<div
+				class="form-control meals-for-generation-container"
+				v-if="generationMethod === 'random'"
+			>
 				<label for="repeat">
-					<input type="radio" id="repeat" name="meals-for-generation" value="repeat" v-model="mealsForGenerationMethod">
+					<input
+						type="radio"
+						id="repeat"
+						name="meals-for-generation"
+						value="repeat"
+						v-model="mealsForGenerationMethod"
+					/>
 					Repeat meals
 				</label>
 
 				<label for="unique">
-					<input type="radio" id="unique" name="meals-for-generation" value="unique" v-model="mealsForGenerationMethod">
+					<input
+						type="radio"
+						id="unique"
+						name="meals-for-generation"
+						value="unique"
+						v-model="mealsForGenerationMethod"
+					/>
 					Only unique meals
 				</label>
 			</div>
 
-
 			<div class="btn-container">
-				<base-button class="generate-btn" v-if="generationMethod === 'random'">Generate</base-button>
+				<base-button class="generate-btn" v-if="generationMethod === 'random'"
+					>Generate</base-button
+				>
 				<base-button v-else>Customize</base-button>
 			</div>
 		</form>
@@ -90,7 +136,11 @@
 		<!-- TODO fix styling, fix saving by recipe id -->
 		<base-modal v-show="modalVisible" @close="closeModal">
 			<template v-slot:icons>
-				<font-awesome-icon class="randomize-btn" @click="getRecipes" :icon="['fas', 'rotate-left']" />
+				<font-awesome-icon
+					class="randomize-btn"
+					@click="getRecipes"
+					:icon="['fas', 'rotate-left']"
+				/>
 			</template>
 			<template v-slot:body>
 				<div class="modal-loading-container" v-if="isLoading">
@@ -98,8 +148,18 @@
 				</div>
 				<div class="modal-content" v-else>
 					<h3 v-if="currentMeal">{{ currentMeal.day }}</h3>
-					<auto-generate-recipe-item class="modal-auto-generate-card" v-if="currentMeal" :day="currentMeal.day" :recipeName="currentMeal.itemName" :img="currentMeal.img"></auto-generate-recipe-item>
-					<font-awesome-icon class="modal-next-btn" @click="nextMeal" :icon="['fas', 'angle-right']" />
+					<auto-generate-recipe-item
+						class="modal-auto-generate-card"
+						v-if="currentMeal"
+						:day="currentMeal.day"
+						:recipeName="currentMeal.itemName"
+						:img="currentMeal.img"
+					></auto-generate-recipe-item>
+					<font-awesome-icon
+						class="modal-next-btn"
+						@click="nextMeal"
+						:icon="['fas', 'angle-right']"
+					/>
 				</div>
 				<div class="save-btn-container">
 					<base-button @click="saveRecipes">Save</base-button>
@@ -117,11 +177,11 @@ import AutoGenerateRecipeItem from "../auto-generate/AutoGenerateRecipeItem.vue"
 
 export default {
 	components: {
-		AutoGenerateRecipeItem
+		AutoGenerateRecipeItem,
 	},
 	data() {
 		return {
-			daysOfWeek: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+			daysOfWeek: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
 			numMealsChoice: null,
 			numMeals: {},
 			numMealsCustom: {},
@@ -142,21 +202,25 @@ export default {
 			handler() {
 				// reset num meals to 1
 				this.numMeals = {};
-				
+
 				// TODO tell users the number of favorite meals they have and if the number they choose for each day goes over total, warn them
 
-				this.maxNumMeals = Math.floor(this.favoriteMeals.length / Object.keys(this.isActive).length);
+				this.maxNumMeals = Math.floor(
+					this.favoriteMeals.length / Object.keys(this.isActive).length
+				);
 			},
-			deep: true
-		}
+			deep: true,
+		},
 	},
 	computed: {
 		isActiveEmpty() {
 			return Object.keys(this.isActive).length === 0;
 		},
 		numMealsObj() {
-			return this.numMealsChoice === 'same' ? this.numMeals : this.numMealsCustom;
-		}
+			return this.numMealsChoice === "same"
+				? this.numMeals
+				: this.numMealsCustom;
+		},
 	},
 	methods: {
 		openModal() {
@@ -175,20 +239,19 @@ export default {
 		},
 		toggleActive(day) {
 			// if isActive already has the day key in it, remove it first because false values shouldn't be kept
-			if(Object.prototype.hasOwnProperty.call(this.isActive, day)) {
+			if (Object.prototype.hasOwnProperty.call(this.isActive, day)) {
 				delete this.isActive[day];
-			}
-			else {
+			} else {
 				this.isActive[day] = true;
 			}
 		},
 		setNumMeals(event) {
-			for(const day in this.isActive) {
+			for (const day in this.isActive) {
 				this.numMeals[day] = event.target.value;
 			}
 		},
 		setNumMealsCustom(event) {
-			for(const day in this.isActive) {
+			for (const day in this.isActive) {
 				this.numMealsCustom[day] = event.target.value;
 			}
 		},
@@ -199,8 +262,8 @@ export default {
 		getUniqueMeals(numMeals) {
 			const uniqueMeals = [];
 			const favoriteMealsCopy = { ...this.favoriteMeals };
-			for(const [day, value] of Object.entries(numMeals)) {
-				for(let i = value; i > 0; i--) {
+			for (const [day, value] of Object.entries(numMeals)) {
+				for (let i = value; i > 0; i--) {
 					let randomIndex = this.getRandomIndex(favoriteMealsCopy);
 					let randomRecipe = favoriteMealsCopy[randomIndex];
 					randomRecipe.day = day;
@@ -212,7 +275,7 @@ export default {
 		},
 		getRecipes(numMeals) {
 			let meals = [];
-			if(this.mealsForGenerationMethod === 'unique') {
+			if (this.mealsForGenerationMethod === "unique") {
 				meals = this.getUniqueMeals(numMeals);
 			}
 			this.recipeResults = meals;
@@ -220,10 +283,11 @@ export default {
 		},
 		customizeGenerationSetup(numMealsChoice) {
 			// if num meals choice is customize, set meals to custom meals
-			const numMeals = numMealsChoice === 'customize' ? this.numMealsCustom : this.numMeals;
-			this.$store.dispatch('customizeGeneration/setNumMeals', numMeals);
-			this.$store.dispatch('customizeGeneration/setDaysPicked', this.isActive);
-			this.$router.push('/upcoming-meals/auto-generate/customize');
+			const numMeals =
+				numMealsChoice === "customize" ? this.numMealsCustom : this.numMeals;
+			this.$store.dispatch("customizeGeneration/setNumMeals", numMeals);
+			this.$store.dispatch("customizeGeneration/setDaysPicked", this.isActive);
+			this.$router.push("/upcoming-meals/auto-generate/customize");
 		},
 		formatToUpcomingMeal(recipe, dayOfWeek) {
 			const ingredients = [];
@@ -258,24 +322,26 @@ export default {
 		async saveRecipes() {
 			this.isLoading = true;
 			// create days of week array
-			const daysOfWeek = ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'];
+			const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 			// iterate over each recipe in recipe results
-			for(const [index, recipe] of Object.entries(this.recipeResults)) {
+			for (const [index, recipe] of Object.entries(this.recipeResults)) {
 				// get info for recipe by id
 				const res = await SearchService.getInfo(recipe.id);
 				const recipeInfo = res.data;
 				console.log(recipeInfo);
-				const mealToSave = this.formatToUpcomingMeal(recipeInfo, daysOfWeek[index]);
+				const mealToSave = this.formatToUpcomingMeal(
+					recipeInfo,
+					daysOfWeek[index]
+				);
 				await UpcomingMealService.add(mealToSave);
 			}
 			this.isLoading = false;
-			this.$router.push('/upcoming-meals');
+			this.$router.push("/upcoming-meals");
 		},
 		async submitForm() {
-			if(this.generationMethod === 'customize') {
+			if (this.generationMethod === "customize") {
 				this.customizeGenerationSetup(this.numMealsChoice);
-			}
-			else {
+			} else {
 				this.getRecipes(this.numMealsObj);
 				this.openModal();
 			}
@@ -286,7 +352,7 @@ export default {
 		const res = await FavoriteMealService.getAll();
 
 		this.favoriteMeals = res.data;
-	}
+	},
 };
 </script>
 
@@ -320,8 +386,8 @@ export default {
 
 .modal-loading-container {
 	grid-column: 1 / 3;
-    margin-top: 5rem;
-    margin-bottom: 2rem;
+	margin-top: 5rem;
+	margin-bottom: 2rem;
 }
 
 .modal .btn-container {
@@ -438,12 +504,12 @@ h3 {
 	color: white;
 	border: 1px solid #94618e !important;
 }
-.days-selection-container input[type=button] {
+.days-selection-container input[type="button"] {
 	background-color: #f8eee7;
-    border-radius: 0.3rem;
-    padding: 0.6rem;
-    font-family: inherit;
-    width: 4rem;
+	border-radius: 0.3rem;
+	padding: 0.6rem;
+	font-family: inherit;
+	width: 4rem;
 	border: 1px solid #d6ccc5;
 }
 #num-meals-custom {

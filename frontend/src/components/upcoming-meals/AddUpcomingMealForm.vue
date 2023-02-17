@@ -18,6 +18,42 @@
 			/>
 		</div>
 
+		<h3>Meal Type</h3>
+		<div class="form-control">
+			<label for="breakfast">
+				<input
+					type="radio"
+					id="breakfast"
+					name="breakfast"
+					value="breakfast"
+					v-model="mealType"
+				/>
+				Breakfast
+			</label>
+
+			<label for="lunch">
+				<input
+					type="radio"
+					id="lunch"
+					name="lunch"
+					value="lunch"
+					v-model="mealType"
+				/>
+				Lunch
+			</label>
+
+			<label for="dinner">
+				<input
+					type="radio"
+					id="dinner"
+					name="dinner"
+					value="dinner"
+					v-model="mealType"
+				/>
+				Dinner
+			</label>
+		</div>
+
 		<!-- servings -->
 		<div class="form-control">
 			<label for="servings" id="servings-label">Servings</label>
@@ -90,10 +126,18 @@
 			:key="index"
 		>
 			<input type="text" v-model="ingredients[index]" />
-			<a @click="addField(ingredients)" @keyup.enter="addField(ingredients)" tabindex="0">
+			<a
+				@click="addField(ingredients)"
+				@keyup.enter="addField(ingredients)"
+				tabindex="0"
+			>
 				<font-awesome-icon class="add-btn" :icon="['fas', 'plus']" />
 			</a>
-			<a @click="removeField(index, ingredients)" @keyup.enter="removeField(index, ingredients)" tabindex="0">
+			<a
+				@click="removeField(index, ingredients)"
+				@keyup.enter="removeField(index, ingredients)"
+				tabindex="0"
+			>
 				<font-awesome-icon class="remove-btn" :icon="['fas', 'minus']" />
 			</a>
 		</div>
@@ -105,7 +149,11 @@
 			<a @click="addField(steps)" @keyup.enter="addField(steps)" tabindex="0">
 				<font-awesome-icon class="add-btn" :icon="['fas', 'plus']" />
 			</a>
-			<a @click="removeField(index, steps)" @keyup.enter="removeField(index, steps)" tabindex="0">
+			<a
+				@click="removeField(index, steps)"
+				@keyup.enter="removeField(index, steps)"
+				tabindex="0"
+			>
 				<font-awesome-icon class="remove-btn" :icon="['fas', 'minus']" />
 			</a>
 		</div>
@@ -117,7 +165,11 @@
 			<a @click="addField(notes)" @keyup.enter="addField(notes)" tabindex="0">
 				<font-awesome-icon class="add-btn" :icon="['fas', 'plus']" />
 			</a>
-			<a @click="removeField(index, notes)" @keyup.enter="removeField(index, notes)" tabindex="0">
+			<a
+				@click="removeField(index, notes)"
+				@keyup.enter="removeField(index, notes)"
+				tabindex="0"
+			>
 				<font-awesome-icon class="remove-btn" :icon="['fas', 'minus']" />
 			</a>
 		</div>
@@ -134,6 +186,7 @@ export default {
 		return {
 			itemName: "",
 			img: "",
+			mealType: "",
 			servings: null,
 			readyTime: null,
 			nutritionFacts: {
@@ -177,7 +230,8 @@ export default {
 			const newMeal = {
 				dayOfWeek: dayOfWeek,
 				itemName: this.itemName,
-				img: 'blah',
+				img: "blah",
+				mealType: this.mealType,
 				servings: this.servings,
 				readyTime: this.readyTime,
 				nutritionFacts: this.nutritionFacts,

@@ -22,6 +22,9 @@ import { faCalendarDays } from "@fortawesome/free-regular-svg-icons";
 import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-regular-svg-icons";
+import { faClock } from "@fortawesome/free-regular-svg-icons";
+import { faFileLines } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import BaseButton from "./components/ui/BaseButton.vue";
 import BaseCard from "./components/ui/BaseCard.vue";
@@ -53,7 +56,10 @@ library.add(
 	faCalendarDays,
 	faCartShopping,
 	faStarRegular,
-	faStar
+	faStar,
+	faUser,
+	faClock,
+	faFileLines
 );
 
 app.component("font-awesome-icon", FontAwesomeIcon);

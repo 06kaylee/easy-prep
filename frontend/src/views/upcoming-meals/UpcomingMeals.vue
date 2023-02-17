@@ -1,68 +1,48 @@
 <template>
 	<dashboard-layout>
-		<div class="all-upcoming-days-container">
-			<header>
+		<div class="upcomingMeals_container">
+			<header class="upcomingMeals_container_header">
 				<h2>Your Upcoming Meals</h2>
-				<div class="upcoming-meal-btns-container">
+				<div class="upcomingMeals_container_header_btnContainer">
 					<base-button v-if="upcomingMealsExist" @click="openModal('auto')">
 						Auto Generate
 					</base-button>
-					<base-button v-else link to="/upcoming-meals/auto-generate">Auto Generate</base-button>
+					<base-button v-else link to="/upcoming-meals/auto-generate"
+						>Auto Generate</base-button
+					>
 					<base-button @click="openModal('export')">Export</base-button>
 				</div>
 			</header>
 
-			<base-modal class="auto-generate-modal" v-show="autoModalVisible" @close="closeModal('auto')">
-				<template v-slot:header>
-					<h3>Auto Generate</h3>
-				</template>
-				<template v-slot:body>
-					<form @submit.prevent="submitAuto" class="auto-generate-form">
-						<div class="remove-option">
-							<p class="form-question">What do you want to do with your current upcoming meals?</p> 
-							<label for="remove">
-								<input type="radio" id="remove" name="remove-option" value="remove" v-model="removeOption">
-								Remove
-							</label>
+			<auto-generate-modal
+				v-show="autoModalVisible"
+				@close="closeModal('auto')"
+			></auto-generate-modal>
 
-							<label for="keep">
-								<input type="radio" id="keep" name="remove-option" value="keep" v-model="removeOption">
-								Keep
-							</label>
-						</div>
+			<export-meals-modal
+				v-show="exportModalVisible"
+				@close="closeModal('export')"
+			></export-meals-modal>
 
-						<div class="btn-container">
-							<!-- TODO fix buttons to remove meals and generate based on option -->
-							<base-button>Save</base-button>
-						</div>
-					</form>
-				</template>
-			</base-modal>
+			<div class="upcomingMeals_container_allDays">
+				<upcoming-meal-day
+					v-for="dayOfWeek in daysOfWeek"
+					:key="dayOfWeek"
+					:dayOfWeek="dayOfWeek"
+					:isActive="isActiveDay(dayOfWeek)"
+					@click="changeActiveDay(dayOfWeek)"
+				></upcoming-meal-day>
+			</div>
 
-			<base-modal class="export-modal" v-show="exportModalVisible" @close="closeModal('export')" id="export-modal-container">
-				<template v-slot:header>
-					<h3>Export your upcoming meals</h3>
-				</template>
-				<template v-slot:body>
-					<form @submit.prevent="submitExport" class="export-modal-form">
-						<label for="download-option">Choose a download method:</label>
-						<select name="download-option" id="export-modal-download-option" v-model="downloadOption">
-							<option value="email">Email</option>
-							<option value="computer">Local Computer</option>
-						</select>
-
-						<div class="btn-container">
-							<base-button>Save</base-button>
-						</div>
-					</form>
-				</template>
-			</base-modal>
-
-			<upcoming-meal-day
-				v-for="dayOfWeek in daysOfWeek"
-				:key="dayOfWeek"
-				:dayOfWeek="dayOfWeek"
-			></upcoming-meal-day>
+			<div class="upcomingMeals_container_meals">
+				<upcoming-meal-preview
+					v-for="mealType in mealTypes"
+					:key="mealType"
+					:day="activeDay"
+					:meal-type="mealType"
+					:meals="mealsForDay(mealType)"
+				></upcoming-meal-preview>
+			</div>
 		</div>
 	</dashboard-layout>
 </template>
@@ -71,110 +51,118 @@
 import DashboardLayout from "../../components/layout/DashboardLayout.vue";
 import UpcomingMealDay from "../../components/upcoming-meals/UpcomingMealDay.vue";
 import UpcomingMealService from "../../services/UpcomingMealService";
+import UpcomingMealPreview from "../../components/upcoming-meals/UpcomingMealPreview.vue";
+import AutoGenerateModal from "../../components/auto-generate/AutoGenerateModal.vue";
+import ExportMealsModal from "../../components/upcoming-meals/ExportMealsModal.vue";
 
 export default {
 	components: {
 		DashboardLayout,
 		UpcomingMealDay,
+		UpcomingMealPreview,
+		AutoGenerateModal,
+		ExportMealsModal,
 	},
 	data() {
 		return {
-			daysOfWeek: ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"],
+			daysOfWeek: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+			mealTypes: ["breakfast", "lunch", "dinner"],
 			upcomingMeals: null,
 			upcomingMealsExist: false,
 			isLoading: false,
 			autoModalVisible: false,
 			exportModalVisible: false,
-			downloadOption: 'computer',
-			removeOption: 'remove',
-		}
+			activeDay: "Mon",
+		};
 	},
 	methods: {
+		mealsForDay(mealType) {
+			if (this.upcomingMeals) {
+				return this.upcomingMeals.filter(
+					(meal) =>
+						meal.dayOfWeek === this.activeDay && meal.mealType === mealType
+				);
+			}
+			return [];
+		},
+		changeActiveDay(dayOfWeek) {
+			this.activeDay = dayOfWeek;
+		},
+		isActiveDay(dayOfWeek) {
+			return this.activeDay === dayOfWeek;
+		},
 		openModal(modalType) {
-			switch(modalType) {
-				case 'auto':
+			switch (modalType) {
+				case "auto":
 					this.autoModalVisible = true;
 					break;
-				case 'export':
+				case "export":
 					this.exportModalVisible = true;
 					break;
 				default:
-					console.log('Something went wrong');
+					console.log("Something went wrong");
 			}
 		},
 		closeModal(modalType) {
-			switch(modalType) {
-				case 'auto':
+			switch (modalType) {
+				case "auto":
 					this.autoModalVisible = false;
 					break;
-				case 'export':
+				case "export":
 					this.exportModalVisible = false;
 					break;
 				default:
-					console.log('Something went wrong');
+					console.log("Something went wrong");
 			}
 		},
-		async setupAuto() {
-			this.isLoading = true;
-			if(this.removeOption === 'remove') {
-				for(const meal of this.upcomingMeals) {
-					await UpcomingMealService.delete(meal._id);
-				}
-			}
-			this.$router.push('/upcoming-meals/auto-generate');
-			this.isLoading = false;
-		},
-		createCsvContent() {
-			const propertiesToKeep = ['dayOfWeek', 'itemName', 'readyTime', 'recipeUrl'];
-			// add the kept properties to a new object and add that object to the new array
-			const newArr = this.upcomingMeals.map(upcomingMealObj => propertiesToKeep.reduce((newObj, key) => {
-				newObj[key] = upcomingMealObj[key];
-				return newObj;
-			}, {}));
-			return newArr;
-		},
-		downloadCsv(arr) {
-			let csv = '';
-			let header = Object.keys(arr[0]).join(',');
-			let values = arr.map(obj => Object.values(obj).join(',')).join('\n');
-			csv += header + '\n' + values;
-			var hiddenElement = document.createElement('a');
-            hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
-            hiddenElement.download = 'upcoming-meals.csv';
-            document.getElementById('export-modal-container').appendChild(hiddenElement);
-            hiddenElement.click();
-			this.closeModal('export');
-		},
-		submitExport() {
-			const newArr = this.createCsvContent();
-			if(this.downloadOption === 'computer') {
-				this.downloadCsv(newArr);
-			}
-		},
-		submitAuto() {
-			this.setupAuto();
-		}
 	},
 	async created() {
 		const res = await UpcomingMealService.getAll();
 		this.upcomingMeals = res.data;
-		if(this.upcomingMeals.length > 0) {
+		if (this.upcomingMeals.length > 0) {
 			this.upcomingMealsExist = true;
 		}
-		console.log(this.upcomingMeals);
-	}
+	},
 };
 </script>
 
-<style scoped>
-.modal h3 {
-	margin: 0.8rem 0 1rem 0;
-}
+<style lang="scss" scoped>
+.upcomingMeals {
+	&_container {
+		display: grid;
+		grid-auto-rows: min-content;
+		gap: 1rem;
+		padding: 2rem;
 
-.modal .btn-container {
-	margin-top: 1rem;
-	display: flex;
-	justify-content: space-evenly;
+		&_header {
+			display: grid;
+			gap: 1rem;
+
+			@media screen and (min-width: 760px) {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+			&_btnContainer {
+				display: flex;
+				gap: 1rem;
+			}
+		}
+
+		&_allDays {
+			display: flex;
+			overflow-x: auto;
+			padding: 0.5rem;
+			gap: 2.5rem;
+			margin-bottom: 3rem;
+		}
+
+		&_meals {
+			display: grid;
+			gap: 2rem;
+		}
+	}
 }
 
 /* >>> is deep combinator */
@@ -196,68 +184,29 @@ export default {
 	border-radius: 0.4rem;
 }
 
-.auto-generate-modal >>> .modal {
-	/* width: 29rem;
-	height: 24rem; */
-	width: fit-content;
-	height: fit-content;
-	text-align: left;
-}
-
-.auto-generate-form {
-	display: grid;
-	row-gap: 1.2rem;
-}
-
-.remove-option,
-.generate-option {
-	display: grid;
-	padding-left: 2rem;
-}
-
-.form-question {
-	margin-bottom: 0.4rem;
-}
-
-.all-upcoming-days-container {
-	display: grid;
-	grid-template-columns: 1fr;
-	padding: 1.5rem;
-	gap: 2rem;
-}
-
-.all-upcoming-days-container header {
-	grid-column: 1 / 2;
-	display: flex;
-	justify-content: space-between;
-}
-
-.upcoming-meal-btns-container {
-	display: flex;
-	gap: 1rem;
-}
-
-@media screen and (min-width: 55rem) {
-	.all-upcoming-days-container {
-		grid-template-columns: repeat(2, 1fr);
-	}
-
-	.all-upcoming-days-container header {
-		grid-column: 1 / 3;
-	}
-}
-
-@media screen and (min-width: 80rem) {
-	.all-upcoming-days-container {
-		grid-template-columns: repeat(3, 1fr);
-	}
-
-	.all-upcoming-days-container header {
-		grid-column: 1 / 4;
-	}
-}
-
 a:hover {
 	color: grey;
+}
+
+::-webkit-scrollbar {
+	width: 1.2em;
+}
+
+::-webkit-scrollbar-track {
+	background: white;
+	border-radius: 100vh;
+	margin-block: 0.4em;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #c7c4c4;
+	border-radius: 100vh;
+	border: 0.25em solid white;
+}
+
+@supports (scrollbar-color: #c7c4c4 white) {
+	* {
+		scrollbar-color: #c7c4c4 white;
+	}
 }
 </style>

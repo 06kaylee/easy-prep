@@ -8,7 +8,9 @@
 			<base-card>
 				<div class="favmeal-container">
 					<a>
-						<h2 v-if="numFavoriteMeals > 1">{{ numFavoriteMeals }} Favorite Meals</h2>
+						<h2 v-if="numFavoriteMeals > 1">
+							{{ numFavoriteMeals }} Favorite Meals
+						</h2>
 						<h2 v-else>{{ numFavoriteMeals }} Favorite Meal</h2>
 					</a>
 				</div>
@@ -30,12 +32,13 @@
 							:key="summary"
 						>
 							<h3 class="day-of-week">{{ dayOfWeek }}</h3>
-							<p v-if="summary.numMeals > 1 || summary.numMeals === 0" class="sublist">
-								{{ summary.numMeals}} meals planned
+							<p
+								v-if="summary.numMeals > 1 || summary.numMeals === 0"
+								class="sublist"
+							>
+								{{ summary.numMeals }} meals planned
 							</p>
-							<p v-else class="sublist">
-								{{ summary.numMeals}} meal planned
-							</p>
+							<p v-else class="sublist">{{ summary.numMeals }} meal planned</p>
 						</li>
 					</ul>
 				</div>
@@ -57,8 +60,8 @@ export default {
 		return {
 			favoriteMeals: null,
 			goals: null,
-			upcomingMeals: null
-		}
+			upcomingMeals: null,
+		};
 	},
 	computed: {
 		numFavoriteMeals() {
@@ -72,14 +75,15 @@ export default {
 		},
 		upcomingMealsSummary() {
 			const upcomingMealsSummary = {};
-			const days = ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"];
-			for(const day of days) {
+			const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+			for (const day of days) {
 				upcomingMealsSummary[day] = {
-					numMeals: 0
+					numMeals: 0,
 				};
 			}
-			for(const meal of this.upcomingMeals) {
-				upcomingMealsSummary[meal.dayOfWeek].numMeals = upcomingMealsSummary[meal.dayOfWeek].numMeals + 1;
+			for (const meal of this.upcomingMeals) {
+				upcomingMealsSummary[meal.dayOfWeek].numMeals =
+					upcomingMealsSummary[meal.dayOfWeek].numMeals + 1;
 			}
 			return upcomingMealsSummary;
 		},
@@ -90,7 +94,7 @@ export default {
 
 		const upcomingMealsRes = await UpcomingMealService.getAll();
 		this.upcomingMeals = upcomingMealsRes.data;
-	}
+	},
 };
 </script>
 
@@ -112,8 +116,7 @@ export default {
 		"welcome"
 		"favorite-meals"
 		"budget"
-		"upcoming-meals"
-		;
+		"upcoming-meals";
 	gap: 1.5rem;
 	/* width: min(95%, 70rem); */
 }

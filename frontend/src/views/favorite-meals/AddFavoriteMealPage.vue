@@ -1,13 +1,8 @@
 <template>
 	<div class="add-favorite-meal-container">
-		<div class="back-btn-container">
-			<base-button class="back-btn" link :to="allFavoriteMealsLink"
-				>Back to all favorite meals</base-button
-			>
-		</div>
+		<h2>Add a Favorite Meal</h2>
 
 		<base-card class="add-favorite-meal-form-container">
-			<h2>Add a Favorite Meal</h2>
 			<add-favorite-meal-form></add-favorite-meal-form>
 		</base-card>
 	</div>
@@ -29,24 +24,31 @@ export default {
 </script>
 
 <style scoped>
-.add-favorite-meal-form-container {
+.add-favorite-meal-container {
+	margin: auto;
+	padding: 3rem;
+}
+
+div .add-favorite-meal-form-container {
+	max-width: 40rem;
+	width: 40rem;
 	background: white;
 	max-height: 45rem;
 	overflow: auto;
 }
 
 ::-webkit-scrollbar {
-    width: 1.2em;
+	width: 1.2em;
 }
 
 ::-webkit-scrollbar-track {
-    background: white;
+	background: white;
 	border-radius: 100vh;
 	margin-block: 0.4em;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #c7c4c4;
+	background: #c7c4c4;
 	border-radius: 100vh;
 	border: 0.25em solid white;
 }
@@ -55,13 +57,5 @@ export default {
 	* {
 		scrollbar-color: #c7c4c4 white;
 	}
-}
-
-.back-btn {
-	height: fit-content;
-}
-
-.back-btn-container {
-	margin: 2rem 0 0 1rem;
 }
 </style>

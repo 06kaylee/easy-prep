@@ -18,19 +18,50 @@
 			/>
 		</div>
 
-        <!-- Servings -->
-        <h3>Servings</h3>
+		<h3>Meal Type</h3>
 		<div class="form-control">
-			<input
-				type="number"
-				id="servings"
-				name="servings"
-				v-model="servings"
-			/>
+			<label for="breakfast">
+				<input
+					type="radio"
+					id="breakfast"
+					name="breakfast"
+					value="breakfast"
+					v-model="mealType"
+				/>
+				Breakfast
+			</label>
+
+			<label for="lunch">
+				<input
+					type="radio"
+					id="lunch"
+					name="lunch"
+					value="lunch"
+					v-model="mealType"
+				/>
+				Lunch
+			</label>
+
+			<label for="dinner">
+				<input
+					type="radio"
+					id="dinner"
+					name="dinner"
+					value="dinner"
+					v-model="mealType"
+				/>
+				Dinner
+			</label>
 		</div>
 
-        <!-- Ready Time -->
-        <h3>Ready Time(minutes)</h3>
+		<!-- Servings -->
+		<h3>Servings</h3>
+		<div class="form-control">
+			<input type="number" id="servings" name="servings" v-model="servings" />
+		</div>
+
+		<!-- Ready Time -->
+		<h3>Ready Time(minutes)</h3>
 		<div class="form-control">
 			<input
 				type="number"
@@ -100,10 +131,18 @@
 			:key="index"
 		>
 			<input type="text" v-model="ingredients[index]" />
-			<a @click="addField(ingredients)" @keyup.enter="addField(ingredients)" tabindex="0">
+			<a
+				@click="addField(ingredients)"
+				@keyup.enter="addField(ingredients)"
+				tabindex="0"
+			>
 				<font-awesome-icon class="add-btn" :icon="['fas', 'plus']" />
 			</a>
-			<a @click="removeField(index, ingredients)" @keyup.enter="removeField(index, ingredients)" tabindex="0">
+			<a
+				@click="removeField(index, ingredients)"
+				@keyup.enter="removeField(index, ingredients)"
+				tabindex="0"
+			>
 				<font-awesome-icon class="remove-btn" :icon="['fas', 'minus']" />
 			</a>
 		</div>
@@ -115,7 +154,11 @@
 			<a @click="addField(steps)" @keyup.enter="addField(steps)" tabindex="0">
 				<font-awesome-icon class="add-btn" :icon="['fas', 'plus']" />
 			</a>
-			<a @click="removeField(index, steps)" @keyup.enter="removeField(index, steps)" tabindex="0">
+			<a
+				@click="removeField(index, steps)"
+				@keyup.enter="removeField(index, steps)"
+				tabindex="0"
+			>
 				<font-awesome-icon class="remove-btn" :icon="['fas', 'minus']" />
 			</a>
 		</div>
@@ -127,7 +170,11 @@
 			<a @click="addField(notes)" @keyup.enter="addField(notes)" tabindex="0">
 				<font-awesome-icon class="add-btn" :icon="['fas', 'plus']" />
 			</a>
-			<a @click="removeField(index, notes)" @keyup.enter="removeField(index, notes)" tabindex="0">
+			<a
+				@click="removeField(index, notes)"
+				@keyup.enter="removeField(index, notes)"
+				tabindex="0"
+			>
 				<font-awesome-icon class="remove-btn" :icon="['fas', 'minus']" />
 			</a>
 		</div>
@@ -144,8 +191,9 @@ export default {
 		return {
 			itemName: "",
 			img: "",
-            servings: null,
-            readyTime: null,
+			mealType: "",
+			servings: null,
+			readyTime: null,
 			nutritionFacts: {
 				calories: "",
 				totalFat: "",
@@ -185,9 +233,10 @@ export default {
 			newImg.src = this.img;
 			const newMeal = {
 				itemName: this.itemName,
-				img: 'sample-logo.jpg',
-                servings: this.servings,
-                readyTime: this.readyTime,
+				img: "sample-logo.jpg",
+				mealType: this.mealType,
+				servings: this.servings,
+				readyTime: this.readyTime,
 				nutritionFacts: this.nutritionFacts,
 				ingredients: this.ingredients,
 				steps: this.steps,
@@ -196,7 +245,7 @@ export default {
 			};
 			const res = await FavoriteMealService.add(newMeal);
 			console.log(res.data);
-			this.$router.replace('/favorite-meals');
+			this.$router.replace("/favorite-meals");
 		},
 	},
 };
@@ -204,7 +253,7 @@ export default {
 
 <style scoped>
 .add-favorite-meal-form {
-	padding-top: 0.6rem;
+	padding: 1rem;
 }
 
 input {
