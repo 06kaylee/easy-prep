@@ -60,6 +60,7 @@ export default {
 	&_header {
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
 		margin-top: 1rem;
 
 		&_addMeal {
@@ -71,8 +72,8 @@ export default {
 	&_container {
 		display: grid;
 		grid-template-columns: 1fr;
-		gap: 1rem;
-		margin-top: 5rem;
+		row-gap: 2.5rem;
+		margin-top: 4rem;
 
 		@media screen and (min-width: 700px) {
 			grid-template-columns: repeat(2, 1fr);
