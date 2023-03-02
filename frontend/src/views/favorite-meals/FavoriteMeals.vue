@@ -74,7 +74,7 @@ export default {
 		gap: 1rem;
 		margin-top: 5rem;
 
-		@media screen and (min-width: 760px) {
+		@media screen and (min-width: 700px) {
 			grid-template-columns: repeat(2, 1fr);
 		}
 
