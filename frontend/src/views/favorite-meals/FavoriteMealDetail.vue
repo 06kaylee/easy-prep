@@ -48,6 +48,17 @@
 							</button>
 						</div>
 
+						<!-- rating -->
+						<div>
+							<span v-for="index in 5" :key="index">
+								<font-awesome-icon
+									v-if="isStarIncluded(index)"
+									:icon="['fas', 'star']"
+								/>
+								<font-awesome-icon v-else :icon="['far', 'star']" />
+							</span>
+						</div>
+
 						<div
 							class="FavoriteMealDetail_container_secondHalf_header_basicInfo"
 						>
@@ -61,7 +72,6 @@
 								<font-awesome-icon :icon="['far', 'user']" />
 								{{ selectedFavoriteMeal.servings }} servings
 							</p>
-							<!-- rating -->
 						</div>
 					</div>
 
@@ -239,6 +249,9 @@ export default {
 				dayOfWeek: this.dayToSaveTo,
 			};
 			await UpcomingMealService.add(mealToSave);
+		},
+		isStarIncluded(index) {
+			return this.selectedFavoriteMeal.rating.includes(index);
 		},
 	},
 	async created() {
