@@ -1,20 +1,13 @@
 <template>
 	<dashboard-layout>
-		<!-- 
-			picture title title title
-			picture icons icons icons
-			picture readyTime servings rating
-			picture nutritionInfo
-			ingredients instructions
-		-->
-		<div class="FavoriteMealDetail">
-			<div class="FavoriteMealDetail_container" v-if="selectedFavoriteMeal">
-				<div class="FavoriteMealDetail_container_firstHalf">
-					<div class="FavoriteMealDetail_container_firstHalf_imgContainer">
+		<div class="favoriteMealDetail">
+			<div class="favoriteMealDetail_container" v-if="selectedFavoriteMeal">
+				<div class="favoriteMealDetail_container_firstHalf">
+					<div class="favoriteMealDetail_container_firstHalf_imgContainer">
 						<img :src="mealImgLink" alt="" />
 					</div>
 
-					<div class="FavoriteMealDetail_container_firstHalf_ingredients">
+					<div class="favoriteMealDetail_container_firstHalf_ingredients">
 						<h3>Ingredients</h3>
 						<ul>
 							<li
@@ -29,10 +22,10 @@
 					</div>
 				</div>
 
-				<div class="FavoriteMealDetail_container_secondHalf">
-					<div class="FavoriteMealDetail_container_secondHalf_header">
+				<div class="favoriteMealDetail_container_secondHalf">
+					<div class="favoriteMealDetail_container_secondHalf_header">
 						<h2>{{ selectedFavoriteMeal.itemName }}</h2>
-						<div class="FavoriteMealDetail_container_secondHalf_header_icons">
+						<div class="favoriteMealDetail_container_secondHalf_header_icons">
 							<button class="like-btn" @click="toggleLikeBtn">
 								<font-awesome-icon v-if="isLiked" :icon="['fas', 'heart']" />
 								<font-awesome-icon v-else :icon="['far', 'heart']" />
@@ -43,7 +36,7 @@
 							>
 								<font-awesome-icon :icon="['fas', 'pen']" />
 							</router-link>
-							<button class="add-to-upcoming-btn" @click="openModal">
+							<button class="add-to-upcoming-btn" @click="openAddToDayModal">
 								<font-awesome-icon :icon="['fas', 'plus']" />
 							</button>
 						</div>
@@ -60,7 +53,7 @@
 						</div>
 
 						<div
-							class="FavoriteMealDetail_container_secondHalf_header_basicInfo"
+							class="favoriteMealDetail_container_secondHalf_header_basicInfo"
 						>
 							<!-- ready time -->
 							<p>
@@ -75,21 +68,57 @@
 						</div>
 					</div>
 
-					<div class="FavoriteMealDetail_container_secondHalf_nutrition">
+					<div class="favoriteMealDetail_container_secondHalf_nutrition">
 						<ul>
-							<li v-for="(info, name) of quickNutritionInfo" :key="info">
+							<li v-for="(value, name) of quickNutritionInfo" :key="name">
 								<p>
-									{{ info }} <span>{{ ingredientLabels[name].label }}</span>
+									{{ value }}
+									<span>
+										{{ getNutritionLabel(name) }}
+										<span v-if="getNutritionUnits(name)">
+											({{ getNutritionUnits(name) }})
+										</span>
+									</span>
 								</p>
 							</li>
 						</ul>
-						<a href="">
+
+						<a @click="openNutritionModal">
 							<font-awesome-icon :icon="['far', 'file-lines']" />
 							See full nutrition label
 						</a>
 					</div>
 
-					<div class="FavoriteMealDetail_container_secondHalf_steps">
+					<base-modal
+						v-if="seeFullNutrition"
+						class="favoriteMealDetail_nutritionModal"
+						@close="closeNutritionModal"
+					>
+						<template v-slot:header>
+							<h2>Nutrition Facts</h2>
+						</template>
+						<template v-slot:body>
+							<table class="favoriteMealDetail_nutritionModal_table">
+								<thead>
+									<tr>
+										<th>Label</th>
+										<th>Value</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr
+										v-for="(value, name) of selectedFavoriteMeal.nutritionFacts"
+										:key="name"
+									>
+										<td>{{ getNutritionLabel(name) }}</td>
+										<td>{{ value }}{{ getNutritionUnits(name) }}</td>
+									</tr>
+								</tbody>
+							</table>
+						</template>
+					</base-modal>
+
+					<div class="favoriteMealDetail_container_secondHalf_steps">
 						<h3>Instructions</h3>
 						<ol>
 							<li v-for="step of selectedFavoriteMeal.steps" :key="step">
@@ -101,30 +130,36 @@
 
 				<base-button v-if="!isLiked" @click="removeMeal">Save</base-button>
 
-				<!-- modal pop up -->
-				<dialog class="modal" ref="modal">
-					<div class="modal-content-container">
-						<button @click="closeModal" class="close-modal-btn">
-							<font-awesome-icon :icon="['fas', 'x']" />
-						</button>
+				<base-modal v-if="addToDay" @close="closeAddToDayModal">
+					<template v-slot:header>
 						<h2>Choose a Day</h2>
-						<form method="dialog">
-							<label for="day-of-week"></label>
-							<select name="day-of-week" id="day-of-week" v-model="dayToSaveTo">
-								<option
-									v-for="dayOfWeek in daysOfWeek"
-									:key="dayOfWeek"
-									:value="dayOfWeek"
+					</template>
+					<template v-slot:body>
+						<div class="modal-content-container">
+							<form method="dialog">
+								<label for="day-of-week"></label>
+								<select
+									name="day-of-week"
+									id="day-of-week"
+									v-model="dayToSaveTo"
 								>
-									{{ dayOfWeek }}
-								</option>
-							</select>
-							<base-button class="save-modal-btn" @click="saveToUpcomingMeals()"
-								>Save</base-button
-							>
-						</form>
-					</div>
-				</dialog>
+									<option
+										v-for="dayOfWeek in daysOfWeek"
+										:key="dayOfWeek"
+										:value="dayOfWeek"
+									>
+										{{ dayOfWeek }}
+									</option>
+								</select>
+								<base-button
+									class="save-modal-btn"
+									@click="saveToUpcomingMeals()"
+									>Save</base-button
+								>
+							</form>
+						</div>
+					</template>
+				</base-modal>
 			</div>
 		</div>
 	</dashboard-layout>
@@ -153,23 +188,31 @@ export default {
 			ingredientLabels: {
 				calories: {
 					label: "Calories",
+					units: "",
 				},
 				totalFat: {
 					label: "Fat",
+					units: "g",
 				},
 				cholesterol: {
 					label: "Cholesterol",
+					units: "mg",
 				},
 				totalCarbs: {
 					label: "Carbs",
+					units: "g",
 				},
 				protein: {
 					label: "Protein",
+					units: "g",
 				},
 				sodium: {
 					label: "Sodium",
+					units: "mg",
 				},
 			},
+			seeFullNutrition: false,
+			addToDay: false,
 		};
 	},
 	computed: {
@@ -199,13 +242,17 @@ export default {
 				// add meal to the favorite meals list
 			}
 		},
-		openModal() {
-			const modal = this.$refs.modal;
-			modal.showModal();
+		openNutritionModal() {
+			this.seeFullNutrition = true;
 		},
-		closeModal() {
-			const modal = this.$refs.modal;
-			modal.close();
+		closeNutritionModal() {
+			this.seeFullNutrition = false;
+		},
+		openAddToDayModal() {
+			this.addToDay = true;
+		},
+		closeAddToDayModal() {
+			this.addToDay = false;
 		},
 		containsFavMeal() {
 			const favoriteMeals = this.$store.getters["favoriteMeals/favoriteMeals"];
@@ -253,6 +300,17 @@ export default {
 		isStarIncluded(index) {
 			return this.selectedFavoriteMeal.rating.includes(index);
 		},
+		getNutritionFact(value, name) {
+			const label = this.getNutritionLabel(name);
+			const units = this.getNutritionUnits(name);
+			return `${label}: ${value}${units}`;
+		},
+		getNutritionLabel(name) {
+			return this.ingredientLabels[name].label;
+		},
+		getNutritionUnits(name) {
+			return this.ingredientLabels[name].units;
+		},
 	},
 	async created() {
 		const res = await FavoriteMealService.get(this.id);
@@ -264,7 +322,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.FavoriteMealDetail {
+.favoriteMealDetail {
 	&_container {
 		display: grid;
 		padding: 2rem;
@@ -427,7 +485,7 @@ export default {
 							color: purple;
 							font-size: 2rem;
 
-							span {
+							> span {
 								display: block;
 								color: black;
 								font-weight: bold;
@@ -473,6 +531,36 @@ export default {
 					margin-right: 0.5rem;
 					min-width: 34px;
 				}
+			}
+		}
+	}
+
+	&_nutritionModal {
+		&_table {
+			margin-top: 2rem;
+			border-collapse: collapse;
+			margin: 25px 0;
+			font-size: 0.9em;
+			min-width: 400px;
+			box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+
+			thead tr {
+				background-color: #662974;
+				color: #ffffff;
+				text-align: left;
+			}
+
+			th,
+			td {
+				padding: 12px 15px;
+			}
+
+			tbody tr {
+				border-bottom: 1px solid #dddddd;
+			}
+
+			tbody tr:nth-of-type(even) {
+				background-color: #f3f3f3;
 			}
 		}
 	}
