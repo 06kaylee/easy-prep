@@ -26,6 +26,10 @@ const favoriteMealSchema = new Schema({
 		type: Number,
 		required: true,
 	},
+	rating: {
+		type: Array,
+		required: true,
+	},
 	nutritionFacts: {
 		calories: {
 			type: Number,

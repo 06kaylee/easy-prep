@@ -4,33 +4,36 @@
 			<div class="FavoriteMealItem_recipeContent_imgContainer">
 				<img :src="mealImgLink" :alt="itemName" />
 			</div>
-			<h3 class="FavoriteMealItem_recipeContent_name" :title="itemName">{{ itemName }}</h3>
+			<h3 class="FavoriteMealItem_recipeContent_name" :title="itemName">
+				{{ itemName }}
+			</h3>
 			<p class="FavoriteMealItem_recipeContent_label">Intermediate</p>
 			<div class="FavoriteMealItem_recipeContent_fastInfo">
-				<p><span>{{ readyTime }}</span> minutes</p>
-				<p><span>{{ servings }}</span> servings</p>
+				<p>
+					<span>{{ readyTime }}</span> minutes
+				</p>
+				<p>
+					<span>{{ servings }}</span> servings
+				</p>
 			</div>
 			<div class="FavoriteMealItem_recipeContent_rating">
 				<span v-for="index in 5" :key="index">
-					<favorite-meal-item-rating></favorite-meal-item-rating>
+					<font-awesome-icon
+						v-if="isStarIncluded(index)"
+						:icon="['fas', 'star']"
+					/>
+					<font-awesome-icon v-else :icon="['far', 'star']" />
 				</span>
 			</div>
 		</div>
 		<div class="FavoriteMealItem_btnContainer">
-			<base-button link :to="favoriteMealDetailLink">
-				See More
-			</base-button>
+			<base-button link :to="favoriteMealDetailLink"> See More </base-button>
 		</div>
 	</base-card>
 </template>
 
 <script>
-import FavoriteMealItemRating from "./FavoriteMealItemRating.vue";
-
 export default {
-	components: {
-		FavoriteMealItemRating
-	},
 	props: {
 		id: {
 			type: String,
@@ -46,12 +49,16 @@ export default {
 		},
 		readyTime: {
 			type: Number,
-			required: true
+			required: true,
+		},
+		rating: {
+			type: Array,
+			required: true,
 		},
 		servings: {
 			type: Number,
-			required: true
-		}
+			required: true,
+		},
 	},
 	computed: {
 		favoriteMealDetailLink() {
@@ -61,6 +68,11 @@ export default {
 			return this.img === "sample-logo.jpg"
 				? require("../../assets/" + this.img)
 				: this.img;
+		},
+	},
+	methods: {
+		isStarIncluded(index) {
+			return this.rating.includes(index);
 		},
 	},
 };

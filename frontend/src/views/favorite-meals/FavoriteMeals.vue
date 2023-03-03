@@ -22,6 +22,7 @@
 					:item-name="favoriteMeal.itemName"
 					:img="favoriteMeal.img"
 					:ready-time="favoriteMeal.readyTime"
+					:rating="favoriteMeal.rating"
 					:servings="favoriteMeal.servings"
 				></favorite-meal-item>
 			</div>

@@ -71,6 +71,17 @@
 			/>
 		</div>
 
+		<h3>Rating</h3>
+		<div class="form-control">
+			<span v-for="index in 5" :key="index">
+				<favorite-meal-item-rating
+					@star-clicked="setRange"
+					:clicked="isStarIncluded(index)"
+					:index="index"
+				></favorite-meal-item-rating>
+			</span>
+		</div>
+
 		<!-- Nutrition Facts -->
 		<h3>Nutrition Facts</h3>
 		<div class="form-control nutrition-facts">
@@ -185,8 +196,12 @@
 
 <script>
 import FavoriteMealService from "../../services/FavoriteMealService";
+import FavoriteMealItemRating from "./FavoriteMealItemRating.vue";
 
 export default {
+	components: {
+		FavoriteMealItemRating,
+	},
 	data() {
 		return {
 			itemName: "",
@@ -206,6 +221,7 @@ export default {
 			steps: [""],
 			notes: [""],
 			userInput: true,
+			starRange: [],
 		};
 	},
 	methods: {
@@ -228,6 +244,15 @@ export default {
 			};
 			reader.readAsDataURL(file);
 		},
+		setRange(index) {
+			this.starRange = [];
+			for (let i = 1; i <= index; i++) {
+				this.starRange.push(i);
+			}
+		},
+		isStarIncluded(index) {
+			return this.starRange.includes(index);
+		},
 		async submitForm() {
 			const newImg = new Image();
 			newImg.src = this.img;
@@ -237,6 +262,7 @@ export default {
 				mealType: this.mealType,
 				servings: this.servings,
 				readyTime: this.readyTime,
+				rating: this.starRange,
 				nutritionFacts: this.nutritionFacts,
 				ingredients: this.ingredients,
 				steps: this.steps,

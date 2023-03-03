@@ -97,6 +97,18 @@
 			/>
 		</div>
 
+		<!-- rating -->
+		<div class="form-control">
+			<label for="rating" id="rating-label">Rating</label>
+			<span v-for="index in 5" :key="index">
+				<favorite-meal-item-rating
+					@star-clicked="setRange"
+					:clicked="isStarIncluded(index)"
+					:index="index"
+				></favorite-meal-item-rating>
+			</span>
+		</div>
+
 		<!-- Nutrition Facts -->
 		<h3>Nutrition Facts</h3>
 		<div class="form-control nutrition-facts">
@@ -256,8 +268,12 @@
 
 <script>
 import FavoriteMealService from "../../services/FavoriteMealService";
+import FavoriteMealItemRating from "./FavoriteMealItemRating.vue";
 
 export default {
+	components: {
+		FavoriteMealItemRating,
+	},
 	data() {
 		return {
 			selectedMeal: null,
@@ -283,6 +299,15 @@ export default {
 		},
 		removeField(index, fieldType) {
 			fieldType.splice(index, 1);
+		},
+		setRange(index) {
+			this.selectedMeal.rating = [];
+			for (let i = 1; i <= index; i++) {
+				this.selectedMeal.rating.push(i);
+			}
+		},
+		isStarIncluded(index) {
+			return this.selectedMeal.rating.includes(index);
 		},
 	},
 	async created() {
