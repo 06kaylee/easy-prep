@@ -400,6 +400,7 @@ export default {
 
 		&_secondHalf {
 			display: grid;
+			grid-auto-rows: min-content;
 			grid-row: 1;
 			gap: 2rem;
 
@@ -415,7 +416,7 @@ export default {
 				row-gap: 1.5rem;
 
 				@media screen and (min-width: 760px) {
-					row-gap: 0;
+					row-gap: 1rem;
 				}
 
 				&_icons {
@@ -458,13 +459,15 @@ export default {
 			}
 
 			&_nutrition {
-				border: 2px solid purple;
-				padding: 1rem;
-				border-radius: 6px;
-				display: grid;
-				gap: 1rem;
-				max-width: 26rem;
-				max-height: 10rem;
+				@media screen and (min-width: 900px) {
+					border: 2px solid purple;
+					padding: 1rem;
+					border-radius: 6px;
+					display: grid;
+					gap: 1rem;
+					max-width: 26rem;
+					max-height: 10rem;
+				}
 
 				@media screen and (min-width: 980px) {
 					padding: 1.5rem 2rem;
@@ -475,9 +478,12 @@ export default {
 				}
 
 				ul {
-					display: flex;
-					justify-content: space-between;
-					list-style-type: none;
+					display: none;
+					@media screen and (min-width: 900px) {
+						display: flex;
+						justify-content: space-between;
+						list-style-type: none;
+					}
 
 					li {
 						p {
@@ -543,11 +549,11 @@ export default {
 			font-size: 0.9em;
 			min-width: 400px;
 			box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+			text-align: left;
 
 			thead tr {
 				background-color: #662974;
 				color: #ffffff;
-				text-align: left;
 			}
 
 			th,
