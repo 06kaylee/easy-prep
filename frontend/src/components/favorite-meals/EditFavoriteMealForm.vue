@@ -109,6 +109,42 @@
 			</span>
 		</div>
 
+		<h3>Label</h3>
+		<div class="form-control">
+			<label for="beginner">
+				<input
+					type="radio"
+					id="beginner"
+					name="beginner"
+					value="Beginner"
+					v-model="selectedMeal.label"
+				/>
+				Beginner
+			</label>
+
+			<label for="intermediate">
+				<input
+					type="radio"
+					id="intermediate"
+					name="intermediate"
+					value="Intermediate"
+					v-model="selectedMeal.label"
+				/>
+				Intermediate
+			</label>
+
+			<label for="advanced">
+				<input
+					type="radio"
+					id="advanced"
+					name="advanced"
+					value="Advanced"
+					v-model="selectedMeal.label"
+				/>
+				Advanced
+			</label>
+		</div>
+
 		<!-- Nutrition Facts -->
 		<h3>Nutrition Facts</h3>
 		<div class="form-control nutrition-facts">

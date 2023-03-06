@@ -30,6 +30,10 @@ const favoriteMealSchema = new Schema({
 		type: Array,
 		required: true,
 	},
+	label: {
+		type: String,
+		required: true,
+	},
 	nutritionFacts: {
 		calories: {
 			type: Number,

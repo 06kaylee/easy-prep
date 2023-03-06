@@ -41,6 +41,11 @@
 							</button>
 						</div>
 
+						<!-- label -->
+						<favorite-meal-item-label
+							:label="selectedFavoriteMeal.label"
+						></favorite-meal-item-label>
+
 						<!-- rating -->
 						<div>
 							<span v-for="index in 5" :key="index">
@@ -169,10 +174,12 @@
 import FavoriteMealService from "../../services/FavoriteMealService";
 import UpcomingMealService from "../../services/UpcomingMealService";
 import DashboardLayout from "../../components/layout/DashboardLayout";
+import FavoriteMealItemLabel from "../../components/favorite-meals/FavoriteMealItemLabel.vue";
 
 export default {
 	components: {
 		DashboardLayout,
+		FavoriteMealItemLabel,
 	},
 	props: ["id"],
 	data() {
@@ -436,6 +443,11 @@ export default {
 					}
 				}
 
+				&_label {
+					width: fit-content;
+					padding: 0.2rem;
+				}
+
 				&_basicInfo {
 					display: flex;
 					gap: 3.5rem;
@@ -669,5 +681,20 @@ export default {
 	font-weight: bold;
 	cursor: pointer;
 	font-size: 1.3rem;
+}
+
+.beginner-label {
+	background: lightgreen;
+	color: darkgreen;
+}
+
+.intermediate-label {
+	background: lightblue;
+	color: darkcyan;
+}
+
+.advanced-label {
+	background: lightpink;
+	color: darkred;
 }
 </style>

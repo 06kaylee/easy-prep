@@ -7,7 +7,12 @@
 			<h3 class="FavoriteMealItem_recipeContent_name" :title="itemName">
 				{{ itemName }}
 			</h3>
-			<p class="FavoriteMealItem_recipeContent_label">Intermediate</p>
+
+			<favorite-meal-item-label
+				class="FavoriteMealItem_recipeContent_label"
+				:label="label"
+			></favorite-meal-item-label>
+
 			<div class="FavoriteMealItem_recipeContent_fastInfo">
 				<p>
 					<span>{{ readyTime }}</span> minutes
@@ -33,7 +38,12 @@
 </template>
 
 <script>
+import FavoriteMealItemLabel from "./FavoriteMealItemLabel.vue";
+
 export default {
+	components: {
+		FavoriteMealItemLabel,
+	},
 	props: {
 		id: {
 			type: String,
@@ -53,6 +63,10 @@ export default {
 		},
 		rating: {
 			type: Array,
+			required: true,
+		},
+		label: {
+			type: String,
 			required: true,
 		},
 		servings: {
@@ -115,11 +129,6 @@ div .FavoriteMealItem {
 		}
 
 		&_label {
-			text-align: center;
-			background: lightblue;
-			color: darkcyan;
-			width: fit-content;
-			padding: 0.2rem;
 			margin: auto;
 		}
 
