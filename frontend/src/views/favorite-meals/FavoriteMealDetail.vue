@@ -26,9 +26,8 @@
 					<div class="favoriteMealDetail_container_secondHalf_header">
 						<h2>{{ selectedFavoriteMeal.itemName }}</h2>
 						<div class="favoriteMealDetail_container_secondHalf_header_icons">
-							<button class="like-btn" @click="toggleLikeBtn">
-								<font-awesome-icon v-if="isLiked" :icon="['fas', 'heart']" />
-								<font-awesome-icon v-else :icon="['far', 'heart']" />
+							<button class="delete-btn" @click="openDeleteMealModal">
+								<font-awesome-icon :icon="['fas', 'trash']" />
 							</button>
 							<router-link
 								:to="'/favorite-meals/' + selectedFavoriteMeal._id + '/edit'"
@@ -95,6 +94,43 @@
 					</div>
 
 					<base-modal
+						v-if="deleteModalOpen"
+						class="favoriteMealDetail_deleteModal"
+						@close="closeDeleteMealModal"
+					>
+						<template v-slot:header>
+							<h2>Are you sure you want to delete this meal?</h2>
+						</template>
+						<template v-slot:body>
+							<form @submit.prevent="submitDeleteMealForm">
+								<div>
+									<label for="delete">
+										<input
+											type="radio"
+											id="delete"
+											name="delete"
+											value="Yes"
+											v-model="deleteMealAnswer"
+										/>
+										Yes
+									</label>
+									<label for="keep">
+										<input
+											type="radio"
+											id="keep"
+											name="keep"
+											value="No"
+											v-model="deleteMealAnswer"
+										/>
+										No
+									</label>
+								</div>
+								<base-button>Submit</base-button>
+							</form>
+						</template>
+					</base-modal>
+
+					<base-modal
 						v-if="seeFullNutrition"
 						class="favoriteMealDetail_nutritionModal"
 						@close="closeNutritionModal"
@@ -131,9 +167,9 @@
 							</li>
 						</ol>
 					</div>
-				</div>
 
-				<base-button v-if="!isLiked" @click="removeMeal">Save</base-button>
+					<base-button v-if="!isLiked" @click="removeMeal">Save</base-button>
+				</div>
 
 				<base-modal v-if="addToDay" @close="closeAddToDayModal">
 					<template v-slot:header>
@@ -220,6 +256,8 @@ export default {
 			},
 			seeFullNutrition: false,
 			addToDay: false,
+			deleteModalOpen: false,
+			deleteMealAnswer: "Yes",
 		};
 	},
 	computed: {
@@ -241,14 +279,6 @@ export default {
 		},
 	},
 	methods: {
-		toggleLikeBtn() {
-			this.isLiked = !this.isLiked;
-			if (!this.isLiked) {
-				// remove the meal from the favorite meals list
-			} else if (this.isLiked && !this.containsFavMeal()) {
-				// add meal to the favorite meals list
-			}
-		},
 		openNutritionModal() {
 			this.seeFullNutrition = true;
 		},
@@ -261,14 +291,11 @@ export default {
 		closeAddToDayModal() {
 			this.addToDay = false;
 		},
-		containsFavMeal() {
-			const favoriteMeals = this.$store.getters["favoriteMeals/favoriteMeals"];
-			for (const favoriteMeal of favoriteMeals) {
-				if (favoriteMeal.id === this.id) {
-					return true;
-				}
-			}
-			return false;
+		openDeleteMealModal() {
+			this.deleteModalOpen = true;
+		},
+		closeDeleteMealModal() {
+			this.deleteModalOpen = false;
 		},
 		setCollapsible(sectionName) {
 			switch (sectionName) {
@@ -317,6 +344,13 @@ export default {
 		},
 		getNutritionUnits(name) {
 			return this.ingredientLabels[name].units;
+		},
+		submitDeleteMealForm() {
+			if (this.deleteMealAnswer === "Yes") {
+				this.removeMeal();
+			} else {
+				this.closeDeleteMealModal();
+			}
 		},
 	},
 	async created() {
@@ -431,7 +465,7 @@ export default {
 					align-items: center;
 					gap: 1.5rem;
 
-					.like-btn {
+					.delete-btn {
 						border: none;
 						background: none;
 						font-size: 1.4rem;
@@ -549,6 +583,32 @@ export default {
 					margin-right: 0.5rem;
 					min-width: 34px;
 				}
+			}
+		}
+	}
+
+	&_deleteModal {
+		h2 {
+			font-size: 1.1rem;
+			margin: 1rem 0;
+		}
+
+		form {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			justify-content: center;
+
+			div {
+				grid-column: 1/3;
+				display: flex;
+				justify-content: center;
+				margin-bottom: 1rem;
+				gap: 3rem;
+			}
+
+			button {
+				grid-column: 1/3;
+				justify-self: center;
 			}
 		}
 	}
