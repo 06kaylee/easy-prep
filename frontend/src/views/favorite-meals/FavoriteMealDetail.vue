@@ -4,7 +4,10 @@
 			<div class="favoriteMealDetail_container" v-if="selectedFavoriteMeal">
 				<div class="favoriteMealDetail_container_firstHalf">
 					<div class="favoriteMealDetail_container_firstHalf_imgContainer">
-						<img :src="mealImgLink" alt="" />
+						<img
+							:src="selectedFavoriteMeal.img"
+							:alt="selectedFavoriteMeal.itemName"
+						/>
 					</div>
 
 					<div class="favoriteMealDetail_container_firstHalf_ingredients">
@@ -261,11 +264,6 @@ export default {
 		};
 	},
 	computed: {
-		mealImgLink() {
-			return this.selectedFavoriteMeal.img === "sample-logo.jpg"
-				? require("../../assets/" + this.selectedFavoriteMeal.img)
-				: this.selectedFavoriteMeal.img;
-		},
 		quickNutritionInfo() {
 			const fields = ["calories", "totalFat", "totalCarbs", "protein"];
 			const filteredNutritionInfo = {};
@@ -315,10 +313,6 @@ export default {
 					console.log("Error, there is no section to collapse");
 			}
 		},
-		setDayToSaveTo(event) {
-			console.log(event);
-			this.dayToSaveTo = event.target.value;
-		},
 		async removeMeal() {
 			const res = await FavoriteMealService.delete(this.id);
 			console.log(res.data);
@@ -330,6 +324,7 @@ export default {
 				dayOfWeek: this.dayToSaveTo,
 			};
 			await UpcomingMealService.add(mealToSave);
+			this.closeAddToDayModal();
 		},
 		isStarIncluded(index) {
 			return this.selectedFavoriteMeal.rating.includes(index);
@@ -382,22 +377,23 @@ export default {
 			display: grid;
 
 			@media screen and (min-width: 760px) {
-				gap: 3rem;
+				gap: 1.5rem;
 			}
 
 			&_imgContainer {
 				display: none;
-				max-width: 200px;
-				max-height: 200px;
+				width: 325px;
+				height: 350px;
 
 				@media screen and (min-width: 760px) {
 					display: block;
 				}
 
 				img {
-					border-radius: 1rem;
-					max-width: 100%;
-					max-height: 100%;
+					border-radius: 12px;
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
 				}
 			}
 
@@ -411,8 +407,8 @@ export default {
 				ul {
 					list-style-type: none;
 					display: grid;
+					grid-template-rows: min-content;
 					gap: 1rem;
-					margin-top: 1rem;
 					height: 16rem;
 					overflow: hidden;
 					overflow-y: scroll;

@@ -1,5 +1,9 @@
 <template>
-	<form class="add-favorite-meal-form" @submit.prevent="submitForm">
+	<form
+		class="add-favorite-meal-form"
+		@submit.prevent="submitForm"
+		enctype="multipart/form-data"
+	>
 		<!-- Name of the item -->
 		<div class="form-control">
 			<label for="item" id="item-name-label">Item Name</label>
@@ -11,10 +15,10 @@
 		<div class="form-control">
 			<input
 				type="file"
-				id="item-image"
-				name="item-image"
-				accept="image/png, image/jpeg, image/jpg"
-				@change="onFileChange"
+				id="img"
+				name="img"
+				accept="image/*"
+				@change="onFileChange($event)"
 			/>
 		</div>
 
@@ -225,7 +229,7 @@
 				<font-awesome-icon class="remove-btn" :icon="['fas', 'minus']" />
 			</a>
 		</div>
-
+		{{ starRange }}
 		<input type="submit" />
 	</form>
 </template>
@@ -241,7 +245,7 @@ export default {
 	data() {
 		return {
 			itemName: "",
-			img: "",
+			img: null,
 			mealType: "",
 			servings: null,
 			readyTime: null,
@@ -269,17 +273,9 @@ export default {
 			fieldType.splice(index, 1);
 		},
 		onFileChange(event) {
-			const files = event.target.files || event.dataTransfer.files;
-			if (!files.length) return;
-			this.createImage(files[0]);
-		},
-		createImage(file) {
-			const reader = new FileReader();
-
-			reader.onload = (event) => {
-				this.img = event.target.result;
-			};
-			reader.readAsDataURL(file);
+			console.log(event);
+			this.img = event.target.files[0];
+			console.log(this.img);
 		},
 		setRange(index) {
 			this.starRange = [];
@@ -291,23 +287,42 @@ export default {
 			return this.starRange.includes(index);
 		},
 		async submitForm() {
-			const newImg = new Image();
-			newImg.src = this.img;
-			const newMeal = {
-				itemName: this.itemName,
-				img: "sample-logo.jpg",
-				mealType: this.mealType,
-				servings: this.servings,
-				readyTime: this.readyTime,
-				rating: this.starRange,
-				label: this.label,
-				nutritionFacts: this.nutritionFacts,
-				ingredients: this.ingredients,
-				steps: this.steps,
-				notes: this.notes,
-				userInput: this.userInput,
-			};
-			const res = await FavoriteMealService.add(newMeal);
+			console.log(this.img);
+			const formData = new FormData();
+			formData.append("itemName", this.itemName);
+			formData.append("img", this.img);
+			formData.append("mealType", this.mealType);
+			formData.append("servings", this.servings);
+			formData.append("readyTime", this.readyTime);
+			formData.append("rating", JSON.stringify(this.starRange));
+			formData.append("label", this.label);
+			formData.append("nutritionFacts", JSON.stringify(this.nutritionFacts));
+			formData.append("ingredients", JSON.stringify(this.ingredients));
+			formData.append("steps", JSON.stringify(this.steps));
+
+			if (this.notes.length !== 0) {
+				formData.append("notes", JSON.stringify(this.notes));
+			}
+
+			formData.append("userInput", this.userInput);
+			// console.log(this.nutritionFacts);
+			// console.log(FavoriteMealService);
+			// const newMeal = {
+			// 	itemName: this.itemName,
+			// 	img: this.img,
+			// 	mealType: this.mealType,
+			// 	servings: this.servings,
+			// 	readyTime: this.readyTime,
+			// 	rating: this.starRange,
+			// 	label: this.label,
+			// 	nutritionFacts: this.nutritionFacts,
+			// 	ingredients: this.ingredients,
+			// 	steps: this.steps,
+			// 	notes: this.notes,
+			// 	userInput: this.userInput,
+			// };
+			// console.log(newMeal);
+			const res = await FavoriteMealService.add(formData);
 			console.log(res.data);
 			this.$router.replace("/favorite-meals");
 		},

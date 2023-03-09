@@ -3,6 +3,7 @@
 		class="edit-favorite-meal-form"
 		@submit.prevent="submitForm"
 		v-if="selectedMeal"
+		enctype="multipart/form-data"
 	>
 		<!-- Name of the item -->
 		<div class="form-control">
@@ -61,18 +62,6 @@
 				/>
 				Dinner
 			</label>
-		</div>
-
-		<div
-			class="form-control-optional"
-			v-if="imageOption === 'change' && selectedMeal.userInput"
-		>
-			<input
-				type="file"
-				id="item-image"
-				name="item-image"
-				accept="image/png, image/jpeg, image/jpg"
-			/>
 		</div>
 
 		<!-- servings -->
@@ -324,11 +313,37 @@ export default {
 	},
 	methods: {
 		async submitForm() {
-			console.log(this.imageOption);
-			console.log(this.selectedMeal);
-			const res = await FavoriteMealService.edit(this.id, this.selectedMeal);
+			const formData = new FormData();
+			formData.append("itemName", this.selectedMeal.itemName);
+			formData.append("img", this.selectedMeal.img);
+			formData.append("mealType", this.selectedMeal.mealType);
+			formData.append("servings", this.selectedMeal.servings);
+			formData.append("readyTime", this.selectedMeal.readyTime);
+			formData.append("rating", JSON.stringify(this.selectedMeal.rating));
+			formData.append("label", this.selectedMeal.label);
+			formData.append(
+				"nutritionFacts",
+				JSON.stringify(this.selectedMeal.nutritionFacts)
+			);
+			formData.append(
+				"ingredients",
+				JSON.stringify(this.selectedMeal.ingredients)
+			);
+			formData.append("steps", JSON.stringify(this.selectedMeal.steps));
+
+			if (this.selectedMeal.notes.length !== 0) {
+				formData.append("notes", JSON.stringify(this.selectedMeal.notes));
+			}
+
+			formData.append("userInput", this.selectedMeal.userInput);
+			const res = await FavoriteMealService.edit(this.id, formData);
 			console.log(res.data);
 			this.$router.replace(`/favorite-meals/${this.id}`);
+		},
+		onFileChange(event) {
+			console.log(event);
+			this.selectedMeal.img = event.target.files[0];
+			console.log(this.img);
 		},
 		addField(fieldType) {
 			fieldType.push("");

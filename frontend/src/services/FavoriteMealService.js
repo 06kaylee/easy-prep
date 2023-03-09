@@ -31,35 +31,35 @@
 
 // export default FavoriteMealService;
 
-import axios from 'axios';
+import axios from "axios";
 
-const url = '/api/favorite-meals';
+const url = "/api/favorite-meals";
 
 class FavoriteMealService {
-    // get all meals
-    static getAll() {
-        return axios.get(url);
-    }
+	// get all meals
+	static getAll() {
+		return axios.get(url);
+	}
 
-    // get meal by id
-    static get(id) {
-        return axios.get(`${url}/${id}`);
-    }
+	// get meal by id
+	static get(id) {
+		return axios.get(`${url}/${id}`);
+	}
 
-    // delete meal by id
-    static delete(id) {
-        return axios.delete(`${url}/${id}`);
-    }
+	// delete meal by id
+	static delete(id) {
+		return axios.delete(`${url}/${id}`);
+	}
 
-    // add a meal
-    static add(favoriteMeal) {
-        return axios.post(url, favoriteMeal);
-    }
+	// add a meal
+	static add(favoriteMeal) {
+		return axios.post(url, favoriteMeal);
+	}
 
-    // edit a meal by id
-    static edit(id, updatedFavoriteMeal) {
-        return axios.patch(`${url}/${id}`, updatedFavoriteMeal);
-    }
+	// edit a meal by id
+	static edit(id, updatedFavoriteMeal) {
+		return axios.patch(`${url}/${id}`, updatedFavoriteMeal);
+	}
 }
 
 export default FavoriteMealService;

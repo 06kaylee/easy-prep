@@ -1,21 +1,24 @@
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const app = require('./app.js');
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const app = require("./app.js");
 
-dotenv.config({ path: './.env' });
+dotenv.config({ path: "./.env" });
+
+console.log(process.env.BUCKET_NAME);
 
 // setting up mongo connection to db
 const url = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@cluster0.5yatb.mongodb.net/mealPlannerDb?retryWrites=true&w=majority`;
-const conn = mongoose.connect(url)
-  .then(() => {
-    console.log("MongoDB connection open");
-  })
-  .catch((err) => {
-    console.log(`MongoDB error: ${err}`);
-  });
+const conn = mongoose
+	.connect(url)
+	.then(() => {
+		console.log("MongoDB connection open");
+	})
+	.catch((err) => {
+		console.log(`MongoDB error: ${err}`);
+	});
 
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-    console.log(`Listening to port ${port}`);
-})
+	console.log(`Listening to port ${port}`);
+});

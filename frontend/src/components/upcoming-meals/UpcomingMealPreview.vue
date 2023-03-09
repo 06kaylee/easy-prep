@@ -12,7 +12,7 @@
 				class="upcomingMealPreview_cardContent"
 			>
 				<div class="upcomingMealPreview_cardContent_imgContainer">
-					<img :src="mealImgLink(meal.img)" :alt="meal.itemName" />
+					<img :src="meal.img" :alt="meal.itemName" />
 				</div>
 				<div class="upcomingMealPreview_cardContent_info">
 					<h3>{{ meal.itemName }}</h3>
@@ -80,9 +80,6 @@ export default {
 				}
 			}
 			return filteredNutritionInfo;
-		},
-		mealImgLink(img) {
-			return img === "sample-logo.jpg" ? require("../../assets/" + img) : img;
 		},
 	},
 };

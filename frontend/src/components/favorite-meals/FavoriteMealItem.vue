@@ -1,17 +1,12 @@
 <template>
 	<base-card class="FavoriteMealItem">
+		<div class="FavoriteMealItem_imgContainer">
+			<img :src="img" :alt="itemName" />
+		</div>
 		<div class="FavoriteMealItem_recipeContent">
-			<div class="FavoriteMealItem_recipeContent_imgContainer">
-				<img :src="mealImgLink" :alt="itemName" />
-			</div>
 			<h3 class="FavoriteMealItem_recipeContent_name" :title="itemName">
 				{{ itemName }}
 			</h3>
-
-			<favorite-meal-item-label
-				class="FavoriteMealItem_recipeContent_label"
-				:label="label"
-			></favorite-meal-item-label>
 
 			<div class="FavoriteMealItem_recipeContent_fastInfo">
 				<p>
@@ -38,12 +33,12 @@
 </template>
 
 <script>
-import FavoriteMealItemLabel from "./FavoriteMealItemLabel.vue";
+// import FavoriteMealItemLabel from "./FavoriteMealItemLabel.vue";
 
 export default {
-	components: {
-		FavoriteMealItemLabel,
-	},
+	// components: {
+	// 	FavoriteMealItemLabel,
+	// },
 	props: {
 		id: {
 			type: String,
@@ -78,11 +73,6 @@ export default {
 		favoriteMealDetailLink() {
 			return this.$route.path + "/" + this.id;
 		},
-		mealImgLink() {
-			return this.img === "sample-logo.jpg"
-				? require("../../assets/" + this.img)
-				: this.img;
-		},
 	},
 	methods: {
 		isStarIncluded(index) {
@@ -94,7 +84,7 @@ export default {
 
 <style lang="scss" scoped>
 div .FavoriteMealItem {
-	padding: 1rem;
+	padding: 0rem;
 	margin: 0rem;
 	max-width: 20rem;
 	max-height: 22rem;
@@ -107,25 +97,30 @@ div .FavoriteMealItem {
 		color: black;
 	}
 
+	&_imgContainer {
+		display: flex;
+		justify-content: center;
+		width: 100%;
+
+		img {
+			width: 100%;
+			max-height: 153px;
+			object-fit: cover;
+			border-top-left-radius: 12px;
+			border-top-right-radius: 12px;
+		}
+	}
+
 	&_recipeContent {
 		display: grid;
 		gap: 0.7rem;
+		padding: 1rem;
 
 		&_name {
 			text-align: center;
 			text-overflow: ellipsis;
 			white-space: nowrap;
 			overflow: hidden;
-		}
-
-		&_imgContainer {
-			display: flex;
-			justify-content: center;
-
-			img {
-				max-width: 100px;
-				max-height: 100px;
-			}
 		}
 
 		&_label {

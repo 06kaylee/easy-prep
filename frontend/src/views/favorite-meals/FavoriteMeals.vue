@@ -72,9 +72,10 @@ export default {
 	}
 
 	&_container {
-		display: grid;
+		display: inline-grid;
 		grid-template-columns: 1fr;
 		row-gap: 2.5rem;
+		column-gap: 6rem;
 		margin-top: 4rem;
 
 		@media screen and (min-width: 700px) {

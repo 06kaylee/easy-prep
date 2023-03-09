@@ -16,7 +16,7 @@ const favoriteMealSchema = new Schema({
 	},
 	img: {
 		type: String,
-		required: true,
+		default: "../frontend/src/assets/default.jpg",
 	},
 	servings: {
 		type: Number,
