@@ -40,7 +40,7 @@ const favoriteMealSchema = new Schema({
 			min: 0,
 			required: true,
 		},
-		totalFat: {
+		fat: {
 			type: Number,
 			min: 0,
 			required: true,
@@ -55,7 +55,7 @@ const favoriteMealSchema = new Schema({
 			min: 0,
 			required: true,
 		},
-		totalCarbs: {
+		carbohydrates: {
 			type: Number,
 			min: 0,
 			required: true,

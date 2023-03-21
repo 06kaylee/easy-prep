@@ -34,6 +34,9 @@
 import axios from "axios";
 
 const url = "/api/favorite-meals";
+const apiKey = process.env.VUE_APP_API_KEY;
+const extractRecipeUrl = "https://api.spoonacular.com/recipes/extract";
+const analyzeRecipeUrl = "https://api.spoonacular.com/recipes/analyze";
 
 class FavoriteMealService {
 	// get all meals
@@ -59,6 +62,19 @@ class FavoriteMealService {
 	// edit a meal by id
 	static edit(id, updatedFavoriteMeal) {
 		return axios.patch(`${url}/${id}`, updatedFavoriteMeal);
+	}
+
+	static extractRecipe(recipeUrl) {
+		return axios.get(
+			`${extractRecipeUrl}?apiKey=${apiKey}&url=${recipeUrl}&includeNutrition=true`
+		);
+	}
+
+	static analyzeRecipe(recipe) {
+		return axios.post(
+			`${analyzeRecipeUrl}?apiKey=${apiKey}&includeNutrition=true`,
+			recipe
+		);
 	}
 }
 

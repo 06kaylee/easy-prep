@@ -18,7 +18,7 @@
 								:key="ingredient"
 							>
 								<base-card>
-									<p>1/3 cup {{ ingredient }}</p>
+									<p>{{ ingredient }}</p>
 								</base-card>
 							</li>
 						</ul>
@@ -236,7 +236,7 @@ export default {
 					label: "Calories",
 					units: "",
 				},
-				totalFat: {
+				fat: {
 					label: "Fat",
 					units: "g",
 				},
@@ -244,7 +244,7 @@ export default {
 					label: "Cholesterol",
 					units: "mg",
 				},
-				totalCarbs: {
+				carbohydrates: {
 					label: "Carbs",
 					units: "g",
 				},
@@ -265,7 +265,7 @@ export default {
 	},
 	computed: {
 		quickNutritionInfo() {
-			const fields = ["calories", "totalFat", "totalCarbs", "protein"];
+			const fields = ["calories", "fat", "carbohydrates", "protein"];
 			const filteredNutritionInfo = {};
 			for (const key in this.selectedFavoriteMeal.nutritionFacts) {
 				if (fields.includes(key)) {
@@ -364,7 +364,7 @@ export default {
 		padding: 2rem;
 		gap: 3rem;
 
-		@media screen and (min-width: 760px) {
+		@media screen and (min-width: 1024px) {
 			grid-template-columns: min-content auto;
 			gap: 4rem;
 		}
@@ -375,6 +375,7 @@ export default {
 
 		&_firstHalf {
 			display: grid;
+			grid-template-rows: min-content;
 
 			@media screen and (min-width: 760px) {
 				gap: 1.5rem;
@@ -419,10 +420,9 @@ export default {
 							margin: 0;
 							max-width: 20rem;
 							width: 14rem;
-							height: 4rem;
+							height: fit-content;
 							max-height: 20rem;
 							display: flex;
-							justify-content: center;
 							align-items: center;
 							border-radius: 26px;
 
@@ -553,6 +553,9 @@ export default {
 			}
 
 			&_steps {
+				height: 30rem;
+				overflow-y: auto;
+
 				@media screen and (min-width: 1400px) {
 					max-width: 30rem;
 				}
@@ -560,13 +563,14 @@ export default {
 					list-style: none;
 					counter-reset: my-awesome-counter;
 					display: grid;
-					gap: 1rem;
+					gap: 1.25rem;
 					margin-top: 1rem;
 				}
 				ol li {
 					counter-increment: my-awesome-counter;
 					display: flex;
-					align-items: center;
+					align-items: flex-start;
+					gap: 0.5rem;
 				}
 				ol li::before {
 					content: counter(my-awesome-counter);

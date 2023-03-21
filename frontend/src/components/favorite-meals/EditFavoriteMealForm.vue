@@ -19,8 +19,29 @@
 		<!-- Image -->
 		<h3>Image</h3>
 		<div class="form-control">
+			<label for="keep">
+				<input
+					type="radio"
+					id="keep"
+					name="keep"
+					value="keep"
+					v-model="imageOption"
+				/>
+				Keep
+			</label>
+			<label for="replace">
+				<input
+					type="radio"
+					id="replace"
+					name="replace"
+					value="replace"
+					v-model="imageOption"
+				/>
+				Replace
+			</label>
 			<input
 				type="file"
+				v-if="imageOption === 'replace'"
 				id="item-image"
 				name="item-image"
 				accept="image/png, image/jpeg, image/jpg"
@@ -151,7 +172,7 @@
 				type="text"
 				id="total-fat"
 				name="total-fat"
-				v-model="selectedMeal.nutritionFacts.totalFat"
+				v-model="selectedMeal.nutritionFacts.fat"
 				:readonly="selectedMeal.recipeUrl"
 			/>
 
@@ -178,7 +199,7 @@
 				type="text"
 				id="total-carbs"
 				name="total-carbs"
-				v-model="selectedMeal.nutritionFacts.totalCarbs"
+				v-model="selectedMeal.nutritionFacts.carbohydrates"
 				:readonly="selectedMeal.recipeUrl"
 			/>
 
@@ -302,7 +323,7 @@ export default {
 	data() {
 		return {
 			selectedMeal: null,
-			imageOption: "",
+			imageOption: "keep",
 		};
 	},
 	props: {

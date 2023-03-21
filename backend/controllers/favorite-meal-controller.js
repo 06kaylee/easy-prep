@@ -53,13 +53,15 @@ exports.allFavoriteMeals = async (req, res) => {
 		const favoriteMeals = await FavoriteMeal.find({});
 
 		for (const meal of favoriteMeals) {
-			const params = {
-				Bucket: bucketName,
-				Key: meal.img,
-			};
-			const command = new GetObjectCommand(params);
-			const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
-			meal.img = url;
+			if (!meal.img.includes("http")) {
+				const params = {
+					Bucket: bucketName,
+					Key: meal.img,
+				};
+				const command = new GetObjectCommand(params);
+				const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+				meal.img = url;
+			}
 		}
 		res.send(favoriteMeals);
 	} catch (err) {
@@ -72,13 +74,16 @@ exports.getFavoriteMeal = async (req, res) => {
 	try {
 		const id = req.params.id;
 		const favoriteMeal = await FavoriteMeal.findById(id);
-		const params = {
-			Bucket: bucketName,
-			Key: favoriteMeal.img,
-		};
-		const command = new GetObjectCommand(params);
-		const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
-		favoriteMeal.img = url;
+
+		if (!favoriteMeal.img.includes("http")) {
+			const params = {
+				Bucket: bucketName,
+				Key: favoriteMeal.img,
+			};
+			const command = new GetObjectCommand(params);
+			const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+			favoriteMeal.img = url;
+		}
 
 		res.send(favoriteMeal);
 	} catch (err) {
@@ -91,6 +96,7 @@ exports.deleteFavoriteMeal = async (req, res) => {
 	try {
 		const id = req.params.id;
 		const favoriteMealToDelete = await FavoriteMeal.findByIdAndDelete(id);
+		console.log(favoriteMealToDelete);
 		const params = {
 			Bucket: bucketName,
 			Key: favoriteMealToDelete.img,
@@ -148,21 +154,26 @@ exports.editFavoriteMeal = async (req, res) => {
 // add a favorite meal
 exports.addFavoriteMeal = async (req, res) => {
 	try {
-		const imageName = randomImageName();
+		console.log(req.file);
+		console.log(req.body);
+		if (req.file) {
+			const imageName = randomImageName();
 
-		const params = {
-			Bucket: bucketName,
-			Key: imageName,
-			Body: req.file.buffer,
-			ContentType: req.file.mimetype,
-		};
+			const params = {
+				Bucket: bucketName,
+				Key: imageName,
+				Body: req.file.buffer,
+				ContentType: req.file.mimetype,
+			};
 
-		const command = new PutObjectCommand(params);
+			const command = new PutObjectCommand(params);
 
-		// from Vue client -> express server -> s3 bucket
-		await s3.send(command);
+			// from Vue client -> express server -> s3 bucket
+			await s3.send(command);
 
-		req.body.img = imageName;
+			req.body.img = imageName;
+		}
+
 		req.body.nutritionFacts = JSON.parse(req.body.nutritionFacts);
 		req.body.rating = JSON.parse(req.body.rating);
 		req.body.ingredients = JSON.parse(req.body.ingredients);
