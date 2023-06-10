@@ -8,12 +8,15 @@
 		<!-- Name of the item -->
 		<div class="form-control">
 			<label for="item-name" id="item-name-label">Item Name</label>
-			<input
-				type="text"
-				id="item-name"
-				v-model="selectedMeal.itemName"
-				:readonly="selectedMeal.recipeUrl"
-			/>
+			<input type="text" id="item-name" v-model="selectedMeal.itemName" />
+		</div>
+
+		<!-- Recipe source -->
+		<div v-if="selectedMeal.recipeUrl">
+			<h3>Recipe Source</h3>
+			<div class="form-control">
+				<input type="text" v-model="selectedMeal.recipeUrl" />
+			</div>
 		</div>
 
 		<!-- Image -->
@@ -356,7 +359,13 @@ export default {
 				formData.append("notes", JSON.stringify(this.selectedMeal.notes));
 			}
 
-			formData.append("userInput", this.selectedMeal.userInput);
+			if (this.selectedMeal.recipeUrl) {
+				formData.append("recipeUrl", this.selectedMeal.recipeUrl);
+			} else {
+				this.selectedMeal.userInput = true;
+				formData.append("userInput", this.selectedMeal.userInput);
+			}
+
 			const res = await FavoriteMealService.edit(this.id, formData);
 			console.log(res.data);
 			this.$router.replace(`/favorite-meals/${this.id}`);

@@ -23,6 +23,15 @@
 							</li>
 						</ul>
 					</div>
+
+					<div v-if="selectedFavoriteMeal.recipeUrl">
+						<p>
+							Recipe Source:
+							<a :href="selectedFavoriteMeal.recipeUrl">
+								{{ selectedFavoriteMeal.recipeUrl }}
+							</a>
+						</p>
+					</div>
 				</div>
 
 				<div class="favoriteMealDetail_container_secondHalf">

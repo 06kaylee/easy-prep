@@ -38,7 +38,7 @@ div .upcoming-meal-day-card {
 	margin: 0;
 	max-width: 8rem;
 	width: 5rem;
-	height: 6rem;
+	height: 5rem;
 	display: flex;
 	justify-content: center;
 	align-items: center;

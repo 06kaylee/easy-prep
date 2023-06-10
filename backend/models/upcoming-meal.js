@@ -21,7 +21,7 @@ const upcomingMealSchema = new Schema({
 	},
 	img: {
 		type: String,
-		required: true,
+		default: "../frontend/src/assets/default.jpg",
 	},
 	servings: {
 		type: Number,
@@ -31,13 +31,21 @@ const upcomingMealSchema = new Schema({
 		type: Number,
 		required: true,
 	},
+	rating: {
+		type: Array,
+		required: true,
+	},
+	label: {
+		type: String,
+		required: true,
+	},
 	nutritionFacts: {
 		calories: {
 			type: Number,
 			min: 0,
 			required: true,
 		},
-		totalFat: {
+		fat: {
 			type: Number,
 			min: 0,
 			required: true,
@@ -52,7 +60,7 @@ const upcomingMealSchema = new Schema({
 			min: 0,
 			required: true,
 		},
-		totalCarbs: {
+		carbohydrates: {
 			type: Number,
 			min: 0,
 			required: true,

@@ -18,7 +18,7 @@
 					<h3>{{ meal.itemName }}</h3>
 					<div class="upcomingMealPreview_cardContent_info_nutrition">
 						<p v-for="(val, name) in quickNutritionInfo(meal)" :key="val">
-							<span>{{ val }}</span> {{ ingredientLabels[name].label }}
+							<span>{{ val }}</span> {{ name }}
 						</p>
 					</div>
 				</div>
@@ -47,32 +47,20 @@ export default {
 	},
 	data() {
 		return {
-			ingredientLabels: {
-				calories: {
-					label: "Calories",
-				},
-				totalFat: {
-					label: "Fat",
-				},
-				cholesterol: {
-					label: "Cholesterol",
-				},
-				totalCarbs: {
-					label: "Carbs",
-				},
-				protein: {
-					label: "Protein",
-				},
-				sodium: {
-					label: "Sodium",
-				},
+			nutritionFacts: {
+				calories: "",
+				fat: "",
+				cholesterol: "",
+				sodium: "",
+				carbohydrates: "",
+				protein: "",
 			},
 		};
 	},
 	methods: {
 		quickNutritionInfo(meal) {
 			console.log(meal);
-			const fields = ["totalFat", "totalCarbs", "protein"];
+			const fields = ["fat", "carbohydrates", "protein"];
 			const filteredNutritionInfo = {};
 			for (const key in meal.nutritionFacts) {
 				if (fields.includes(key)) {
@@ -104,7 +92,12 @@ export default {
 			display: flex;
 			overflow-x: auto;
 			padding: 0.5rem;
-			gap: 1.5rem;
+			display: grid;
+			grid-auto-flow: column;
+		}
+
+		@media screen and (min-width: 1200px) {
+			width: 85%;
 		}
 	}
 
@@ -113,21 +106,27 @@ export default {
 		width: 20rem;
 		margin: 0;
 		height: 20rem;
+		padding: 0;
 
 		&_imgContainer {
 			display: flex;
 			justify-content: center;
 			margin-bottom: 0.5rem;
+			width: 100%;
 
 			img {
-				max-width: 150px;
+				width: 100%;
 				max-height: 150px;
+				object-fit: cover;
+				border-top-left-radius: 12px;
+				border-top-right-radius: 12px;
 			}
 		}
 
 		&_info {
 			display: grid;
 			gap: 2rem;
+			padding: 1rem;
 
 			h3 {
 				font-size: 1.3rem;
