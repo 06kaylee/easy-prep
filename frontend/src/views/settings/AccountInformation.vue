@@ -1,54 +1,44 @@
 <template>
-	<dashboard-layout>
-		<div class="account-info-container">
-			<header>
-				<h2>Your Account Information</h2>
-				<a href="">
-					<font-awesome-icon :icon="['fas', 'pen']" />
-				</a>
-			</header>
-			<div class="info-container">
-				<ul>
-					<li>
-						<label for="email">Email</label>
-						<br />
-						<input
-							type="text"
-							id="email"
-							:value="email"
-							readonly
-						/>
-					</li>
-					<li>
-						<label for="password">Password</label>
-						<br />
-						<input type="text" id="password" :value="password" readonly />
-					</li>
-					<li>This account has been active for {{ timeSinceAccountCreation }} years.</li>
-				</ul>
-			</div>
+	<div class="account-info-container">
+		<header>
+			<h2>Your Account Information</h2>
+			<a href="">
+				<font-awesome-icon :icon="['fas', 'pen']" />
+			</a>
+		</header>
+		<div class="info-container">
+			<ul>
+				<li>
+					<label for="email">Email</label>
+					<br />
+					<input type="text" id="email" :value="email" readonly />
+				</li>
+				<li>
+					<label for="password">Password</label>
+					<br />
+					<input type="text" id="password" :value="password" readonly />
+				</li>
+				<li>
+					This account has been active for {{ timeSinceAccountCreation }} years.
+				</li>
+			</ul>
 		</div>
-	</dashboard-layout>
+	</div>
 </template>
 
 <script>
-import DashboardLayout from "../../components/layout/DashboardLayout.vue";
-
 export default {
-	components: {
-		DashboardLayout,
-	},
 	computed: {
 		email() {
-			return this.$store.getters['accountInfo/email'];
+			return this.$store.getters["accountInfo/email"];
 		},
 		password() {
-			return this.$store.getters['accountInfo/password'];
+			return this.$store.getters["accountInfo/password"];
 		},
 		timeSinceAccountCreation() {
-			return this.$store.getters['accountInfo/timeSinceAccountCreation'];
-		}
-	}
+			return this.$store.getters["accountInfo/timeSinceAccountCreation"];
+		},
+	},
 };
 </script>
 

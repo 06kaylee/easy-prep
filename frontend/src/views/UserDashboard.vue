@@ -1,61 +1,55 @@
 <template>
-	<dashboard-layout>
-		<div class="dashboard-container" v-if="upcomingMeals">
-			<header id="welcome-msg">
-				<h2>Your Dashboard</h2>
-			</header>
+	<div class="dashboard-container" v-if="upcomingMeals">
+		<header id="welcome-msg">
+			<h2>Your Dashboard</h2>
+		</header>
 
-			<base-card>
-				<div class="favmeal-container">
-					<a>
-						<h2 v-if="numFavoriteMeals > 1">
-							{{ numFavoriteMeals }} Favorite Meals
-						</h2>
-						<h2 v-else>{{ numFavoriteMeals }} Favorite Meal</h2>
-					</a>
-				</div>
-			</base-card>
+		<base-card>
+			<div class="favmeal-container">
+				<a>
+					<h2 v-if="numFavoriteMeals > 1">
+						{{ numFavoriteMeals }} Favorite Meals
+					</h2>
+					<h2 v-else>{{ numFavoriteMeals }} Favorite Meal</h2>
+				</a>
+			</div>
+		</base-card>
 
-			<base-card>
-				<div class="budget-container">
-					<p>Money spent</p>
-					<p>This Month: ${{ currentMonthMoneySpent }}</p>
-					<p>Last Month: ${{ lastMonthMoneySpent }}</p>
-				</div>
-			</base-card>
+		<base-card>
+			<div class="budget-container">
+				<p>Money spent</p>
+				<p>This Month: ${{ currentMonthMoneySpent }}</p>
+				<p>Last Month: ${{ lastMonthMoneySpent }}</p>
+			</div>
+		</base-card>
 
-			<base-card>
-				<div class="upcoming-meals-container">
-					<ul>
-						<li
-							v-for="(summary, dayOfWeek) in upcomingMealsSummary"
-							:key="summary"
+		<base-card>
+			<div class="upcoming-meals-container">
+				<ul>
+					<li
+						v-for="(summary, dayOfWeek) in upcomingMealsSummary"
+						:key="summary"
+					>
+						<h3 class="day-of-week">{{ dayOfWeek }}</h3>
+						<p
+							v-if="summary.numMeals > 1 || summary.numMeals === 0"
+							class="sublist"
 						>
-							<h3 class="day-of-week">{{ dayOfWeek }}</h3>
-							<p
-								v-if="summary.numMeals > 1 || summary.numMeals === 0"
-								class="sublist"
-							>
-								{{ summary.numMeals }} meals planned
-							</p>
-							<p v-else class="sublist">{{ summary.numMeals }} meal planned</p>
-						</li>
-					</ul>
-				</div>
-			</base-card>
-		</div>
-	</dashboard-layout>
+							{{ summary.numMeals }} meals planned
+						</p>
+						<p v-else class="sublist">{{ summary.numMeals }} meal planned</p>
+					</li>
+				</ul>
+			</div>
+		</base-card>
+	</div>
 </template>
 
 <script>
-import DashboardLayout from "../components/layout/DashboardLayout.vue";
 import FavoriteMealService from "../services/FavoriteMealService";
 import UpcomingMealService from "../services/UpcomingMealService";
 
 export default {
-	components: {
-		DashboardLayout,
-	},
 	data() {
 		return {
 			favoriteMeals: null,

@@ -1,54 +1,52 @@
 <template>
-	<dashboard-layout>
-		<div class="upcomingMeals_container">
-			<header class="upcomingMeals_container_header">
-				<h2>Your Upcoming Meals</h2>
-				<div class="upcomingMeals_container_header_btnContainer">
-					<base-button v-if="upcomingMealsExist" @click="openModal('auto')">
-						Auto Generate
-					</base-button>
-					<base-button v-else link to="/upcoming-meals/auto-generate"
-						>Auto Generate</base-button
-					>
-					<base-button @click="openModal('export')">Export</base-button>
-				</div>
-			</header>
-
-			<auto-generate-modal
-				v-show="autoModalVisible"
-				@close="closeModal('auto')"
-			></auto-generate-modal>
-
-			<export-meals-modal
-				v-show="exportModalVisible"
-				@close="closeModal('export')"
-			></export-meals-modal>
-
-			<div class="upcomingMeals_container_allDays">
-				<upcoming-meal-day
-					v-for="dayOfWeek in daysOfWeek"
-					:key="dayOfWeek"
-					:dayOfWeek="dayOfWeek"
-					:isActive="isActiveDay(dayOfWeek)"
-					@click="changeActiveDay(dayOfWeek)"
-				></upcoming-meal-day>
+	<div class="upcomingMeals_container">
+		<header class="upcomingMeals_container_header">
+			<h2>Your Upcoming Meals</h2>
+			<div class="upcomingMeals_container_header_btnContainer">
+				<base-button v-if="upcomingMealsExist" @click="openModal('auto')">
+					Auto Generate
+				</base-button>
+				<base-button v-else link to="/upcoming-meals/auto-generate"
+					>Auto Generate</base-button
+				>
+				<base-button @click="openModal('export')">Export</base-button>
+				<base-button link to="/upcoming-meals/choose">Choose</base-button>
 			</div>
+		</header>
 
-			<div class="upcomingMeals_container_meals">
-				<upcoming-meal-preview
-					v-for="mealType in mealTypes"
-					:key="mealType"
-					:day="activeDay"
-					:meal-type="mealType"
-					:meals="mealsForDay(mealType)"
-				></upcoming-meal-preview>
-			</div>
+		<auto-generate-modal
+			v-show="autoModalVisible"
+			@close="closeModal('auto')"
+		></auto-generate-modal>
+
+		<export-meals-modal
+			v-show="exportModalVisible"
+			@close="closeModal('export')"
+		></export-meals-modal>
+
+		<div class="upcomingMeals_container_allDays">
+			<upcoming-meal-day
+				v-for="dayOfWeek in daysOfWeek"
+				:key="dayOfWeek"
+				:dayOfWeek="dayOfWeek"
+				:isActive="isActiveDay(dayOfWeek)"
+				@click="changeActiveDay(dayOfWeek)"
+			></upcoming-meal-day>
 		</div>
-	</dashboard-layout>
+
+		<div class="upcomingMeals_container_meals">
+			<upcoming-meal-preview
+				v-for="mealType in mealTypes"
+				:key="mealType"
+				:day="activeDay"
+				:meal-type="mealType"
+				:meals="mealsForDay(mealType)"
+			></upcoming-meal-preview>
+		</div>
+	</div>
 </template>
 
 <script>
-import DashboardLayout from "../../components/layout/DashboardLayout.vue";
 import UpcomingMealDay from "../../components/upcoming-meals/UpcomingMealDay.vue";
 import UpcomingMealService from "../../services/UpcomingMealService";
 import UpcomingMealPreview from "../../components/upcoming-meals/UpcomingMealPreview.vue";
@@ -57,7 +55,6 @@ import ExportMealsModal from "../../components/upcoming-meals/ExportMealsModal.v
 
 export default {
 	components: {
-		DashboardLayout,
 		UpcomingMealDay,
 		UpcomingMealPreview,
 		AutoGenerateModal,
@@ -161,6 +158,10 @@ export default {
 		&_meals {
 			display: grid;
 			gap: 2rem;
+
+			@media screen and (min-width: 1024px) {
+				grid-template-columns: repeat(3, 1fr);
+			}
 		}
 	}
 }

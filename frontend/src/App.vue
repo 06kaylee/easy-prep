@@ -16,7 +16,7 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Rubik&display=swap");
 
 * {
 	box-sizing: border-box;
@@ -26,9 +26,5 @@ export default {
 
 html {
 	font-family: "Rubik", sans-serif;
-}
-
-.app {
-	display: flex;
 }
 </style>

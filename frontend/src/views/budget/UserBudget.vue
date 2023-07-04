@@ -1,57 +1,52 @@
 <template>
-	<dashboard-layout>
-		<div class="all-budgets-container">
-			<header class="all-budgets-header">
-				<h2>Your Budget</h2>
-			</header>
-			<div
-				class="budget-category-container"
-				v-for="budget in budgets"
-				:key="budget.id"
-			>
-				<h3 class="category-title">
-					{{ budget.category }}
-					<router-link :to="'/edit-budget/' + budget.id">
-						<font-awesome-icon :icon="['fas', 'pen']" />
-					</router-link>
-				</h3>
-				<base-card class="budget-content-container">
-					<div class="budget-content-item">
-						<p class="budget-item-title">Target Amount</p>
-						<p class="budget-item-value">${{ budget.stats.targetAmount }}/{{ budget.stats.timeline }}</p>
-					</div>
-					<div class="budget-content-item">
-						<p class="budget-item-title">Current Total</p>
-						<p class="budget-item-value">${{ budget.stats.currentTotal }}</p>
-					</div>
-					<div class="budget-content-item">
-						<p class="budget-item-title">Average Spent</p>
-						<p class="budget-item-value">${{ budget.stats.avgSpent }}/week</p>
-					</div>
-					<div class="budget-content-item">
-						<p class="budget-item-title">Most Expensive Ingredients</p>
-						<ol>
-							<li
-								v-for="expensiveItem in budget.stats.mostExpensive"
-								:key="expensiveItem"
-							>
-								{{ expensiveItem }}
-							</li>
-						</ol>
-					</div>
-				</base-card>
-			</div>
+	<div class="all-budgets-container">
+		<header class="all-budgets-header">
+			<h2>Your Budget</h2>
+		</header>
+		<div
+			class="budget-category-container"
+			v-for="budget in budgets"
+			:key="budget.id"
+		>
+			<h3 class="category-title">
+				{{ budget.category }}
+				<router-link :to="'/edit-budget/' + budget.id">
+					<font-awesome-icon :icon="['fas', 'pen']" />
+				</router-link>
+			</h3>
+			<base-card class="budget-content-container">
+				<div class="budget-content-item">
+					<p class="budget-item-title">Target Amount</p>
+					<p class="budget-item-value">
+						${{ budget.stats.targetAmount }}/{{ budget.stats.timeline }}
+					</p>
+				</div>
+				<div class="budget-content-item">
+					<p class="budget-item-title">Current Total</p>
+					<p class="budget-item-value">${{ budget.stats.currentTotal }}</p>
+				</div>
+				<div class="budget-content-item">
+					<p class="budget-item-title">Average Spent</p>
+					<p class="budget-item-value">${{ budget.stats.avgSpent }}/week</p>
+				</div>
+				<div class="budget-content-item">
+					<p class="budget-item-title">Most Expensive Ingredients</p>
+					<ol>
+						<li
+							v-for="expensiveItem in budget.stats.mostExpensive"
+							:key="expensiveItem"
+						>
+							{{ expensiveItem }}
+						</li>
+					</ol>
+				</div>
+			</base-card>
 		</div>
-	</dashboard-layout>
+	</div>
 </template>
 
 <script>
-import DashboardLayout from "../../components/layout/DashboardLayout.vue";
-
 export default {
-	components: {
-		DashboardLayout,
-	},
 	computed: {
 		budgets() {
 			return this.$store.getters["budget/budgets"];

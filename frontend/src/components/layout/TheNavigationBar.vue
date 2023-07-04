@@ -35,10 +35,8 @@
 			</router-link>
 		</div>
 
-		<div class="TheNavigationBar_sidebar">
-			<ul
-				class="TheNavigationBar_list"
-			>
+		<div class="TheNavigationBar_listContainer">
+			<ul class="TheNavigationBar_list">
 				<li>
 					<router-link to="/dashboard">
 						<font-awesome-icon :icon="['fas', 'house']" />
@@ -67,37 +65,32 @@
 <style lang="scss">
 .TheNavigationBar {
 	display: flex;
-	flex-direction: column;
-	gap: 10rem;
-	background-color: white;
-	color: black;
-	width: 7rem;
-	overflow: hidden;
-	min-height: 100vh;
-	padding: 1.5rem;
-	background: rgb(212, 212, 212);
+	justify-content: space-between;
+	padding: 1rem 2rem;
+	background: white;
 
 	&_logo {
 		display: flex;
 		justify-content: center;
 		margin-bottom: 1rem;
 		margin-top: 1rem;
-		
+
 		img {
 			width: 6rem;
 		}
 	}
 
-	&_list {
+	&_listContainer {
 		display: flex;
-		flex-wrap: wrap;
-		gap: 1.5rem;
-		list-style: none;
+		align-items: center;
+	}
 
+	&_list {
 		li {
-			display: flex;
-			justify-content: center;
-			flex-basis: 100%;
+			display: inline-block;
+			list-style: none;
+			display: inline-block;
+			padding: 0 20px;
 		}
 
 		li a {

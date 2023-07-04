@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const upcomingMealSchema = new Schema({
+	favoriteMealId: {
+		type: Schema.Types.ObjectId,
+		required: true,
+		ref: "FavoriteMeal",
+	},
 	dayOfWeek: {
 		type: String,
 		enum: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],

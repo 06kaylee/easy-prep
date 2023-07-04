@@ -1,52 +1,51 @@
 <template>
-	<dashboard-layout>
-		<div class="personal-info-container">
-			<header>
-				<h2>Your Personal Information</h2>
-			</header>
-			<div class="info-container">
-				<base-card v-for="restriction in restrictions" :key="restriction.id">
-					<header>
-						<h3>{{ restriction.category }}</h3>
-						<router-link :to="'/add-personal-info/' + restriction.id">
-							<font-awesome-icon :icon="['fas', 'plus']" />
-						</router-link>
-					</header>
-					<ul>
-						<li v-for="restrictionItem in restriction.restrictionItems" :key="restrictionItem">
-							{{ restrictionItem }}
-							<a href="" @click="removeItem($event, restriction.id, restrictionItem)">
-								<font-awesome-icon :icon="['fas', 'x']" />
-							</a>
-						</li>
-					</ul>
-				</base-card>
-			</div>
+	<div class="personal-info-container">
+		<header>
+			<h2>Your Personal Information</h2>
+		</header>
+		<div class="info-container">
+			<base-card v-for="restriction in restrictions" :key="restriction.id">
+				<header>
+					<h3>{{ restriction.category }}</h3>
+					<router-link :to="'/add-personal-info/' + restriction.id">
+						<font-awesome-icon :icon="['fas', 'plus']" />
+					</router-link>
+				</header>
+				<ul>
+					<li
+						v-for="restrictionItem in restriction.restrictionItems"
+						:key="restrictionItem"
+					>
+						{{ restrictionItem }}
+						<a
+							href=""
+							@click="removeItem($event, restriction.id, restrictionItem)"
+						>
+							<font-awesome-icon :icon="['fas', 'x']" />
+						</a>
+					</li>
+				</ul>
+			</base-card>
 		</div>
-	</dashboard-layout>
+	</div>
 </template>
 
 <script>
-import DashboardLayout from "../../components/layout/DashboardLayout.vue";
-
 export default {
-	components: {
-		DashboardLayout,
-	},
 	computed: {
 		restrictions() {
-			return this.$store.getters['personalInfo/restrictions'];
-		}
+			return this.$store.getters["personalInfo/restrictions"];
+		},
 	},
 	methods: {
 		removeItem(event, id, restrictionItem) {
 			event.preventDefault();
-			this.$store.dispatch('personalInfo/removeItem', {
+			this.$store.dispatch("personalInfo/removeItem", {
 				id,
-				item: restrictionItem
+				item: restrictionItem,
 			});
-		}
-	}
+		},
+	},
 };
 </script>
 

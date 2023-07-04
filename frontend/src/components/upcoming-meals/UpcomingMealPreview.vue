@@ -5,30 +5,29 @@
 			<font-awesome-icon :icon="['fas', 'plus']" />
 		</div>
 
-		<div class="upcomingMealPreview_contentContainer" v-if="meals">
-			<base-card
-				v-for="meal in meals"
-				:key="meal"
-				class="upcomingMealPreview_cardContent"
-			>
-				<div class="upcomingMealPreview_cardContent_imgContainer">
-					<img :src="meal.img" :alt="meal.itemName" />
-				</div>
-				<div class="upcomingMealPreview_cardContent_info">
-					<h3>{{ meal.itemName }}</h3>
-					<div class="upcomingMealPreview_cardContent_info_nutrition">
-						<p v-for="(val, name) in quickNutritionInfo(meal)" :key="val">
-							<span>{{ val }}</span> {{ name }}
-						</p>
-					</div>
-				</div>
-			</base-card>
+		<div
+			class="upcomingMealPreview_contentContainer"
+			v-if="meals && meals.length"
+		>
+			<base-carousel @next="nextMeal" :items="meals">
+				<template v-slot:content>
+					<UpcomingMealPreviewCard :meal="this.currentMeal" />
+				</template>
+			</base-carousel>
 		</div>
+		<base-card v-else class="upcomingMealPreview_defaultCard">
+			<h3>No meals selected for this day!</h3>
+		</base-card>
 	</div>
 </template>
 
 <script>
+import UpcomingMealPreviewCard from "./UpcomingMealPreviewCard.vue";
+
 export default {
+	components: {
+		UpcomingMealPreviewCard,
+	},
 	props: {
 		day: {
 			type: String,
@@ -40,9 +39,7 @@ export default {
 		},
 		meals: {
 			type: Array,
-			default: function () {
-				return [];
-			},
+			default: null,
 		},
 	},
 	data() {
@@ -55,6 +52,33 @@ export default {
 				carbohydrates: "",
 				protein: "",
 			},
+			ingredientLabels: {
+				calories: {
+					label: "Calories",
+					units: "",
+				},
+				fat: {
+					label: "Fat",
+					units: "g",
+				},
+				cholesterol: {
+					label: "Cholesterol",
+					units: "mg",
+				},
+				carbohydrates: {
+					label: "Carbs",
+					units: "g",
+				},
+				protein: {
+					label: "Protein",
+					units: "g",
+				},
+				sodium: {
+					label: "Sodium",
+					units: "mg",
+				},
+			},
+			currentIndex: 0,
 		};
 	},
 	methods: {
@@ -69,6 +93,24 @@ export default {
 			}
 			return filteredNutritionInfo;
 		},
+		getNutritionLabel(name) {
+			return this.ingredientLabels[name].label;
+		},
+		getNutritionUnits(name) {
+			return this.ingredientLabels[name].units;
+		},
+		nextMeal() {
+			if (this.currentIndex + 1 === this.meals.length) {
+				this.currentIndex = 0;
+			} else {
+				this.currentIndex += 1;
+			}
+		},
+	},
+	computed: {
+		currentMeal() {
+			return this.meals?.[this.currentIndex];
+		},
 	},
 };
 </script>
@@ -82,71 +124,44 @@ export default {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-	}
 
-	&_contentContainer {
-		display: grid;
-		gap: 2rem;
-
-		@media screen and (min-width: 760px) {
-			display: flex;
-			overflow-x: auto;
-			padding: 0.5rem;
-			display: grid;
-			grid-auto-flow: column;
-		}
-
-		@media screen and (min-width: 1200px) {
-			width: 85%;
+		@media screen and (min-width: 1024px) {
+			justify-content: start;
+			gap: 1.5rem;
 		}
 	}
 
-	div &_cardContent {
+	// &_contentContainer {
+	// 	display: grid;
+	// 	gap: 2rem;
+
+	// 	@media screen and (min-width: 1200px) {
+	// 		width: 85%;
+	// 	}
+	// }
+
+	div &_defaultCard {
 		max-width: 30rem;
 		width: 20rem;
 		margin: 0;
-		height: 20rem;
-		padding: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 10rem;
+		padding: 2rem;
+		margin: 0;
 
-		&_imgContainer {
-			display: flex;
-			justify-content: center;
-			margin-bottom: 0.5rem;
-			width: 100%;
-
-			img {
-				width: 100%;
-				max-height: 150px;
-				object-fit: cover;
-				border-top-left-radius: 12px;
-				border-top-right-radius: 12px;
-			}
+		@media screen and (min-width: 768px) {
+			height: 12rem;
 		}
 
-		&_info {
-			display: grid;
-			gap: 2rem;
-			padding: 1rem;
+		@media screen and (min-width: 1024px) {
+			height: 20rem;
+			width: 15rem;
+		}
 
-			h3 {
-				font-size: 1.3rem;
-				justify-self: center;
-			}
-
-			&_nutrition {
-				display: grid;
-				grid-template-columns: repeat(3, 1fr);
-				justify-items: center;
-
-				p {
-					text-align: center;
-
-					span {
-						display: block;
-						font-weight: bold;
-					}
-				}
-			}
+		@media screen and (min-width: 1200px) {
+			width: 20rem;
 		}
 	}
 }

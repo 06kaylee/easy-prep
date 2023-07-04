@@ -1,44 +1,40 @@
 <template>
-	<dashboard-layout>
-		<div class="FavoriteMeals">
-			<header class="FavoriteMeals_header">
-				<h2>My Favorite Meals</h2>
-				<h4>
-					<router-link
-						to="/favorite-meals/add"
-						class="FavoriteMeals_header_addMeal"
-					>
-						Add a favorite meal
-						<font-awesome-icon :icon="['fas', 'plus']" />
-					</router-link>
-				</h4>
-			</header>
+	<div class="FavoriteMeals">
+		<header class="FavoriteMeals_header">
+			<h2>My Favorite Meals</h2>
+			<h4>
+				<router-link
+					to="/favorite-meals/add"
+					class="FavoriteMeals_header_addMeal"
+				>
+					Add a favorite meal
+					<font-awesome-icon :icon="['fas', 'plus']" />
+				</router-link>
+			</h4>
+		</header>
 
-			<div class="FavoriteMeals_container">
-				<favorite-meal-item
-					v-for="favoriteMeal in favoriteMeals"
-					:key="favoriteMeal._id"
-					:id="favoriteMeal._id"
-					:item-name="favoriteMeal.itemName"
-					:img="favoriteMeal.img"
-					:ready-time="favoriteMeal.readyTime"
-					:rating="favoriteMeal.rating"
-					:label="favoriteMeal.label"
-					:servings="favoriteMeal.servings"
-				></favorite-meal-item>
-			</div>
+		<div class="FavoriteMeals_container">
+			<favorite-meal-item
+				v-for="favoriteMeal in favoriteMeals"
+				:key="favoriteMeal._id"
+				:id="favoriteMeal._id"
+				:item-name="favoriteMeal.itemName"
+				:img="favoriteMeal.img"
+				:ready-time="favoriteMeal.readyTime"
+				:rating="favoriteMeal.rating"
+				:label="favoriteMeal.label"
+				:servings="favoriteMeal.servings"
+			></favorite-meal-item>
 		</div>
-	</dashboard-layout>
+	</div>
 </template>
 
 <script>
-import DashboardLayout from "../../components/layout/DashboardLayout.vue";
 import FavoriteMealItem from "../../components/favorite-meals/FavoriteMealItem.vue";
 import FavoriteMealService from "../../services/FavoriteMealService";
 
 export default {
 	components: {
-		DashboardLayout,
 		FavoriteMealItem,
 	},
 	data() {

@@ -1,232 +1,220 @@
 <template>
-	<dashboard-layout>
-		<div class="favoriteMealDetail">
-			<div class="favoriteMealDetail_container" v-if="selectedFavoriteMeal">
-				<div class="favoriteMealDetail_container_firstHalf">
-					<div class="favoriteMealDetail_container_firstHalf_imgContainer">
-						<img
-							:src="selectedFavoriteMeal.img"
-							:alt="selectedFavoriteMeal.itemName"
-						/>
+	<div class="favoriteMealDetail">
+		<div class="favoriteMealDetail_container" v-if="selectedFavoriteMeal">
+			<div class="favoriteMealDetail_container_firstHalf">
+				<div class="favoriteMealDetail_container_firstHalf_imgContainer">
+					<img
+						:src="selectedFavoriteMeal.img"
+						:alt="selectedFavoriteMeal.itemName"
+					/>
+				</div>
+
+				<div class="favoriteMealDetail_container_firstHalf_ingredients">
+					<h3>Ingredients</h3>
+					<ul>
+						<li
+							v-for="ingredient of selectedFavoriteMeal.ingredients"
+							:key="ingredient"
+						>
+							<base-card>
+								<p>{{ ingredient }}</p>
+							</base-card>
+						</li>
+					</ul>
+				</div>
+
+				<div v-if="selectedFavoriteMeal.recipeUrl">
+					<p>
+						Recipe Source:
+						<a :href="selectedFavoriteMeal.recipeUrl">
+							{{ selectedFavoriteMeal.recipeUrl }}
+						</a>
+					</p>
+				</div>
+			</div>
+
+			<div class="favoriteMealDetail_container_secondHalf">
+				<div class="favoriteMealDetail_container_secondHalf_header">
+					<h2>{{ selectedFavoriteMeal.itemName }}</h2>
+					<div class="favoriteMealDetail_container_secondHalf_header_icons">
+						<button class="delete-btn" @click="openDeleteMealModal">
+							<font-awesome-icon :icon="['fas', 'trash']" />
+						</button>
+						<router-link
+							:to="'/favorite-meals/' + selectedFavoriteMeal._id + '/edit'"
+							class="edit-btn"
+						>
+							<font-awesome-icon :icon="['fas', 'pen']" />
+						</router-link>
+						<button class="add-to-upcoming-btn" @click="openAddToDayModal">
+							<font-awesome-icon :icon="['fas', 'plus']" />
+						</button>
 					</div>
 
-					<div class="favoriteMealDetail_container_firstHalf_ingredients">
-						<h3>Ingredients</h3>
-						<ul>
-							<li
-								v-for="ingredient of selectedFavoriteMeal.ingredients"
-								:key="ingredient"
-							>
-								<base-card>
-									<p>{{ ingredient }}</p>
-								</base-card>
-							</li>
-						</ul>
+					<!-- label -->
+					<favorite-meal-item-label
+						:label="selectedFavoriteMeal.label"
+					></favorite-meal-item-label>
+
+					<!-- rating -->
+					<div>
+						<span v-for="index in 5" :key="index">
+							<font-awesome-icon
+								v-if="isStarIncluded(index)"
+								:icon="['fas', 'star']"
+							/>
+							<font-awesome-icon v-else :icon="['far', 'star']" />
+						</span>
 					</div>
 
-					<div v-if="selectedFavoriteMeal.recipeUrl">
+					<div class="favoriteMealDetail_container_secondHalf_header_basicInfo">
+						<!-- ready time -->
 						<p>
-							Recipe Source:
-							<a :href="selectedFavoriteMeal.recipeUrl">
-								{{ selectedFavoriteMeal.recipeUrl }}
-							</a>
+							<font-awesome-icon :icon="['far', 'clock']" />
+							{{ selectedFavoriteMeal.readyTime }} minutes
+						</p>
+						<!-- servings -->
+						<p>
+							<font-awesome-icon :icon="['far', 'user']" />
+							{{ selectedFavoriteMeal.servings }} servings
 						</p>
 					</div>
 				</div>
 
-				<div class="favoriteMealDetail_container_secondHalf">
-					<div class="favoriteMealDetail_container_secondHalf_header">
-						<h2>{{ selectedFavoriteMeal.itemName }}</h2>
-						<div class="favoriteMealDetail_container_secondHalf_header_icons">
-							<button class="delete-btn" @click="openDeleteMealModal">
-								<font-awesome-icon :icon="['fas', 'trash']" />
-							</button>
-							<router-link
-								:to="'/favorite-meals/' + selectedFavoriteMeal._id + '/edit'"
-								class="edit-btn"
-							>
-								<font-awesome-icon :icon="['fas', 'pen']" />
-							</router-link>
-							<button class="add-to-upcoming-btn" @click="openAddToDayModal">
-								<font-awesome-icon :icon="['fas', 'plus']" />
-							</button>
-						</div>
-
-						<!-- label -->
-						<favorite-meal-item-label
-							:label="selectedFavoriteMeal.label"
-						></favorite-meal-item-label>
-
-						<!-- rating -->
-						<div>
-							<span v-for="index in 5" :key="index">
-								<font-awesome-icon
-									v-if="isStarIncluded(index)"
-									:icon="['fas', 'star']"
-								/>
-								<font-awesome-icon v-else :icon="['far', 'star']" />
-							</span>
-						</div>
-
-						<div
-							class="favoriteMealDetail_container_secondHalf_header_basicInfo"
-						>
-							<!-- ready time -->
+				<div class="favoriteMealDetail_container_secondHalf_nutrition">
+					<ul>
+						<li v-for="(value, name) of quickNutritionInfo" :key="name">
 							<p>
-								<font-awesome-icon :icon="['far', 'clock']" />
-								{{ selectedFavoriteMeal.readyTime }} minutes
-							</p>
-							<!-- servings -->
-							<p>
-								<font-awesome-icon :icon="['far', 'user']" />
-								{{ selectedFavoriteMeal.servings }} servings
-							</p>
-						</div>
-					</div>
-
-					<div class="favoriteMealDetail_container_secondHalf_nutrition">
-						<ul>
-							<li v-for="(value, name) of quickNutritionInfo" :key="name">
-								<p>
-									{{ value }}
-									<span>
-										{{ getNutritionLabel(name) }}
-										<span v-if="getNutritionUnits(name)">
-											({{ getNutritionUnits(name) }})
-										</span>
+								{{ value }}
+								<span>
+									{{ getNutritionLabel(name) }}
+									<span v-if="getNutritionUnits(name)">
+										({{ getNutritionUnits(name) }})
 									</span>
-								</p>
-							</li>
-						</ul>
+								</span>
+							</p>
+						</li>
+					</ul>
 
-						<a @click="openNutritionModal">
-							<font-awesome-icon :icon="['far', 'file-lines']" />
-							See full nutrition label
-						</a>
-					</div>
-
-					<base-modal
-						v-if="deleteModalOpen"
-						class="favoriteMealDetail_deleteModal"
-						@close="closeDeleteMealModal"
-					>
-						<template v-slot:header>
-							<h2>Are you sure you want to delete this meal?</h2>
-						</template>
-						<template v-slot:body>
-							<form @submit.prevent="submitDeleteMealForm">
-								<div>
-									<label for="delete">
-										<input
-											type="radio"
-											id="delete"
-											name="delete"
-											value="Yes"
-											v-model="deleteMealAnswer"
-										/>
-										Yes
-									</label>
-									<label for="keep">
-										<input
-											type="radio"
-											id="keep"
-											name="keep"
-											value="No"
-											v-model="deleteMealAnswer"
-										/>
-										No
-									</label>
-								</div>
-								<base-button>Submit</base-button>
-							</form>
-						</template>
-					</base-modal>
-
-					<base-modal
-						v-if="seeFullNutrition"
-						class="favoriteMealDetail_nutritionModal"
-						@close="closeNutritionModal"
-					>
-						<template v-slot:header>
-							<h2>Nutrition Facts</h2>
-						</template>
-						<template v-slot:body>
-							<table class="favoriteMealDetail_nutritionModal_table">
-								<thead>
-									<tr>
-										<th>Label</th>
-										<th>Value</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr
-										v-for="(value, name) of selectedFavoriteMeal.nutritionFacts"
-										:key="name"
-									>
-										<td>{{ getNutritionLabel(name) }}</td>
-										<td>{{ value }}{{ getNutritionUnits(name) }}</td>
-									</tr>
-								</tbody>
-							</table>
-						</template>
-					</base-modal>
-
-					<div class="favoriteMealDetail_container_secondHalf_steps">
-						<h3>Instructions</h3>
-						<ol>
-							<li v-for="step of selectedFavoriteMeal.steps" :key="step">
-								<p>{{ step }}</p>
-							</li>
-						</ol>
-					</div>
-
-					<base-button v-if="!isLiked" @click="removeMeal">Save</base-button>
+					<a @click="openNutritionModal">
+						<font-awesome-icon :icon="['far', 'file-lines']" />
+						See full nutrition label
+					</a>
 				</div>
 
-				<base-modal v-if="addToDay" @close="closeAddToDayModal">
+				<base-modal
+					v-if="deleteModalOpen"
+					class="favoriteMealDetail_deleteModal"
+					@close="closeDeleteMealModal"
+				>
 					<template v-slot:header>
-						<h2>Choose a Day</h2>
+						<h2>Are you sure you want to delete this meal?</h2>
 					</template>
 					<template v-slot:body>
-						<div class="modal-content-container">
-							<form method="dialog">
-								<label for="day-of-week"></label>
-								<select
-									name="day-of-week"
-									id="day-of-week"
-									v-model="dayToSaveTo"
-								>
-									<option
-										v-for="dayOfWeek in daysOfWeek"
-										:key="dayOfWeek"
-										:value="dayOfWeek"
-									>
-										{{ dayOfWeek }}
-									</option>
-								</select>
-								<base-button
-									class="save-modal-btn"
-									@click="saveToUpcomingMeals()"
-									>Save</base-button
-								>
-							</form>
-						</div>
+						<form @submit.prevent="submitDeleteMealForm">
+							<div>
+								<label for="delete">
+									<input
+										type="radio"
+										id="delete"
+										name="delete"
+										value="Yes"
+										v-model="deleteMealAnswer"
+									/>
+									Yes
+								</label>
+								<label for="keep">
+									<input
+										type="radio"
+										id="keep"
+										name="keep"
+										value="No"
+										v-model="deleteMealAnswer"
+									/>
+									No
+								</label>
+							</div>
+							<base-button>Submit</base-button>
+						</form>
 					</template>
 				</base-modal>
+
+				<base-modal
+					v-if="seeFullNutrition"
+					class="favoriteMealDetail_nutritionModal"
+					@close="closeNutritionModal"
+				>
+					<template v-slot:header>
+						<h2>Nutrition Facts</h2>
+					</template>
+					<template v-slot:body>
+						<table class="favoriteMealDetail_nutritionModal_table">
+							<thead>
+								<tr>
+									<th>Label</th>
+									<th>Value</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									v-for="(value, name) of selectedFavoriteMeal.nutritionFacts"
+									:key="name"
+								>
+									<td>{{ getNutritionLabel(name) }}</td>
+									<td>{{ value }}{{ getNutritionUnits(name) }}</td>
+								</tr>
+							</tbody>
+						</table>
+					</template>
+				</base-modal>
+
+				<div class="favoriteMealDetail_container_secondHalf_steps">
+					<h3>Instructions</h3>
+					<ol>
+						<li v-for="step of selectedFavoriteMeal.steps" :key="step">
+							<p>{{ step }}</p>
+						</li>
+					</ol>
+				</div>
+
+				<base-button v-if="!isLiked" @click="removeMeal">Save</base-button>
 			</div>
+
+			<base-modal v-if="addToDay" @close="closeAddToDayModal">
+				<template v-slot:header>
+					<h2>Choose a Day</h2>
+				</template>
+				<template v-slot:body>
+					<div class="modal-content-container">
+						<form method="dialog">
+							<label for="day-of-week"></label>
+							<select name="day-of-week" id="day-of-week" v-model="dayToSaveTo">
+								<option
+									v-for="dayOfWeek in daysOfWeek"
+									:key="dayOfWeek"
+									:value="dayOfWeek"
+								>
+									{{ dayOfWeek }}
+								</option>
+							</select>
+							<base-button class="save-modal-btn" @click="saveToUpcomingMeals()"
+								>Save</base-button
+							>
+						</form>
+					</div>
+				</template>
+			</base-modal>
 		</div>
-	</dashboard-layout>
+	</div>
 </template>
 
 <script>
 import FavoriteMealService from "../../services/FavoriteMealService";
 import UpcomingMealService from "../../services/UpcomingMealService";
-import DashboardLayout from "../../components/layout/DashboardLayout";
 import FavoriteMealItemLabel from "../../components/favorite-meals/FavoriteMealItemLabel.vue";
 
 export default {
 	components: {
-		DashboardLayout,
 		FavoriteMealItemLabel,
 	},
 	props: ["id"],
@@ -331,6 +319,7 @@ export default {
 			const mealToSave = {
 				...this.selectedFavoriteMeal,
 				dayOfWeek: this.dayToSaveTo,
+				favoriteMealId: this.selectedFavoriteMeal._id,
 			};
 			await UpcomingMealService.add(mealToSave);
 			this.closeAddToDayModal();
